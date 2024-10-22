@@ -2,12 +2,24 @@ public abstract class Account {
   private String accountNumber;
   private double balance;
 
-  abstract void deposit(double amount);
+  public void deposit(double amount) {
+    this.balance += amount;
+  }
 
-  // this.balance += amount;
+  public double getBalance() {
+    return this.balance;
+  }
+
+  public boolean setAccountNumber(String accountNum) {
+    this.accountNumber = accountNum;
+    return true;
+  }
+
+  public String getAccountNumber(){
+    return this.accountNumber;
+  }
 
   abstract boolean withdraw(double amount);
-
   /*
    * if (amount <= this.balance) {
    * this.balance -= amount;
@@ -15,8 +27,6 @@ public abstract class Account {
    * }else
    * return false;
    */
-  abstract double getBalance();
-  // return this.balance;
 
   abstract boolean transfer(Account account, double ammount);
   /*

@@ -1,8 +1,13 @@
 public abstract class Account {
+
+  public double balance;
+
   abstract void deposit(double amount);
+
   // this.balance += amount;
 
   abstract boolean withdraw(double amount);
+
   /*
    * if (amount <= this.balance) {
    * this.balance -= amount;

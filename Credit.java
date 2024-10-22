@@ -17,15 +17,14 @@ public class Credit extends Account {
   }
 
   public double getBalance() {
-    return 0.00; // add balance attribute to Account class
+    return this.balance; // add balance attribute to Account class
   }
 
-  public boolean transfer(Account account, double ammount){
-    if(this.withdraw(ammount)){
+  public boolean transfer(Account account, double ammount) {
+    if (this.withdraw(ammount)) {
       account.deposit(ammount);
       return true;
-    }
-    else{
+    } else {
       return false;
     }
   }

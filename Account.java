@@ -1,6 +1,7 @@
 public abstract class Account {
 
   public double balance;
+  protected String acctNum;
 
   abstract void deposit(double amount);
 

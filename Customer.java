@@ -4,8 +4,8 @@ import java.util.List;
 public abstract class Customer extends Person{
     protected List<Account> accounts;
 
-    public Customer(String firstName, String lastName, String id, String phoneNum, String address){
-        super(firstName,lastName,id,phoneNum,address);
+    public Customer(String id, String firstName, String lastName,String dob, String address, String phoneNum){
+        super(id,firstName,lastName,dob,address,phoneNum);
         this.accounts = new ArrayList<>();
     }
 
@@ -24,6 +24,11 @@ public abstract class Customer extends Person{
     public String getAddress(){
         return address;
     }
+    public String getDOB(){
+        return dob;
+    }
+
+    
     public void addAccount(Account account){
         accounts.add(account);
     }

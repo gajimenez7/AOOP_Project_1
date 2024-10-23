@@ -1,6 +1,4 @@
 public class Saving extends Account {
-
-    // Additional fields for savings accounts (e.g., interest rate)
     
     public Saving(String accountNumber, double initialBalance) {
         this.setAccountNumber(accountNumber);

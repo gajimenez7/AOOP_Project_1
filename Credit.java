@@ -8,21 +8,17 @@ public class Credit extends Account {
     this.creditLimit = limit;
   }
 
-  public void deposit(double ammount) {
-
+  public boolean withdraw(double amount) {
+    if (this.getBalance() >= creditLimit) {
+      return false;
+    } else {
+      return super.withdraw(amount);
+    }
   }
 
-  public boolean withdraw(double ammount) {
-    return false;
-  }
-
-  public double getBalance() {
-    return this.balance; // add balance attribute to Account class
-  }
-
-  public boolean transfer(Account account, double ammount) {
-    if (this.withdraw(ammount)) {
-      account.deposit(ammount);
+  public boolean transfer(Account account, double amount) {
+    if (this.withdraw(amount)) {
+      account.deposit(amount);
       return true;
     } else {
       return false;

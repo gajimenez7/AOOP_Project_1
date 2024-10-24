@@ -1,4 +1,6 @@
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -7,8 +9,10 @@ import java.util.List;
 public class RunBank {
   public static void main(String[] args) throws FileNotFoundException {
     boolean exitFlag = false;
+    Log logTransaction = new Log();
+
     while (!exitFlag) {
-      String userInput = Prompt();
+      String userInput = prompt();
       switch (userInput) {
         case "1":
           System.out.println("You Selected: Make individual transaction\n");
@@ -32,10 +36,11 @@ public class RunBank {
           break;
       }
     }
-    ParseFile();
+    parseFile();
+    toFile(logTransaction.parseTransaction());
   }
 
-  private static String Prompt() {
+  private static String prompt() {
     String input = "";
     Scanner scnr = new Scanner(System.in);
     System.out.println("WELCOME TO MINERS BANK!\n");
@@ -48,7 +53,7 @@ public class RunBank {
     return input;
   }
 
-  private static void ParseFile() throws FileNotFoundException {
+  private static void parseFile() throws FileNotFoundException {
     String line = "";
     List<Customer> customerList = new ArrayList<Customer>();
     try (Scanner scanner = new Scanner(new File("Bank Users.csv"))) {
@@ -85,6 +90,27 @@ public class RunBank {
       System.out.println("File not found: " + e.getMessage());
     } catch (Exception e) {
       System.out.println("Error");
+    }
+  }
+
+  public void createFile() {
+    try {
+      File f = new File("o g.txt");
+      f.createNewFile();
+    } catch (IOException e) {
+      System.out.println("An error occured");
+      e.printStackTrace();
+    }
+  }
+
+  public static void toFile(String transaction) {
+    try {
+      FileWriter fw = new FileWriter("log.txt", true);
+      fw.write(transaction);
+      fw.close();
+    } catch (IOException e) {
+      System.out.println("An error occured");
+      e.printStackTrace();
     }
   }
 }

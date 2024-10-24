@@ -1,6 +1,4 @@
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -8,17 +6,15 @@ import java.util.List;
 
 public class RunBank {
   public static void main(String[] args) throws FileNotFoundException {
-    List<Customer> customers = parseFile();
+    List <Customer>customers = ParseFile();
 
     boolean exitFlag = false;
-    Log logTransaction = new Log();
-
     while (!exitFlag) {
-      String userInput = prompt();
+      String userInput = Prompt();
       switch (userInput) {
         case "1":
           System.out.println("You Selected: Make individual transaction\n");
-          transaction(customers);
+            transaction(customers);
           break;
         case "2":
           System.out.println("You Selected: Make transaction between two accounts\n");
@@ -29,6 +25,7 @@ public class RunBank {
           pay(customers);
         case "4":
           System.out.println("You Selected: Bank Manager\n");
+          bankManager(customers);
           break;
         case "5":
           System.out.println("Exiting...Goodbye!\n");
@@ -43,10 +40,8 @@ public class RunBank {
           break;
       }
     }
-    parseFile();
-    toFile(logTransaction.parseTransaction());
+    ParseFile();
   }
-<<<<<<< HEAD
 
   private static Customer getValidCustomer(Scanner scnr, List<Customer> customers) {
     System.out.println("Whose account is the request?");
@@ -197,40 +192,8 @@ private static void transaction(List<Customer> customers) {
   }
 
   
-=======
 
-  private static boolean transaction(List<Customer> customers) {
-    Scanner scnr = new Scanner(System.in);
-    System.out.println("Whose account is the transaction?");
-    String input = scnr.nextLine();
-    Customer curr = isValidCustomer(input, customers);
-    while (isValidCustomer(input, customers) == null) {
-      System.out.println("Not a valid user. Try again.");
-      input = scnr.nextLine();
-    }
-    System.out.println("Enter the account number where the transaction will take place:\n");
-    input = scnr.nextLine();
-    while (curr.getAccount(input) != null) {
-      System.out.println("Not a valid account number. Try again");
-      input = scnr.nextLine();
-    }
-    Account currAcc = curr.getAccount(input);
-    System.out.println("How much would you like to deposit/withdraw?");
-    double amount = Double.parseDouble(scnr.nextLine());
-    System.out.println("Would you like to\n 1. Deposit\n2.Withdraw\n");
-    input = scnr.nextLine();
-    switch (input) {
-      case "1":
-        currAcc.deposit(amount);
-      case "2":
-      default:
-    }
-
-    return false;
-  }
->>>>>>> 54ec8bab2e86ce8587c609591649475ab57ba633
-
-  private static String prompt() {
+  private static String Prompt() {
     String input = "";
     Scanner scnr = new Scanner(System.in);
     System.out.println("WELCOME TO MINERS BANK!\n");
@@ -244,21 +207,18 @@ private static void transaction(List<Customer> customers) {
     return input;
   }
 
-  public static Customer isValidCustomer(String name, List<Customer> customers) {
-    String[] fullName = name.split(" ");
-    for (Customer temp : customers) {
-      if (temp.getFirstName().equals(fullName[0]) && temp.getLastName().equals(fullName[1])) {
-        return temp;
-      }
+public static Customer isValidCustomer(String name, List <Customer> customers){
+  String [] fullName = name.split(" ")
+  ;
+  for(Customer temp : customers ){
+    if(temp.getFirstName().equals(fullName[0]) && temp.getLastName().equals(fullName[1])){
+      return temp;
     }
-    return null;
   }
+  return null;
+}
 
-<<<<<<< HEAD
   public static List <Customer>ParseFile() throws FileNotFoundException {
-=======
-  public static List parseFile() throws FileNotFoundException {
->>>>>>> 54ec8bab2e86ce8587c609591649475ab57ba633
     String line = "";
     List<Customer> customerList = new ArrayList<Customer>();
     try (Scanner scanner = new Scanner(new File("Bank Users.csv"))) {
@@ -291,34 +251,14 @@ private static void transaction(List<Customer> customers) {
         customer.addAccount(checking);
         customer.addAccount(savings);
 
+        
       }
-
+     
     } catch (FileNotFoundException e) {
       System.out.println("File not found: " + e.getMessage());
     } catch (Exception e) {
       System.out.println("Error");
     }
     return customerList;
-  }
-
-  public void createFile() {
-    try {
-      File f = new File("o g.txt");
-      f.createNewFile();
-    } catch (IOException e) {
-      System.out.println("An error occured");
-      e.printStackTrace();
-    }
-  }
-
-  public static void toFile(String transaction) {
-    try {
-      FileWriter fw = new FileWriter("log.txt", true);
-      fw.write(transaction);
-      fw.close();
-    } catch (IOException e) {
-      System.out.println("An error occured");
-      e.printStackTrace();
-    }
   }
 }

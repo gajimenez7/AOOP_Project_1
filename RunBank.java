@@ -1,12 +1,16 @@
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+import java.io.FileNotFoundException;
+import java.io.File;
 
 public class RunBank {
   public static void main(String[] args) throws FileNotFoundException {
-    List <Customer>customers = ParseFile();
+    List<Customer> customers = ParseFile();
+    createFile();
 
     boolean exitFlag = false;
     while (!exitFlag) {
@@ -14,7 +18,7 @@ public class RunBank {
       switch (userInput) {
         case "1":
           System.out.println("You Selected: Make individual transaction\n");
-            transaction(customers);
+          transaction(customers);
           break;
         case "2":
           System.out.println("You Selected: Make transaction between two accounts\n");
@@ -23,16 +27,17 @@ public class RunBank {
         case "3":
           System.out.println("You Selected: Pay another user\n");
           pay(customers);
+          break;
         case "4":
           System.out.println("You Selected: Bank Manager\n");
           bankManager(customers);
           break;
         case "5":
-          System.out.println("Exiting...Goodbye!\n");
+          System.out.println("Exiting...Goodbye!");
           exitFlag = true;
           break;
         case "exit":
-          System.out.println("Exiting...Goodbye!\n");
+          System.out.println("Exiting...Goodbye!");
           exitFlag = true;
           break;
         default:
@@ -48,135 +53,162 @@ public class RunBank {
     String input = scnr.nextLine();
     Customer curr = isValidCustomer(input, customers);
     while (curr == null) {
-        System.out.println("Not a valid user. Try again.");
-        input = scnr.nextLine();
-        curr = isValidCustomer(input, customers);
+      System.out.println("Not a valid user. Try again.");
+      input = scnr.nextLine();
+      curr = isValidCustomer(input, customers);
     }
     return curr;
-}
+  }
 
-private static void bankManager(List <Customer> customers){
-Scanner scnr = new Scanner(System.in);
-System.out.println("Would you like to 1. Display user info, 2. show account info");
-String input = scnr.nextLine();
+  private static void bankManager(List<Customer> customers) {
+    Scanner scnr = new Scanner(System.in);
+    System.out.println("Would you like to 1. Display user info, 2. show account info");
+    String input = scnr.nextLine();
 
-switch (input) {
-  case "1":
-    System.out.println("Search user by A. Name or B. ID number?");
-    String input2 = scnr.nextLine();
-    while(!input2.equals("A") || !input2.equals("B")){
-      System.out.println("Invalid option. Try again");
-      input2 = scnr.nextLine();
-    }
-    if(input2.equals("A")){
-      Customer curr = getValidCustomer(scnr, customers);
-      curr.showCustomerDetails();
-    }
-    else{
-      System.out.println("Enter ID number: ");
-      String id = scnr.nextLine();
-      Customer cust = searchCustomer(id, customers);
-      while(cust == null){
-        System.out.println("Not a valid ID. Try again");
-        id = scnr.nextLine();
-        cust = searchCustomer(id, customers);
-      }
-      cust.showCustomerDetails();
-    }
-    break;
-  case "2":
-  Customer showAcctInfo = getValidCustomer(scnr, customers);
+    switch (input) {
+      case "1":
+        System.out.println("Search user by A. Name or B. ID number?");
+        String input2 = scnr.nextLine();
+        while (!input2.equals("A") || !input2.equals("B")) {
+          System.out.println("Invalid option. Try again");
+          input2 = scnr.nextLine();
+        }
+        if (input2.equals("A")) {
+          Customer curr = getValidCustomer(scnr, customers);
+          curr.showCustomerDetails();
+        } else {
+          System.out.println("Enter ID number: ");
+          String id = scnr.nextLine();
+          Customer cust = searchCustomer(id, customers);
+          while (cust == null) {
+            System.out.println("Not a valid ID. Try again");
+            id = scnr.nextLine();
+            cust = searchCustomer(id, customers);
+          }
+          cust.showCustomerDetails();
+        }
+        break;
+      case "2":
+        Customer showAcctInfo = getValidCustomer(scnr, customers);
 
-  System.out.println("/Checking Account/\nBalance: $" + showAcctInfo.accounts.get(1).getBalance() + "\nAccount Number: " + showAcctInfo.accounts.get(1).getAccountNumber());
-  System.out.println("/Savings Account/\nBalance: $" + showAcctInfo.accounts.get(2).getBalance() + "\nAccount Number: " + showAcctInfo.accounts.get(2).getAccountNumber());
- 
-  System.out.println("/Checking Account/\nBalance: $" + showAcctInfo.accounts.get(0).getBalance() + "\nAccount Number: " + showAcctInfo.accounts.get(0).getAccountNumber() );
-  default:
-    break;
-}
-}
-private static Customer searchCustomer(String id, List <Customer> customers){
-  for(Customer temp : customers){
-    if(temp.getID().equals(id)){
-      return temp;
+        System.out.println("/Checking Account/\nBalance: $" + showAcctInfo.accounts.get(1).getBalance()
+            + "\nAccount Number: " + showAcctInfo.accounts.get(1).getAccountNumber());
+        System.out.println("/Savings Account/\nBalance: $" + showAcctInfo.accounts.get(2).getBalance()
+            + "\nAccount Number: " + showAcctInfo.accounts.get(2).getAccountNumber());
+
+        System.out.println("/Checking Account/\nBalance: $" + showAcctInfo.accounts.get(0).getBalance()
+            + "\nAccount Number: " + showAcctInfo.accounts.get(0).getAccountNumber());
+      default:
+        break;
     }
   }
-  return null;
-}
-private static Account getValidAccount(Scanner scnr, Customer customer) {
+
+  private static Customer searchCustomer(String id, List<Customer> customers) {
+    for (Customer temp : customers) {
+      if (temp.getID().equals(id)) {
+        return temp;
+      }
+    }
+    return null;
+  }
+
+  private static Account getValidAccount(Scanner scnr, Customer customer) {
     System.out.println("Enter the account number:");
     String input = scnr.nextLine();
     Account account = customer.getAccount(input);
     while (account == null) {
-        System.out.println("Not a valid account number. Try again.");
-        input = scnr.nextLine();
-        account = customer.getAccount(input);
+      System.out.println("Not a valid account number. Try again.");
+      input = scnr.nextLine();
+      account = customer.getAccount(input);
     }
     return account;
-}
-private static void transfer(List<Customer> customers) {
-  Scanner scnr = new Scanner(System.in);
-  
-  Customer curr = getValidCustomer(scnr, customers);
-  Account fromAcct = getValidAccount(scnr, curr);
-  
-  System.out.println("How much will you be transferring?");
-  double amount = Double.parseDouble(scnr.nextLine());
-  if (fromAcct.getBalance() < amount) {
+  }
+
+  private static void transfer(List<Customer> customers) {
+    Scanner scnr = new Scanner(System.in);
+
+    Log logger = new Log();
+
+    Customer curr = getValidCustomer(scnr, customers);
+    Account fromAcct = getValidAccount(scnr, curr);
+
+    System.out.println("How much will you be transferring?");
+    double amount = Double.parseDouble(scnr.nextLine());
+    if (fromAcct.getBalance() < amount) {
       System.out.println("You do not have sufficient funds.");
       return;
+    }
+
+    Account toAcct = getValidAccount(scnr, curr);
+
+    fromAcct.setBalance(fromAcct.getBalance() - amount);
+    toAcct.setBalance(toAcct.getBalance() + amount);
+
+    logger.setAccount1(fromAcct);
+    logger.setAccount2(toAcct);
+    logger.setPerson1(curr);
+    logger.setAmount(Double.toString(amount));
+    logger.setTransaction("transfer");
+    toFile(logger.parseTransaction());
+
+    System.out.println("You transferred $" + amount + " from account " + fromAcct.getAccountNumber() +
+        " to account " + toAcct.getAccountNumber() + ".");
   }
 
-  Account toAcct = getValidAccount(scnr, curr);
+  private static void transaction(List<Customer> customers) {
+    Scanner scnr = new Scanner(System.in);
 
+    Customer curr = getValidCustomer(scnr, customers);
+    Account currAcc = getValidAccount(scnr, curr);
 
-  fromAcct.setBalance(fromAcct.getBalance() - amount);
-  toAcct.setBalance(toAcct.getBalance() + amount);
+    Log logger = new Log();
 
-  System.out.println("You transferred $" + amount + " from account " + fromAcct.getAccountNumber() + 
-      " to account " + toAcct.getAccountNumber() + ".");
-}
-private static void transaction(List<Customer> customers) {
-  Scanner scnr = new Scanner(System.in);
+    System.out.println("How much would you like to deposit/withdraw?");
+    double amount = Double.parseDouble(scnr.nextLine());
 
+    System.out.println("Would you like to\n1. Deposit\n2. Withdraw");
+    String input = scnr.nextLine();
 
-  Customer curr = getValidCustomer(scnr, customers);
-  Account currAcc = getValidAccount(scnr, curr);
+    switch (input) {
+      case "1":
+        currAcc.deposit(amount);
 
-  System.out.println("How much would you like to deposit/withdraw?");
-  double amount = Double.parseDouble(scnr.nextLine());
-  
-  System.out.println("Would you like to\n1. Deposit\n2. Withdraw");
-  String input = scnr.nextLine();
-  
-  switch (input) {
-      case "1":  
-          currAcc.deposit(amount);
-          System.out.println("Your balance is now $" + currAcc.getBalance());
-          break;
+        logger.setAccount1(currAcc);
+        logger.setPerson1(curr);
+        logger.setTransaction("deposit");
+        logger.setAmount(Double.toString(amount));
+        toFile(logger.parseTransaction());
+
+        System.out.println("Your balance is now $" + currAcc.getBalance() + "\n");
+        break;
+      case "2":
+        if (currAcc.withdraw(amount)) {
+          System.out.println("Your balance is now $" + currAcc.getBalance() + "\n");
           
-      case "2":  
-          if (currAcc.withdraw(amount)) {
-              System.out.println("Your balance is now $" + currAcc.getBalance());
-          } else {
-              System.out.println("You do not have sufficient funds.");
-          }
-          break;
-          
+          logger.setAccount1(currAcc);
+          logger.setPerson1(curr);
+          logger.setTransaction("withdraw");
+          logger.setAmount(Double.toString(amount));
+          toFile(logger.parseTransaction());
+        } else {
+          System.out.println("You do not have sufficient funds.\n");
+        }
+        break;
       default:
-          System.out.println("Invalid option. Transaction cancelled.");
+        System.out.println("Invalid option. Transaction cancelled.");
+    }
   }
-}
 
+  private static void pay(List<Customer> customers) {
+    Log logger = new Log();
 
-  private static void pay(List <Customer> customers){
     Scanner scnr = new Scanner(System.in);
     Customer curr = getValidCustomer(scnr, customers);
     Account fromAcct = getValidAccount(scnr, curr);
 
     System.out.println("How much will you be paying?");
     double amount = Double.parseDouble(scnr.nextLine());
-    while(amount > fromAcct.balance){
+    while (amount > fromAcct.balance) {
       System.out.println("Not enough funds.");
       amount = Double.parseDouble(scnr.nextLine());
     }
@@ -187,11 +219,17 @@ private static void transaction(List<Customer> customers) {
     fromAcct.setBalance(fromAcct.balance - amount);
     payAcct.setBalance(payAcct.balance + amount);
 
+    logger.setAccount1(fromAcct);
+    logger.setAccount2(payAcct);
+    logger.setPerson1(curr);
+    logger.setPerson2(paid);
+    logger.setAmount(Double.toString(amount));
+    logger.setTransaction("payment");
+    toFile(logger.parseTransaction());
 
-    System.out.println("You just paid " + paid.getFirstName() + " " + paid.getLastName() + " $" + amount + ". Your new balance is " + fromAcct.getBalance());
+    System.out.println("You just paid " + paid.getFirstName() + " " + paid.getLastName() + " $" + amount
+        + ". Your new balance is " + fromAcct.getBalance());
   }
-
-  
 
   private static String Prompt() {
     String input = "";
@@ -207,18 +245,17 @@ private static void transaction(List<Customer> customers) {
     return input;
   }
 
-public static Customer isValidCustomer(String name, List <Customer> customers){
-  String [] fullName = name.split(" ")
-  ;
-  for(Customer temp : customers ){
-    if(temp.getFirstName().equals(fullName[0]) && temp.getLastName().equals(fullName[1])){
-      return temp;
+  public static Customer isValidCustomer(String name, List<Customer> customers) {
+    String[] fullName = name.split(" ");
+    for (Customer temp : customers) {
+      if (temp.getFirstName().equals(fullName[0]) && temp.getLastName().equals(fullName[1])) {
+        return temp;
+      }
     }
+    return null;
   }
-  return null;
-}
 
-  public static List <Customer>ParseFile() throws FileNotFoundException {
+  public static List<Customer> ParseFile() throws FileNotFoundException {
     String line = "";
     List<Customer> customerList = new ArrayList<Customer>();
     try (Scanner scanner = new Scanner(new File("Bank Users.csv"))) {
@@ -251,14 +288,33 @@ public static Customer isValidCustomer(String name, List <Customer> customers){
         customer.addAccount(checking);
         customer.addAccount(savings);
 
-        
       }
-     
+
     } catch (FileNotFoundException e) {
       System.out.println("File not found: " + e.getMessage());
     } catch (Exception e) {
       System.out.println("Error");
     }
     return customerList;
+  }
+   public static void createFile() {
+    try {
+      File f = new File("log.txt");
+      f.createNewFile();
+    } catch (IOException e) {
+      System.out.println("An error occurred");
+      e.printStackTrace();
+    }
+  }
+
+  public static void toFile(String transaction) {
+    try {
+      FileWriter fw = new FileWriter("log.txt", true);
+      fw.write(transaction);
+      fw.close();
+    } catch (IOException e) {
+      System.out.println("An error occurred");
+      e.printStackTrace();
+    }
   }
 }

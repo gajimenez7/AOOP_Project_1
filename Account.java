@@ -1,6 +1,6 @@
 public abstract class Account {
   protected String accountNumber;
-  private double balance;
+  protected double balance;
 
   public void deposit(double amount) {
     this.balance += amount;
@@ -8,6 +8,10 @@ public abstract class Account {
 
   public double getBalance() {
     return this.balance;
+  }
+
+  public void setBalance(double balance){
+    this.balance = balance;
   }
 
   public boolean setAccountNumber(String accountNum) {

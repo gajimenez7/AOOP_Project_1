@@ -1,12 +1,13 @@
 public class Credit extends Account {
   private double creditLimit;
 
-  public Credit() {
+  public Credit(String acctNum, double creditLim, double creditStart) {
+    this.setAccountNumber(acctNum);
+    this.creditLimit = creditLim;
+    this.setBalance(creditStart);
   }
 
-  public Credit(double limit) {
-    this.creditLimit = limit;
-  }
+
 
   public boolean withdraw(double amount) {
     if (this.getBalance() >= creditLimit) {

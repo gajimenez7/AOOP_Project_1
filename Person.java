@@ -20,5 +20,5 @@ public class Person extends Customer {
         System.out.println("Address: " + getAddress());
         System.out.println("Phone Number: " + getPhoneNum());
     }
-    
+}
 }

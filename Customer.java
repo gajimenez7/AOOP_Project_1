@@ -78,7 +78,8 @@ public abstract class Customer {
     for (Account temp : accounts) {
       if (temp.getAccountNumber().equals(acctNum)) {
         return temp;
-      }
+     }
+
     }
     return null;
   }

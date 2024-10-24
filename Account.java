@@ -48,14 +48,8 @@ public abstract class Account {
     } else
       return false;
   }
+  
 
   abstract boolean transfer(Account account, double amount);
-  /*
-   * if(this.withdraw(ammount)){
-   * account.deposit(ammount);
-   * return true;
-   * } else{
-   * return false;
-   * }
-   */
+
 }

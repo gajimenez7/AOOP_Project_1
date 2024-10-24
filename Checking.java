@@ -2,7 +2,7 @@ public class Checking extends Account {
 
     public Checking(String accountNumber, double initialBalance) {
         this.setAccountNumber(accountNumber);
-        this.deposit(initialBalance);
+        this.setBalance(initialBalance);
     }
 
     @Override

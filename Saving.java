@@ -2,7 +2,7 @@ public class Saving extends Account {
 
   public Saving(String accountNumber, double initialBalance) {
     this.setAccountNumber(accountNumber);
-    this.deposit(initialBalance);
+    this.setBalance(initialBalance);
   }
 
   @Override

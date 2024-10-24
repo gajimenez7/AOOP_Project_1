@@ -18,9 +18,11 @@ public class RunBank {
           break;
         case "2":
           System.out.println("You Selected: Make transaction between two accounts\n");
+          transfer(customers);
           break;
         case "3":
           System.out.println("You Selected: Pay another user\n");
+          pay(customers);
         case "4":
           System.out.println("You Selected: Bank Manager\n");
           break;
@@ -39,36 +41,155 @@ public class RunBank {
     }
     ParseFile();
   }
-private static boolean transaction(List<Customer> customers){
-    Scanner scnr = new Scanner(System.in);
-    System.out.println("Whose account is the transaction?");
-    String input = scnr.nextLine(); 
-    Customer curr = isValidCustomer(input, customers);
-    while(isValidCustomer(input, customers) == null){
-      System.out.println("Not a valid user. Try again.");
-      input = scnr.nextLine();
-    }
-    System.out.println("Enter the account number where the transaction will take place:\n");
-    input = scnr.nextLine();
-    while(curr.getAccount(input) != null){
-      System.out.println("Not a valid account number. Try again");
-      input = scnr.nextLine();
-    }
-    Account currAcc = curr.getAccount(input);
-   
-    System.out.println("How much would you like to deposit/withdraw?");
-    double amount = Double.parseDouble(scnr.nextLine());
-    System.out.println("Would you like to\n 1. Deposit\n2.Withdraw\n");
-    input = scnr.nextLine();
-    switch(input){
-      case "1":
-        currAcc.deposit(amount);
-      case "2":
-      default:
-    }
 
-  return false;
+  private static Customer getValidCustomer(Scanner scnr, List<Customer> customers) {
+    System.out.println("Whose account is the request?");
+    String input = scnr.nextLine();
+    Customer curr = isValidCustomer(input, customers);
+    while (curr == null) {
+        System.out.println("Not a valid user. Try again.");
+        input = scnr.nextLine();
+        curr = isValidCustomer(input, customers);
+    }
+    return curr;
 }
+
+private static void bankManager(List <Customer> customers){
+Scanner scnr = new Scanner(System.in);
+System.out.println("Would you like to 1. Display user info, 2. show account info");
+String input = scnr.nextLine();
+
+switch (input) {
+  case "1":
+    System.out.println("Search user by A. Name or B. ID number?");
+    String input2 = scnr.nextLine();
+    while(!input2.equals("A") || !input2.equals("B")){
+      System.out.println("Invalid option. Try again");
+      input2 = scnr.nextLine();
+    }
+    if(input2.equals("A")){
+      Customer curr = getValidCustomer(scnr, customers);
+      curr.showCustomerDetails();
+    }
+    else{
+      System.out.println("Enter ID number: ");
+      String id = scnr.nextLine();
+      Customer cust = searchCustomer(id, customers);
+      while(cust == null){
+        System.out.println("Not a valid ID. Try again");
+        id = scnr.nextLine();
+        cust = searchCustomer(id, customers);
+      }
+      cust.showCustomerDetails();
+    }
+    break;
+  case "2":
+  Customer showAcctInfo = getValidCustomer(scnr, customers);
+
+  System.out.println("/Checking Account/\nBalance: $" + showAcctInfo.accounts.get(1).getBalance() + "\nAccount Number: " + showAcctInfo.accounts.get(1).getAccountNumber());
+  System.out.println("/Savings Account/\nBalance: $" + showAcctInfo.accounts.get(2).getBalance() + "\nAccount Number: " + showAcctInfo.accounts.get(2).getAccountNumber());
+ 
+  System.out.println("/Checking Account/\nBalance: $" + showAcctInfo.accounts.get(0).getBalance() + "\nAccount Number: " + showAcctInfo.accounts.get(0).getAccountNumber() );
+  default:
+    break;
+}
+}
+private static Customer searchCustomer(String id, List <Customer> customers){
+  for(Customer temp : customers){
+    if(temp.getID().equals(id)){
+      return temp;
+    }
+  }
+  return null;
+}
+private static Account getValidAccount(Scanner scnr, Customer customer) {
+    System.out.println("Enter the account number:");
+    String input = scnr.nextLine();
+    Account account = customer.getAccount(input);
+    while (account == null) {
+        System.out.println("Not a valid account number. Try again.");
+        input = scnr.nextLine();
+        account = customer.getAccount(input);
+    }
+    return account;
+}
+private static void transfer(List<Customer> customers) {
+  Scanner scnr = new Scanner(System.in);
+  
+  Customer curr = getValidCustomer(scnr, customers);
+  Account fromAcct = getValidAccount(scnr, curr);
+  
+  System.out.println("How much will you be transferring?");
+  double amount = Double.parseDouble(scnr.nextLine());
+  if (fromAcct.getBalance() < amount) {
+      System.out.println("You do not have sufficient funds.");
+      return;
+  }
+
+  Account toAcct = getValidAccount(scnr, curr);
+
+
+  fromAcct.setBalance(fromAcct.getBalance() - amount);
+  toAcct.setBalance(toAcct.getBalance() + amount);
+
+  System.out.println("You transferred $" + amount + " from account " + fromAcct.getAccountNumber() + 
+      " to account " + toAcct.getAccountNumber() + ".");
+}
+private static void transaction(List<Customer> customers) {
+  Scanner scnr = new Scanner(System.in);
+
+
+  Customer curr = getValidCustomer(scnr, customers);
+  Account currAcc = getValidAccount(scnr, curr);
+
+  System.out.println("How much would you like to deposit/withdraw?");
+  double amount = Double.parseDouble(scnr.nextLine());
+  
+  System.out.println("Would you like to\n1. Deposit\n2. Withdraw");
+  String input = scnr.nextLine();
+  
+  switch (input) {
+      case "1":  
+          currAcc.deposit(amount);
+          System.out.println("Your balance is now $" + currAcc.getBalance());
+          break;
+          
+      case "2":  
+          if (currAcc.withdraw(amount)) {
+              System.out.println("Your balance is now $" + currAcc.getBalance());
+          } else {
+              System.out.println("You do not have sufficient funds.");
+          }
+          break;
+          
+      default:
+          System.out.println("Invalid option. Transaction cancelled.");
+  }
+}
+
+
+  private static void pay(List <Customer> customers){
+    Scanner scnr = new Scanner(System.in);
+    Customer curr = getValidCustomer(scnr, customers);
+    Account fromAcct = getValidAccount(scnr, curr);
+
+    System.out.println("How much will you be paying?");
+    double amount = Double.parseDouble(scnr.nextLine());
+    while(amount > fromAcct.balance){
+      System.out.println("Not enough funds.");
+      amount = Double.parseDouble(scnr.nextLine());
+    }
+    System.out.println("Now input information of the person you'd like to pay");
+    Customer paid = getValidCustomer(scnr, customers);
+    Account payAcct = getValidAccount(scnr, paid);
+
+    fromAcct.setBalance(fromAcct.balance - amount);
+    payAcct.setBalance(payAcct.balance + amount);
+
+
+    System.out.println("You just paid " + paid.getFirstName() + " " + paid.getLastName() + " $" + amount + ". Your new balance is " + fromAcct.getBalance());
+  }
+
   
 
   private static String Prompt() {
@@ -96,7 +217,7 @@ public static Customer isValidCustomer(String name, List <Customer> customers){
   return null;
 }
 
-  public static List ParseFile() throws FileNotFoundException {
+  public static List <Customer>ParseFile() throws FileNotFoundException {
     String line = "";
     List<Customer> customerList = new ArrayList<Customer>();
     try (Scanner scanner = new Scanner(new File("Bank Users.csv"))) {
@@ -110,13 +231,13 @@ public static Customer isValidCustomer(String name, List <Customer> customers){
         String dob = accountData[3];
         String address = accountData[4];
         String phoneNumber = accountData[6];
-        String checkAcctNum = accountData[7];
-        double checkStart = Double.parseDouble(accountData[8]);
-        String savAcctNum = accountData[9];
-        double savStart = Double.parseDouble(accountData[10]);
-        String creditAcctNum = accountData[11];
-        double creditLim = Double.parseDouble(accountData[12]);
-        double creditStart = Double.parseDouble(accountData[13]);
+        String checkAcctNum = accountData[8];
+        double checkStart = Double.parseDouble(accountData[9]);
+        String savAcctNum = accountData[10];
+        double savStart = Double.parseDouble(accountData[11]);
+        String creditAcctNum = accountData[12];
+        double creditLim = Double.parseDouble(accountData[13]);
+        double creditStart = Double.parseDouble(accountData[14]);
 
         Customer customer = new Person(id, firstName, lastName, dob, address, phoneNumber);
         customerList.add(customer);

@@ -1,4 +1,7 @@
 
+/**
+ * Log class that handles logging transactions
+ */
 public class Log {
   private Account account1;
   private Account account2;
@@ -7,9 +10,21 @@ public class Log {
   private String transaction;
   private String amount;
 
+  /**
+   * Empty constructor
+   */
   public Log() {
   }
 
+  /**
+   * Log Constructor
+   * @param a1
+   * @param a2
+   * @param c1
+   * @param c2
+   * @param transaction
+   * @param amount
+   */
   public Log(Account a1, Account a2, Customer c1, Customer c2, String transaction, String amount) {
     this.account1 = a1;
     this.account2 = a2;
@@ -19,30 +34,59 @@ public class Log {
     this.amount = amount;
   }
 
+  /**
+   * Set first account
+   * @param a
+   */
   public void setAccount1(Account a) {
     this.account1 = a;
   }
 
+  /**
+   * Set second account
+   * @param a
+   */
   public void setAccount2(Account a) {
     this.account2 = a;
   }
 
+  /**
+   * Set first customer
+   * @param c
+   */
   public void setPerson1(Customer c) {
     this.customer1 = c;
   }
 
+  /**
+   * Set second customer
+   * @param c
+   */
   public void setPerson2(Customer c) {
     this.customer2 = c;
   }
 
+  /**
+   * Set the transaction type
+   * @param transaction
+   */
   public void setTransaction(String transaction) {
     this.transaction = transaction;
   }
 
+  /**
+   * Set amount in transaction made
+   * @param amount
+   */
   public void setAmount(String amount){
     this.amount = amount;
   }
 
+  /**
+   * Parse object attributes to return information to log
+   * depending on transaction type
+   * @return
+   */
   public String parseTransaction() {
     String logHistory = "";
     switch (this.transaction) {

@@ -4,10 +4,24 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.io.FileNotFoundException;
 import java.io.File;
 
+/**
+ * Runner class that uses all helper classes
+ * 
+ * @author
+ * @author
+ * @author George Jimenez
+ * 
+ */
 public class RunBank {
+
+  /**
+   * Main contains the interface for user interaction
+   * 
+   * @param args
+   * @throws FileNotFoundException
+   */
   public static void main(String[] args) throws FileNotFoundException {
     List<Customer> customers = ParseFile();
     createFile();
@@ -48,6 +62,13 @@ public class RunBank {
     ParseFile();
   }
 
+  /**
+   * Get valid customer from list of customers and user input
+   * 
+   * @param scnr
+   * @param customers
+   * @return Customer
+   */
   private static Customer getValidCustomer(Scanner scnr, List<Customer> customers) {
     System.out.println("Whose account is the request?");
     String input = scnr.nextLine();
@@ -60,6 +81,11 @@ public class RunBank {
     return curr;
   }
 
+  /**
+   * Simulates a bank manager option
+   * 
+   * @param customers
+   */
   private static void bankManager(List<Customer> customers) {
     Scanner scnr = new Scanner(System.in);
     System.out.println("Would you like to 1. Display user info, 2. show account info");
@@ -103,6 +129,13 @@ public class RunBank {
     }
   }
 
+  /**
+   * Searches requested customer from list
+   * 
+   * @param id
+   * @param customers
+   * @return
+   */
   private static Customer searchCustomer(String id, List<Customer> customers) {
     for (Customer temp : customers) {
       if (temp.getID().equals(id)) {
@@ -112,6 +145,13 @@ public class RunBank {
     return null;
   }
 
+  /**
+   * Searches for requested account associated to customer
+   * 
+   * @param scnr
+   * @param customer
+   * @return
+   */
   private static Account getValidAccount(Scanner scnr, Customer customer) {
     System.out.println("Enter the account number:");
     String input = scnr.nextLine();
@@ -123,6 +163,12 @@ public class RunBank {
     }
     return account;
   }
+
+  /**
+   * Transfer user interface
+   * 
+   * @param customers
+   */
 
   private static void transfer(List<Customer> customers) {
     Scanner scnr = new Scanner(System.in);
@@ -155,6 +201,11 @@ public class RunBank {
         " to account " + toAcct.getAccountNumber() + ".");
   }
 
+  /**
+   * Transaction user interface
+   * 
+   * @param customers
+   */
   private static void transaction(List<Customer> customers) {
     Scanner scnr = new Scanner(System.in);
 
@@ -184,7 +235,7 @@ public class RunBank {
       case "2":
         if (currAcc.withdraw(amount)) {
           System.out.println("Your balance is now $" + currAcc.getBalance() + "\n");
-          
+
           logger.setAccount1(currAcc);
           logger.setPerson1(curr);
           logger.setTransaction("withdraw");
@@ -199,6 +250,11 @@ public class RunBank {
     }
   }
 
+  /**
+   * Payment user interface
+   * 
+   * @param customers
+   */
   private static void pay(List<Customer> customers) {
     Log logger = new Log();
 
@@ -231,6 +287,11 @@ public class RunBank {
         + ". Your new balance is " + fromAcct.getBalance());
   }
 
+  /**
+   * Prints the prompt for user to give input
+   * 
+   * @return
+   */
   private static String Prompt() {
     String input = "";
     Scanner scnr = new Scanner(System.in);
@@ -245,6 +306,14 @@ public class RunBank {
     return input;
   }
 
+  /**
+   * Checks that input is a valid customer from list
+   * 
+   * @param name
+   * @param customers
+   * @return
+   */
+
   public static Customer isValidCustomer(String name, List<Customer> customers) {
     String[] fullName = name.split(" ");
     for (Customer temp : customers) {
@@ -254,6 +323,13 @@ public class RunBank {
     }
     return null;
   }
+
+  /**
+   * Parse csv file
+   * 
+   * @return
+   * @throws FileNotFoundException
+   */
 
   public static List<Customer> ParseFile() throws FileNotFoundException {
     String line = "";
@@ -297,7 +373,11 @@ public class RunBank {
     }
     return customerList;
   }
-   public static void createFile() {
+
+  /**
+   * Create logging text file
+   */
+  public static void createFile() {
     try {
       File f = new File("log.txt");
       f.createNewFile();
@@ -307,6 +387,10 @@ public class RunBank {
     }
   }
 
+  /**
+   * Write transactions to logging text file
+   * @param transaction
+   */
   public static void toFile(String transaction) {
     try {
       FileWriter fw = new FileWriter("log.txt", true);

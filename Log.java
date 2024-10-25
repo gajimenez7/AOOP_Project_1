@@ -67,7 +67,9 @@ public class Log {
                    "FROM ACCOUNT: " + this.account1.getAccountNumber() + "\n" + 
                    "TO ACCOUNT: " + this.account2.getAccountNumber() + "\n" +
                    "CUSTOMER: " + this.customer1.getFirstName() + " " + this.customer1.getLastName() + "\n" +
-                   "AMOUNT: " + this.amount + "\n\n";
+                   "AMOUNT: " + this.amount + "\n" + 
+                   "FROM ACCOUNT BALANCE: " + this.account1.getBalance() + "\n" + 
+                   "TO ACCOUNT BALANCE: " + this.account2.getBalance() + "\n\n";
         break;
       case "payment":
       logHistory = "TRANSACTION: " + this.transaction + "\n" + 

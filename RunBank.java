@@ -95,7 +95,7 @@ public class RunBank {
       case "1":
         System.out.println("Search user by A. Name or B. ID number?");
         String input2 = scnr.nextLine();
-        while (!input2.equals("A") || !input2.equals("B")) {
+        while (!input2.equals("A") && !input2.equals("B")) {
           System.out.println("Invalid option. Try again");
           input2 = scnr.nextLine();
         }
@@ -174,12 +174,21 @@ public class RunBank {
     Scanner scnr = new Scanner(System.in);
 
     Log logger = new Log();
+    
+    double amount = 0.00;
 
     Customer curr = getValidCustomer(scnr, customers);
     Account fromAcct = getValidAccount(scnr, curr);
 
     System.out.println("How much will you be transferring?");
-    double amount = Double.parseDouble(scnr.nextLine());
+    amount = Double.parseDouble(scnr.nextLine());
+    
+    while(amount < 0){
+      System.out.println("Invalid Input");
+      System.out.println("How much will you be transferring?");
+      amount = Double.parseDouble(scnr.next());
+    }
+    
     if (fromAcct.getBalance() < amount) {
       System.out.println("You do not have sufficient funds.");
       return;
@@ -209,13 +218,21 @@ public class RunBank {
   private static void transaction(List<Customer> customers) {
     Scanner scnr = new Scanner(System.in);
 
+    double amount = 0.00;
+
     Customer curr = getValidCustomer(scnr, customers);
     Account currAcc = getValidAccount(scnr, curr);
 
     Log logger = new Log();
 
     System.out.println("How much would you like to deposit/withdraw?");
-    double amount = Double.parseDouble(scnr.nextLine());
+    amount = Double.parseDouble(scnr.nextLine());
+
+    while(amount < 0){
+      System.out.println("Invalid Input");
+      System.out.println("How much would you like to deposit/withdraw?");
+      amount = Double.parseDouble(scnr.nextLine());
+    }
 
     System.out.println("Would you like to\n1. Deposit\n2. Withdraw");
     String input = scnr.nextLine();
@@ -242,6 +259,11 @@ public class RunBank {
           logger.setAmount(Double.toString(amount));
           toFile(logger.parseTransaction());
         } else {
+          logger.setAccount1(currAcc);
+          logger.setPerson1(curr);
+          logger.setTransaction("invalid");
+          toFile(logger.parseTransaction());
+
           System.out.println("You do not have sufficient funds.\n");
         }
         break;
@@ -258,12 +280,18 @@ public class RunBank {
   private static void pay(List<Customer> customers) {
     Log logger = new Log();
 
+    double amount = 0.00;
+
     Scanner scnr = new Scanner(System.in);
     Customer curr = getValidCustomer(scnr, customers);
     Account fromAcct = getValidAccount(scnr, curr);
 
-    System.out.println("How much will you be paying?");
-    double amount = Double.parseDouble(scnr.nextLine());
+    while(amount < 0){
+      System.out.println("Invalid Input");
+      System.out.println("How much will you be paying?");
+      amount = Double.parseDouble(scnr.nextLine());
+    }
+
     while (amount > fromAcct.balance) {
       System.out.println("Not enough funds.");
       amount = Double.parseDouble(scnr.nextLine());
@@ -363,7 +391,6 @@ public class RunBank {
         customer.addAccount(credit);
         customer.addAccount(checking);
         customer.addAccount(savings);
-
       }
 
     } catch (FileNotFoundException e) {
@@ -389,6 +416,7 @@ public class RunBank {
 
   /**
    * Write transactions to logging text file
+   * 
    * @param transaction
    */
   public static void toFile(String transaction) {

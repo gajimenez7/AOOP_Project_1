@@ -18,6 +18,7 @@ public class Log {
 
   /**
    * Log Constructor
+   * 
    * @param a1
    * @param a2
    * @param c1
@@ -36,6 +37,7 @@ public class Log {
 
   /**
    * Set first account
+   * 
    * @param a
    */
   public void setAccount1(Account a) {
@@ -44,6 +46,7 @@ public class Log {
 
   /**
    * Set second account
+   * 
    * @param a
    */
   public void setAccount2(Account a) {
@@ -52,6 +55,7 @@ public class Log {
 
   /**
    * Set first customer
+   * 
    * @param c
    */
   public void setPerson1(Customer c) {
@@ -60,6 +64,7 @@ public class Log {
 
   /**
    * Set second customer
+   * 
    * @param c
    */
   public void setPerson2(Customer c) {
@@ -68,6 +73,7 @@ public class Log {
 
   /**
    * Set the transaction type
+   * 
    * @param transaction
    */
   public void setTransaction(String transaction) {
@@ -76,54 +82,90 @@ public class Log {
 
   /**
    * Set amount in transaction made
+   * 
    * @param amount
    */
-  public void setAmount(String amount){
+  public void setAmount(String amount) {
     this.amount = amount;
   }
 
   /**
    * Parse object attributes to return information to log
    * depending on transaction type
+   * 
    * @return
    */
   public String parseTransaction() {
     String logHistory = "";
     switch (this.transaction) {
       case "deposit":
-      logHistory = "TRANSACTION: " + this.transaction + "\n" + 
-                    "ACCOUNT: " + this.account1.getAccountNumber() + "\n" + 
-                    "CUSTOMER: " + this.customer1.getFirstName() + " " + this.customer1.getLastName() + "\n" +
-                    "AMOUNT: " + this.amount + "\n" +
-                    "PREVIOUS BALANCE: " + (this.account1.getBalance() - Double.parseDouble(this.amount)) + "\n" + 
-                    "NEW BALANCE: " + this.account1.getBalance() + "\n\n";
-      break;
+        logHistory = logDeposit();
+        break;
       case "withdraw":
-      logHistory = "TRANSACTION: " + this.transaction + "\n" + 
-                   "ACCOUNT: " + this.account1.getAccountNumber() + "\n" + 
-                   "CUSTOMER: " + this.customer1.getFirstName() + " " + this.customer1.getLastName() + "\n" +
-                   "AMOUNT: $" + this.amount + "\n" +
-                   "PREVIOUS BALANCE: $" + (this.account1.getBalance() + Double.parseDouble(this.amount)) + "\n" + 
-                   "NEW BALANCE: $" + this.account1.getBalance() + "\n\n";
+        logHistory = logWithdraw();
         break;
       case "transfer":
-      logHistory = "TRANSACTION: " + this.transaction + "\n" + 
-                   "FROM ACCOUNT: " + this.account1.getAccountNumber() + "\n" + 
-                   "TO ACCOUNT: " + this.account2.getAccountNumber() + "\n" +
-                   "CUSTOMER: " + this.customer1.getFirstName() + " " + this.customer1.getLastName() + "\n" +
-                   "AMOUNT: " + this.amount + "\n" + 
-                   "FROM ACCOUNT BALANCE: " + this.account1.getBalance() + "\n" + 
-                   "TO ACCOUNT BALANCE: " + this.account2.getBalance() + "\n\n";
+        logHistory = logTransfer();
         break;
       case "payment":
-      logHistory = "TRANSACTION: " + this.transaction + "\n" + 
-                   "FROM ACCOUNT: " + this.account1.getAccountNumber() + "\n" + 
-                   "TO ACCOUNT: " + this.account2.getAccountNumber() + "\n" +
-                   "FROM CUSTOMER: " + this.customer1.getFirstName() + " " + this.customer1.getLastName() + "\n" +
-                   "TO CUSTOMER: " + this.customer2.getFirstName() + " " + this.customer2.getLastName() + "\n" +
-                   "AMOUNT: " + this.amount + "\n\n";
+        logHistory = logPayement();
         break;
+      case "invalid":
+        logHistory = logInvalid();
     }
     return logHistory;
+  }
+
+  public String logDeposit(){
+    String log;
+    log = "TRANSACTION: " + this.transaction + "\n" +
+            "ACCOUNT: " + this.account1.getAccountNumber() + "\n" +
+            "CUSTOMER: " + this.customer1.getFirstName() + " " + this.customer1.getLastName() + "\n" +
+            "AMOUNT: " + this.amount + "\n" +
+            "PREVIOUS BALANCE: " + (this.account1.getBalance() - Double.parseDouble(this.amount)) + "\n" +
+            "NEW BALANCE: " + this.account1.getBalance() + "\n\n";
+    return log;
+  }
+
+  public String logWithdraw(){
+    String log;
+    log = "TRANSACTION: " + this.transaction + "\n" +
+            "ACCOUNT: " + this.account1.getAccountNumber() + "\n" +
+            "CUSTOMER: " + this.customer1.getFirstName() + " " + this.customer1.getLastName() + "\n" +
+            "AMOUNT: $" + this.amount + "\n" +
+            "PREVIOUS BALANCE: $" + (this.account1.getBalance() + Double.parseDouble(this.amount)) + "\n" +
+            "NEW BALANCE: $" + this.account1.getBalance() + "\n\n";
+    return log;
+  }
+
+  public String logTransfer(){
+    String log;
+    log = "TRANSACTION: " + this.transaction + "\n" +
+            "FROM ACCOUNT: " + this.account1.getAccountNumber() + "\n" +
+            "TO ACCOUNT: " + this.account2.getAccountNumber() + "\n" +
+            "CUSTOMER: " + this.customer1.getFirstName() + " " + this.customer1.getLastName() + "\n" +
+            "AMOUNT: " + this.amount + "\n" +
+            "FROM ACCOUNT BALANCE: " + this.account1.getBalance() + "\n" +
+            "TO ACCOUNT BALANCE: " + this.account2.getBalance() + "\n\n";
+    return log;
+  }
+  
+  public String logPayement(){
+    String log;
+    log = "TRANSACTION: " + this.transaction + "\n" +
+            "FROM ACCOUNT: " + this.account1.getAccountNumber() + "\n" +
+            "TO ACCOUNT: " + this.account2.getAccountNumber() + "\n" +
+            "FROM CUSTOMER: " + this.customer1.getFirstName() + " " + this.customer1.getLastName() + "\n" +
+            "TO CUSTOMER: " + this.customer2.getFirstName() + " " + this.customer2.getLastName() + "\n" +
+            "AMOUNT: " + this.amount + "\n\n";
+    return log;
+  }
+  
+  public String logInvalid(){
+    String log;
+    log = "TRANSACTION: " + this.transaction + "\n" +
+            "ACCOUNT: " + this.account1.getAccountNumber() + "\n" +
+            "FROM CUSTOMER: " + this.customer1.getFirstName() + " " + this.customer1.getLastName() + "\n\n";
+    return log;
   }
 }

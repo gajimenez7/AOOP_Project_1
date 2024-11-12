@@ -1,10 +1,12 @@
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.ReadOnlyBufferException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.io.File;
+import java.util.Random;
 
 /**
  * Runner class that uses all helper classes
@@ -43,10 +45,15 @@ public class RunBank {
           pay(customers);
           break;
         case "4":
+          System.out.println("You Selected: Create an Account\n");
+          acountCreation(customers);
+          break;
+        case "5":
           System.out.println("You Selected: Bank Manager\n");
           bankManager(customers);
           break;
-        case "5":
+          
+        case "6":
           System.out.println("Exiting...Goodbye!");
           exitFlag = true;
           break;
@@ -61,7 +68,273 @@ public class RunBank {
     }
     ParseFile();
   }
+private static boolean hasNumber(String str){
+  for (char c : str.toCharArray()) {
+    if (Character.isDigit(c)) {
+       return true;
+    }
+ }
+ return false;
+}
+private static boolean hasLetter(String num){
+  boolean valid = false;
+  for (char c : num.toCharArray()) {
+    if (Character.isDigit(c)) {
+       valid = false;
+    }
+    else{
+      return true;
+    }
+ }
+ return valid;
+}
+  private static void acountCreation(List<Customer> customers){
+    Scanner scnr = new Scanner(System.in);
+    //String [] newCustInfo = new String[13];
 
+    System.out.println("Enter your first name: \n");
+    String firstName= scnr.nextLine();
+    firstName = checkName(scnr, firstName);
+
+    System.out.println("Enter your last name:\n");
+    String lastName = scnr.nextLine();
+    lastName = checkName(scnr, lastName);
+
+    System.out.println("Enter your address:\n");
+    String address = scnr.nextLine();
+
+    System.out.println("Enter your phone number (with no spaces or dashes):\n");
+    String phoneNum = scnr.nextLine();
+    phoneNum = checkNum(scnr, phoneNum);
+
+    System.out.println("Enter your Date of Birth (in the format DDMMYY)");
+    String dob = scnr.nextLine();
+    dob = checkDOB(scnr, dob);
+
+    System.out.println("What is your credit score?");
+    String creditScore = scnr.nextLine();
+    creditScore = checkCreditScore(scnr, creditScore);
+    String creditLimit = Double.toString(assignCreditLimit(creditScore));
+    
+
+    int _newID = Integer.parseInt(highestID(customers)) + 1;
+    String newID = Integer.toString(_newID);
+    System.out.println("Your ID has been assigned. It is " + newID + ".\n");
+
+    String checkingAcctID = Integer.toString(highestCheckingAcctNum(customers));
+    System.out.println("Your Checking Account Number is " + checkingAcctID +".\n");
+
+    String savingsAcctID = Integer.toString(highestSavingsAcctNum(customers));
+    System.out.println(" Your Savings Account Number is " + savingsAcctID + ".\n");
+    
+    String creditAcctID = Integer.toString(highestCreditAcctNum(customers));
+    System.out.println(" Your Credit Account Number is " + creditAcctID + ".\n");
+    System.out.printf("Your credit limit is $%.2f%n" ,creditScore);
+
+    Customer newCustomer = new Person(newID, firstName, lastName, dob, address, phoneNum);
+    customers.add(newCustomer);
+
+        Account checking = new Checking(checkingAcctID, 0.00);
+        Account savings = new Saving(savingsAcctID, 0.00);
+        Account credit = new Credit(creditAcctID, Integer.parseInt(creditLimit), 0.00);
+
+        newCustomer.addAccount(credit);
+        newCustomer.addAccount(checking);
+        newCustomer.addAccount(savings);
+  
+  }
+  private static int highestCreditAcctNum(List<Customer> customers){
+    Customer highestCustomer = customers.get(0);
+    Account highestAccount = highestCustomer.accounts.get(0);
+    for (Customer temp : customers) {
+      if(Integer.parseInt(highestAccount.getAccountNumber()) < Integer.parseInt(temp.accounts.get(0).getAccountNumber()) ){
+        highestAccount = temp.accounts.get(0);
+      }
+    }
+    return Integer.parseInt(highestAccount.getAccountNumber()) + 1;
+  }
+  private static int highestCheckingAcctNum(List<Customer> customers){
+    Customer highestCustomer = customers.get(0);
+    Account highestAccount = highestCustomer.accounts.get(1);
+    for (Customer temp : customers) {
+      if(Integer.parseInt(highestAccount.getAccountNumber()) < Integer.parseInt(temp.accounts.get(1).getAccountNumber()) ){
+        highestAccount = temp.accounts.get(1);
+      }
+    }
+    return Integer.parseInt(highestAccount.getAccountNumber()) + 1;
+  }
+  private static int highestSavingsAcctNum(List<Customer> customers){
+    Customer highestCustomer = customers.get(0);
+    Account highestAccount = highestCustomer.accounts.get(2);
+    for (Customer temp : customers) {
+      if(Integer.parseInt(highestAccount.getAccountNumber()) < Integer.parseInt(temp.accounts.get(2).getAccountNumber()) ){
+        highestAccount = temp.accounts.get(2);
+      }
+    }
+    return Integer.parseInt(highestAccount.getAccountNumber()) + 1;
+  }
+  private static String highestID(List<Customer> customers){
+    Customer highestCustomer = customers.get(0);
+    for (Customer temp : customers) {
+      if(Integer.parseInt(highestCustomer.getID()) < Integer.parseInt(temp.getID()) ){
+        highestCustomer = temp;
+      }
+    }
+    return highestCustomer.getID();
+  }
+
+  
+  private static String checkCreditScore(Scanner scnr, String _creditScore){
+    int creditScore = Integer.parseInt(_creditScore);
+    while(creditScore < 0 || creditScore > 850 || hasLetter(_creditScore) == true){
+      System.out.println("Enter a valid credit score:\n");
+      creditScore = Integer.parseInt(scnr.nextLine());
+    }
+    return Integer.toString(creditScore);
+  }
+private static double assignCreditLimit(String _creditScore){
+  double creditScore = Double.parseDouble(_creditScore);
+  Random random = new Random();
+  if(creditScore <= 580){
+    return random.nextInt(699 - 100) + 100;
+  }
+  else if(creditScore > 580 && creditScore < 670){
+    return random.nextInt(4999 - 700) + 700;
+  }
+  else if(creditScore >= 670 && creditScore <740){
+    return random.nextInt(7499 - 5000) + 5000;
+  }
+  else if(creditScore >= 740 && creditScore <800){
+    return random.nextInt(15999 - 7500) + 7500;
+  }
+  else if(creditScore >= 800 && creditScore <= 850){
+    return random.nextInt(25000 - 16000) + 16000;
+  }
+  else{
+    return -1;
+  }
+}
+
+  private static boolean checkDayToMonth(String day, String month){
+    int dayNum = Integer.parseInt(day);
+    int monthNum = Integer.parseInt(month);
+    if(monthNum == 1 || monthNum == 3 || monthNum == 5 || monthNum == 7 || monthNum == 8 || monthNum == 10 || monthNum == 12){
+      if(dayNum > 31){
+        return false;
+      }
+    }
+    else if(monthNum == 4 || monthNum == 6 || monthNum == 9 || monthNum == 11 ){
+      if(dayNum > 30){
+        return false;
+      }
+    }
+    else if(monthNum == 2){
+      if(dayNum > 29){
+        return false;
+      }
+    }
+    return true;
+  }
+  private static String monthStr(String monthNum){
+    switch (monthNum) {
+      case "01":
+        return "Jan";
+
+      case "02":
+        return "Feb";
+
+      case "03":
+        return "Mar";
+
+      case "04":
+        return "Apr";
+
+      case "05":
+        return "May";
+
+      case "06":
+        return "Jun";
+
+      case "07":
+        return "Jul";
+
+      case "08":
+        return "Aug";
+
+      case "09":
+        return "Sep";
+
+      case "10":
+        return "Oct";
+
+      case "11":
+        return "Nov";
+        
+      case "12":
+        return "Dec";
+
+      default:
+      return null;
+      
+    }
+  }
+
+  private static String checkDOB(Scanner scnr, String str) {
+    while (true) {
+      if (str.length() == 6 && !hasLetter(str)) {
+        String day = str.substring(0, 2);
+        String month = str.substring(2, 4);
+            
+        if (isValidMonth(month)) {
+          if (checkDayToMonth(day, month)) {
+            month = monthStr(month);  
+            return String.format("%s-%s-%s", day, month, str.substring(4));
+        } 
+          else {
+            System.out.println("The date you inputted is impossible for the given month, try again.\n");
+        }
+       } 
+          else {
+                System.out.println("Please enter a valid month (01–12).\n");
+            }
+      } else {
+            System.out.println("Please enter a DOB in the correct format (DDMMYY) with a valid month (01–12).\n");
+        }
+        
+        str = scnr.nextLine();
+    }
+}
+
+private static boolean isValidMonth(String month) {
+    try {
+        int monthInt = Integer.parseInt(month);
+        return monthInt >= 1 && monthInt <= 12;
+    } catch (NumberFormatException e) {
+        return false;
+    }
+}
+
+
+  private static String checkNum(Scanner scnr, String str){
+    while(hasLetter(str) == true || str.length() != 10){
+      System.out.println("Please enter a valid number:\n");
+      str = scnr.nextLine();
+    }
+    str = str.trim();
+    return String.format("(%s) %s-%s", 
+      str.substring(0, 3), 
+      str.substring(3, 6), 
+      str.substring(6));
+  }
+  private static String checkName(Scanner scnr, String str){
+    while(hasNumber(str) == true){
+      System.out.println("Please enter a valid name:\n");
+      str = scnr.nextLine();
+    }
+    str = str.trim();
+    Character.toUpperCase(str.charAt(0));
+    return str;
+  }
   /**
    * Get valid customer from list of customers and user input
    * 
@@ -122,7 +395,7 @@ public class RunBank {
         System.out.println("/Savings Account/\nBalance: $" + showAcctInfo.accounts.get(2).getBalance()
             + "\nAccount Number: " + showAcctInfo.accounts.get(2).getAccountNumber());
 
-        System.out.println("/Checking Account/\nBalance: $" + showAcctInfo.accounts.get(0).getBalance()
+        System.out.println("/Credit Account/\nBalance: $" + showAcctInfo.accounts.get(0).getBalance()
             + "\nAccount Number: " + showAcctInfo.accounts.get(0).getAccountNumber());
       default:
         break;
@@ -328,8 +601,9 @@ public class RunBank {
     System.out.println("[1] Make individual transaction");
     System.out.println("[2] Make transaction between two accounts");
     System.out.println("[3] Pay another user");
-    System.out.println("[4] Bank Manager");
-    System.out.println("[5] EXIT");
+    System.out.println("[4] Create an Account");
+    System.out.println("[5] Bank Manager");
+    System.out.println("[6] EXIT");
     input = scnr.nextLine();
     return input;
   }
@@ -413,7 +687,6 @@ public class RunBank {
       e.printStackTrace();
     }
   }
-
   /**
    * Write transactions to logging text file
    * 

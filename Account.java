@@ -1,9 +1,12 @@
+import java.text.NumberFormat;
+
 /**
  * @author George Jimenez
  * creates an account with account number and balance
  */
 
 public abstract class Account {
+  // NumberFormat moneyFormat = NumberFormat.getCurrencyInstance();
   protected String accountNumber;
   protected double balance;
 

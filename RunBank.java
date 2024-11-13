@@ -447,8 +447,7 @@ private static boolean isValidMonth(String month) {
   private static void transfer(List<Customer> customers) {
     Scanner scnr = new Scanner(System.in);
 
-    Log logger = new Log();
-
+    
     UserTransaction ut1 = new UserTransaction();
     UserTransaction ut2 = new UserTransaction();
     
@@ -457,6 +456,7 @@ private static boolean isValidMonth(String month) {
     Customer curr = getValidCustomer(scnr, customers);
     Account fromAcct = getValidAccount(scnr, curr);
 
+    
     ut1.setCustomer(curr);
     ut1.setAccount(fromAcct);
     if(ut1.getStartBalance() == 0.00) ut1.setStartBalance(fromAcct.getBalance());

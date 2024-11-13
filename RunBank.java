@@ -1,7 +1,6 @@
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.ReadOnlyBufferException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,7 +48,7 @@ public class RunBank {
           break;
         case "4":
           System.out.println("You Selected: Create an Account\n");
-          acountCreation(customers);
+          accountCreation(customers);
           break;
         case "5":
           System.out.println("You Selected: Bank Manager\n");
@@ -91,7 +90,7 @@ private static boolean hasLetter(String num){
  }
  return valid;
 }
-  private static void acountCreation(List<Customer> customers){
+  private static void accountCreation(List<Customer> customers){
     Scanner scnr = new Scanner(System.in);
     //String [] newCustInfo = new String[13];
 
@@ -452,11 +451,20 @@ private static boolean isValidMonth(String month) {
     Scanner scnr = new Scanner(System.in);
 
     Log logger = new Log();
+
+    UserTransaction ut1 = new UserTransaction();
+    UserTransaction ut2 = new UserTransaction();
     
     double amount = 0.00;
 
     Customer curr = getValidCustomer(scnr, customers);
     Account fromAcct = getValidAccount(scnr, curr);
+
+    ut1.setCustomer(curr);
+    ut1.setAccount(fromAcct);
+    if(ut1.getStartBalance() == 0.00) ut1.setStartBalance(fromAcct.getBalance());
+
+    
 
     System.out.println("How much will you be transferring?");
     amount = Double.parseDouble(scnr.nextLine());
@@ -474,8 +482,15 @@ private static boolean isValidMonth(String month) {
 
     Account toAcct = getValidAccount(scnr, curr);
 
+    ut2.setCustomer(curr);
+    ut2.setAccount(toAcct);
+    if(ut2.getStartBalance() == 0.00) ut2.setStartBalance(toAcct.getBalance());
+
     fromAcct.setBalance(fromAcct.getBalance() - amount);
     toAcct.setBalance(toAcct.getBalance() + amount);
+
+    ut1.setEndBalance(fromAcct.getBalance());
+    ut2.setEndBalance(toAcct.getBalance());
 
     logger.setAccount1(fromAcct);
     logger.setAccount2(toAcct);
@@ -484,8 +499,15 @@ private static boolean isValidMonth(String month) {
     logger.setTransaction("transfer");
     toFile(logger.parseTransaction());
 
+    ut1.addTransaction(logger.parseTransaction());
+    ut2.addTransaction(logger.parseTransaction());
+
+    ut1.generateTransactionFile();
+    ut2.generateTransactionFile();
+
     System.out.println("You transferred $" + amount + " from account " + fromAcct.getAccountNumber() +
         " to account " + toAcct.getAccountNumber() + ".");
+
   }
   public static void readTransactions(String filePath, List<Customer> customers) {
     try (Scanner scanner = new Scanner(new File(filePath))) {
@@ -595,6 +617,11 @@ private static void handleDeposit(String toFirst, String toLast, String toWhere,
 
     Log logger = new Log();
 
+    UserTransaction ut = new UserTransaction();
+    ut.setCustomer(curr);
+    ut.setAccount(currAcc);
+    if(ut.getStartBalance() == 0.00) ut.setStartBalance(currAcc.getBalance());
+
     System.out.println("How much would you like to deposit/withdraw?");
     amount = Double.parseDouble(scnr.nextLine());
 
@@ -617,10 +644,16 @@ private static void handleDeposit(String toFirst, String toLast, String toWhere,
         logger.setAmount(Double.toString(amount));
         toFile(logger.parseTransaction());
 
+        ut.setEndBalance(currAcc.getBalance());
+
+        ut.addTransaction(logger.parseTransaction());
+
         System.out.println("Your balance is now $" + currAcc.getBalance() + "\n");
         break;
       case "2":
         if (currAcc.withdraw(amount)) {
+          ut.setEndBalance(currAcc.getBalance());
+
           System.out.println("Your balance is now $" + currAcc.getBalance() + "\n");
 
           logger.setAccount1(currAcc);
@@ -628,11 +661,15 @@ private static void handleDeposit(String toFirst, String toLast, String toWhere,
           logger.setTransaction("withdraw");
           logger.setAmount(Double.toString(amount));
           toFile(logger.parseTransaction());
+          
+          ut.addTransaction(logger.parseTransaction());
         } else {
           logger.setAccount1(currAcc);
           logger.setPerson1(curr);
           logger.setTransaction("invalid");
           toFile(logger.parseTransaction());
+
+          ut.addTransaction(logger.parseTransaction());
 
           System.out.println("You do not have sufficient funds.\n");
         }
@@ -640,6 +677,7 @@ private static void handleDeposit(String toFirst, String toLast, String toWhere,
       default:
         System.out.println("Invalid option. Transaction cancelled.");
     }
+    ut.generateTransactionFile();
   }
 
   /**
@@ -650,11 +688,18 @@ private static void handleDeposit(String toFirst, String toLast, String toWhere,
   private static void pay(List<Customer> customers) {
     Log logger = new Log();
 
+    UserTransaction ut1 = new UserTransaction();
+    UserTransaction ut2 = new UserTransaction();
+    
     double amount = 0.00;
 
     Scanner scnr = new Scanner(System.in);
     Customer curr = getValidCustomer(scnr, customers);
     Account fromAcct = getValidAccount(scnr, curr);
+
+    ut1.setCustomer(curr);
+    ut1.setAccount(fromAcct);
+    if(ut1.getStartBalance() == 0.00) ut1.setStartBalance(fromAcct.getBalance());
 
     while(amount < 0){
       System.out.println("Invalid Input");
@@ -670,8 +715,15 @@ private static void handleDeposit(String toFirst, String toLast, String toWhere,
     Customer paid = getValidCustomer(scnr, customers);
     Account payAcct = getValidAccount(scnr, paid);
 
+    ut2.setCustomer(paid);
+    ut2.setAccount(payAcct);
+    if(ut2.getStartBalance() == 0.00) ut2.setStartBalance(payAcct.getBalance());
+
     fromAcct.setBalance(fromAcct.balance - amount);
     payAcct.setBalance(payAcct.balance + amount);
+
+    ut1.setEndBalance(fromAcct.getBalance());
+    ut2.setEndBalance(payAcct.getBalance());
 
     logger.setAccount1(fromAcct);
     logger.setAccount2(payAcct);
@@ -680,6 +732,12 @@ private static void handleDeposit(String toFirst, String toLast, String toWhere,
     logger.setAmount(Double.toString(amount));
     logger.setTransaction("payment");
     toFile(logger.parseTransaction());
+
+    ut1.addTransaction(logger.parseTransaction());
+    ut2.addTransaction(logger.parseTransaction());
+
+    ut1.generateTransactionFile();
+    ut2.generateTransactionFile();
 
     System.out.println("You just paid " + paid.getFirstName() + " " + paid.getLastName() + " $" + amount
         + ". Your new balance is " + fromAcct.getBalance());

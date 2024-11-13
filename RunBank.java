@@ -114,7 +114,7 @@ private static boolean hasLetter(String num){
     System.out.println("What is your credit score?");
     String creditScore = scnr.nextLine();
     creditScore = checkCreditScore(scnr, creditScore);
-    String creditLimit = Double.toString(assignCreditLimit(creditScore));
+    double creditLimit = assignCreditLimit(creditScore);
     
 
     int _newID = Integer.parseInt(highestID(customers)) + 1;
@@ -129,14 +129,14 @@ private static boolean hasLetter(String num){
     
     String creditAcctID = Integer.toString(highestCreditAcctNum(customers));
     System.out.println(" Your Credit Account Number is " + creditAcctID + ".\n");
-    System.out.printf("Your credit limit is $%.2f%n" ,creditScore);
+    System.out.printf("Your credit limit is $$%.2f.\n" , creditLimit );
 
     Customer newCustomer = new Person(newID, firstName, lastName, dob, address, phoneNum);
     customers.add(newCustomer);
 
         Account checking = new Checking(checkingAcctID, 0.00);
         Account savings = new Saving(savingsAcctID, 0.00);
-        Account credit = new Credit(creditAcctID, Integer.parseInt(creditLimit), 0.00);
+        Account credit = new Credit(creditAcctID, creditLimit, 0.00);
 
         newCustomer.addAccount(credit);
         newCustomer.addAccount(checking);
@@ -192,9 +192,11 @@ private static boolean hasLetter(String num){
     }
     return Integer.toString(creditScore);
   }
+
 private static double assignCreditLimit(String _creditScore){
   double creditScore = Double.parseDouble(_creditScore);
   Random random = new Random();
+
   if(creditScore <= 580){
     return random.nextInt(699 - 100) + 100;
   }
@@ -633,10 +635,23 @@ private static boolean isValidMonth(String month) {
    * @throws FileNotFoundException
    */
 
+   public static int rows(String firstLine, String target){
+    String [] rows = firstLine.split(",");
+    for(int i = 0; i < rows.length; i++){
+      if(target.equals(rows[i])){
+        return i;
+      }
+    }
+    return -1;
+   }
+  //  public static Customer addToList(Customer customer){
+    
+  //  }
   public static List<Customer> ParseFile() throws FileNotFoundException {
     String line = "";
     List<Customer> customerList = new ArrayList<Customer>();
     try (Scanner scanner = new Scanner(new File("Bank Users.csv"))) {
+      //int i = rows(scanner.nextLine());
       scanner.nextLine();
       while (scanner.hasNextLine()) {
         line = scanner.nextLine();
@@ -666,7 +681,7 @@ private static boolean isValidMonth(String month) {
         customer.addAccount(checking);
         customer.addAccount(savings);
       }
-
+      System.out.println(customerList.get(0).getFirstName());
     } catch (FileNotFoundException e) {
       System.out.println("File not found: " + e.getMessage());
     } catch (Exception e) {

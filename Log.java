@@ -20,15 +20,22 @@ public class Log {
    * @param transaction
    * @param amount
    */
-  public Log(Account a1, Account a2, Customer c1, Customer c2, String transaction, String amount) {
-    this.account1 = a1;
-    this.account2 = a2;
-    this.customer1 = c1;
-    this.customer2 = c2;
-    this.transaction = transaction;
-    this.amount = amount;
+  // public Log(Account a1, Account a2, Customer c1, Customer c2, String transaction, String amount) {
+  //   this.account1 = a1;
+  //   this.account2 = a2;
+  //   this.customer1 = c1;
+  //   this.customer2 = c2;
+  //   this.transaction = transaction;
+  //   this.amount = amount;
+  // }
+  Log(LogBuilder builder){
+    this.account1 = builder.account1;
+    this.account2 = builder.account2;
+    this.customer1 = builder.customer1;
+    this.customer2 = builder.customer2;
+    this.transaction = builder.transaction;
+    this.amount = builder.amount;
   }
-
   /**
    * Parse object attributes to return information to log
    * depending on transaction type

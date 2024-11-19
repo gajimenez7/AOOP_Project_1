@@ -450,7 +450,7 @@ private static boolean isValidMonth(String month) {
   private static void transfer(List<Customer> customers) {
     Scanner scnr = new Scanner(System.in);
 
-    Log logger = new Log();
+    Log logger;
 
     UserTransaction ut1 = new UserTransaction();
     UserTransaction ut2 = new UserTransaction();
@@ -463,8 +463,6 @@ private static boolean isValidMonth(String month) {
     ut1.setCustomer(curr);
     ut1.setAccount(fromAcct);
     if(ut1.getStartBalance() == 0.00) ut1.setStartBalance(fromAcct.getBalance());
-
-    
 
     System.out.println("How much will you be transferring?");
     amount = Double.parseDouble(scnr.nextLine());
@@ -492,11 +490,14 @@ private static boolean isValidMonth(String month) {
     ut1.setEndBalance(fromAcct.getBalance());
     ut2.setEndBalance(toAcct.getBalance());
 
-    logger.setAccount1(fromAcct);
-    logger.setAccount2(toAcct);
-    logger.setPerson1(curr);
-    logger.setAmount(Double.toString(amount));
-    logger.setTransaction("transfer");
+    logger = new LogBuilder()
+      .account1(fromAcct)
+      .account2(toAcct)
+      .person1(curr)
+      .amount(Double.toString(amount))
+      .transaction("transfer")
+      .build();
+
     toFile(logger.parseTransaction());
 
     ut1.addTransaction(logger.parseTransaction());
@@ -615,7 +616,7 @@ private static void handleDeposit(String toFirst, String toLast, String toWhere,
     Customer curr = getValidCustomer(scnr, customers);
     Account currAcc = getValidAccount(scnr, curr);
 
-    Log logger = new Log();
+    Log logger;
 
     UserTransaction ut = new UserTransaction();
     ut.setCustomer(curr);
@@ -638,10 +639,13 @@ private static void handleDeposit(String toFirst, String toLast, String toWhere,
       case "1":
         currAcc.deposit(amount);
 
-        logger.setAccount1(currAcc);
-        logger.setPerson1(curr);
-        logger.setTransaction("deposit");
-        logger.setAmount(Double.toString(amount));
+        logger = new LogBuilder()
+          .account1(currAcc)
+          .person1(curr)
+          .amount(Double.toString(amount))
+          .transaction("deposit")
+          .build();
+        
         toFile(logger.parseTransaction());
 
         ut.setEndBalance(currAcc.getBalance());
@@ -656,17 +660,24 @@ private static void handleDeposit(String toFirst, String toLast, String toWhere,
 
           System.out.println("Your balance is now $" + currAcc.getBalance() + "\n");
 
-          logger.setAccount1(currAcc);
-          logger.setPerson1(curr);
-          logger.setTransaction("withdraw");
-          logger.setAmount(Double.toString(amount));
+          logger = new LogBuilder()
+            .account1(currAcc)
+            .person1(curr)
+            .amount(Double.toString(amount))
+            .transaction("withdraw")
+            .build();
+
           toFile(logger.parseTransaction());
           
           ut.addTransaction(logger.parseTransaction());
         } else {
-          logger.setAccount1(currAcc);
-          logger.setPerson1(curr);
-          logger.setTransaction("invalid");
+
+          logger = new LogBuilder()
+            .account1(currAcc)
+            .person1(curr)
+            .transaction("invalid")
+            .build();
+
           toFile(logger.parseTransaction());
 
           ut.addTransaction(logger.parseTransaction());
@@ -686,7 +697,7 @@ private static void handleDeposit(String toFirst, String toLast, String toWhere,
    * @param customers
    */
   private static void pay(List<Customer> customers) {
-    Log logger = new Log();
+    Log logger;
 
     UserTransaction ut1 = new UserTransaction();
     UserTransaction ut2 = new UserTransaction();
@@ -725,12 +736,15 @@ private static void handleDeposit(String toFirst, String toLast, String toWhere,
     ut1.setEndBalance(fromAcct.getBalance());
     ut2.setEndBalance(payAcct.getBalance());
 
-    logger.setAccount1(fromAcct);
-    logger.setAccount2(payAcct);
-    logger.setPerson1(curr);
-    logger.setPerson2(paid);
-    logger.setAmount(Double.toString(amount));
-    logger.setTransaction("payment");
+    logger = new LogBuilder()
+      .account1(fromAcct)
+      .account2(payAcct)
+      .person1(curr)
+      .person2(paid)
+      .transaction("payment")
+      .amount(Double.toString(amount))
+      .build();
+
     toFile(logger.parseTransaction());
 
     ut1.addTransaction(logger.parseTransaction());

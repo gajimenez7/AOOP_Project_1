@@ -1,11 +1,11 @@
 
 public class LogBuilder {
-    private Account account1;
-    private Account account2;
-    private Customer customer1;
-    private Customer customer2;
-    private String transaction;
-    private String amount;
+    Account account1;
+    Account account2;
+    Customer customer1;
+    Customer customer2;
+    String transaction;
+    String amount;
 
     public static LogBuilder newInstance() {
         return new LogBuilder();
@@ -16,7 +16,7 @@ public class LogBuilder {
      * 
      * @param account1
      */
-    public LogBuilder setAccount1(Account a) {
+    public LogBuilder account1(Account a) {
         this.account1 = a;
         return this;
     }
@@ -26,7 +26,7 @@ public class LogBuilder {
      * 
      * @param account2
      */
-    public LogBuilder setAccount2(Account a) {
+    public LogBuilder account2(Account a) {
         this.account2 = a;
         return this;
     }
@@ -36,7 +36,7 @@ public class LogBuilder {
      * 
      * @param customer1
      */
-    public LogBuilder setPerson1(Customer c) {
+    public LogBuilder person1(Customer c) {
         this.customer1 = c;
         return this;
     }
@@ -46,7 +46,7 @@ public class LogBuilder {
      * 
      * @param customer2
      */
-    public LogBuilder setPerson2(Customer c) {
+    public LogBuilder person2(Customer c) {
         this.customer2 = c;
         return this;
     }
@@ -56,7 +56,7 @@ public class LogBuilder {
      * 
      * @param transaction
      */
-    public LogBuilder setTransaction(String transaction) {
+    public LogBuilder transaction(String transaction) {
         this.transaction = transaction;
         return this;
     }
@@ -66,12 +66,12 @@ public class LogBuilder {
      * 
      * @param amount
      */
-    public LogBuilder setAmount(String amount) {
+    public LogBuilder amount(String amount) {
         this.amount = amount;
         return this;
     }
 
     public Log build() {
-        return new Log(account1, account2, customer1, customer2, transaction, amount);
+        return new Log(this);
     }
 }

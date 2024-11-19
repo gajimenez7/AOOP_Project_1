@@ -447,7 +447,7 @@ private static boolean isValidMonth(String month) {
   private static void transfer(List<Customer> customers) {
     Scanner scnr = new Scanner(System.in);
 
-    Log logger = new Log();
+    Log logger;
 
     UserTransaction ut1 = new UserTransaction();
     UserTransaction ut2 = new UserTransaction();
@@ -460,8 +460,6 @@ private static boolean isValidMonth(String month) {
     ut1.setCustomer(curr);
     ut1.setAccount(fromAcct);
     if(ut1.getStartBalance() == 0.00) ut1.setStartBalance(fromAcct.getBalance());
-
-    Log logger;
 
     System.out.println("How much will you be transferring?");
     amount = Double.parseDouble(scnr.nextLine());

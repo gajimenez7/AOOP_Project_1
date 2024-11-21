@@ -13,8 +13,8 @@ import java.util.Random;
 /**
  * Runner class that uses all helper classes
  * 
- * @author
- * @author
+ * @author Juan Meza
+ * @author Stephanie Reyes
  * @author George Jimenez
  * 
  */

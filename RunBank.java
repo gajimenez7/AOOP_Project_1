@@ -26,9 +26,10 @@ public class RunBank {
    * @throws FileNotFoundException
    */
   public static void main(String[] args) throws FileNotFoundException {
-    List<Customer> customers = ParseFile();
+    List<Customer> customers = BankCSVHandler.parseFile();
     createFile();
-
+    
+    readTransactions("Transactions.csv", customers);
     boolean exitFlag = false;
     while (!exitFlag) {
       String userInput = Prompt();
@@ -67,7 +68,7 @@ public class RunBank {
           break;
       }
     }
-    ParseFile();
+    BankCSVHandler.parseFile();
   }
 
   private static boolean hasNumber(String str) {
@@ -131,7 +132,7 @@ public class RunBank {
 
     String creditAcctID = Integer.toString(highestCreditAcctNum(customers));
     System.out.println(" Your Credit Account Number is " + creditAcctID + ".\n");
-    System.out.printf("Your credit limit is $$%.2f.\n", creditLimit);
+    System.out.printf("Your credit limit is $%.2f.\n", creditLimit);
 
     Customer newCustomer = new Person(newID, firstName, lastName, dob, address, phoneNum);
     customers.add(newCustomer);
@@ -143,8 +144,9 @@ public class RunBank {
     newCustomer.addAccount(credit);
     newCustomer.addAccount(checking);
     newCustomer.addAccount(savings);
-
+    BankCSVHandler.appendUserToCSV(newCustomer);
   }
+
 
   private static int highestCreditAcctNum(List<Customer> customers) {
     Customer highestCustomer = customers.get(0);
@@ -812,121 +814,20 @@ public class RunBank {
    */
 
   public static Customer isValidCustomer(String name, List<Customer> customers) {
-    String[] fullName = name.split(" ");
-    for (Customer temp : customers) {
-      if (temp.getFirstName().equals(fullName[0]) && temp.getLastName().equals(fullName[1])) {
-        return temp;
+    
+    if(name.contains(" ") ){
+      String[] fullName = name.split(" ");
+      for (Customer temp : customers) {
+        if (temp.getFirstName().equals(fullName[0]) && temp.getLastName().equals(fullName[1])) {
+          return temp;
+        }
+      
       }
     }
+    
     return null;
   }
 
-  /**
-   * Parse csv file
-   * 
-   * @return
-   * @throws FileNotFoundException
-   */
-
-  /**
-   * Parse csv file
-   * 
-   * @return
-   * @throws FileNotFoundException
-   */
-
-  public static List<Customer> ParseFile() throws FileNotFoundException {
-    List<Customer> customerList = new ArrayList<>();
-    Map<String, Integer> headerMap = new HashMap<>();
-
-    try (Scanner scanner = new Scanner(new File("Bank Users.csv"))) {
-      // Read the header row and create a map for column indices
-      if (scanner.hasNextLine()) {
-        String headerLine = scanner.nextLine();
-        String[] headers = splitLine(headerLine);
-        for (int i = 0; i < headers.length; i++) {
-          headerMap.put(headers[i].trim(), i);
-        }
-      }
-
-      // Retrieve column indices dynamically
-      int idIndex = headerMap.getOrDefault("Identification Number", -1);
-      int firstNameIndex = headerMap.getOrDefault("First Name", -1);
-      int lastNameIndex = headerMap.getOrDefault("Last Name", -1);
-      int dobIndex = headerMap.getOrDefault("Date of Birth", -1);
-      int addressIndex = headerMap.getOrDefault("Address", -1);
-      int phoneNumberIndex = headerMap.getOrDefault("Phone Number", -1);
-      int checkingAccountIndex = headerMap.getOrDefault("Checking Account Number", -1);
-      int checkingBalanceIndex = headerMap.getOrDefault("Checking Starting Balance", -1);
-      int savingsAccountIndex = headerMap.getOrDefault("Savings Account Number", -1);
-      int savingsBalanceIndex = headerMap.getOrDefault("Savings Starting Balance", -1);
-      int creditAccountIndex = headerMap.getOrDefault("Credit Account Number", -1);
-      int creditMaxIndex = headerMap.getOrDefault("Credit Max", -1);
-      int creditBalanceIndex = headerMap.getOrDefault("Credit Starting Balance", -1);
-
-      // Read each data row and parse it based on header indices
-      while (scanner.hasNextLine()) {
-        String line = scanner.nextLine();
-        String[] accountData = splitLine(line);
-
-        // Retrieve values dynamically using header map indices
-        String id = idIndex >= 0 ? accountData[idIndex] : "";
-        String firstName = firstNameIndex >= 0 ? accountData[firstNameIndex] : "";
-        String lastName = lastNameIndex >= 0 ? accountData[lastNameIndex] : "";
-        String dob = dobIndex >= 0 ? accountData[dobIndex] : "";
-        String address = addressIndex >= 0 ? accountData[addressIndex] : "";
-        String phoneNumber = phoneNumberIndex >= 0 ? accountData[phoneNumberIndex] : "";
-        String checkAcctNum = checkingAccountIndex >= 0 ? accountData[checkingAccountIndex] : "";
-        double checkStart = checkingBalanceIndex >= 0 ? Double.parseDouble(accountData[checkingBalanceIndex]) : 0.0;
-        String savAcctNum = savingsAccountIndex >= 0 ? accountData[savingsAccountIndex] : "";
-        double savStart = savingsBalanceIndex >= 0 ? Double.parseDouble(accountData[savingsBalanceIndex]) : 0.0;
-        String creditAcctNum = creditAccountIndex >= 0 ? accountData[creditAccountIndex] : "";
-        double creditLim = creditMaxIndex >= 0 ? Double.parseDouble(accountData[creditMaxIndex]) : 0.0;
-        double creditStart = creditBalanceIndex >= 0 ? Double.parseDouble(accountData[creditBalanceIndex]) : 0.0;
-
-        // Create Customer and Accounts
-        Customer customer = new Person(id, firstName, lastName, dob, address, phoneNumber);
-        customerList.add(customer);
-
-        Account checking = new Checking(checkAcctNum, checkStart);
-        Account savings = new Saving(savAcctNum, savStart);
-        Account credit = new Credit(creditAcctNum, creditLim, creditStart);
-
-        customer.addAccount(credit);
-        customer.addAccount(checking);
-        customer.addAccount(savings);
-      }
-
-    } catch (FileNotFoundException e) {
-      System.out.println("File not found: " + e.getMessage());
-    } catch (Exception e) {
-      System.out.println("Error: " + e.getMessage());
-    }
-
-    return customerList;
-  }
-
-  // Method to handle splitting lines with quoted fields
-  private static String[] splitLine(String line) {
-    List<String> result = new ArrayList<>();
-    StringBuilder currentField = new StringBuilder();
-    boolean inQuotes = false;
-
-    for (char c : line.toCharArray()) {
-      if (c == '"') {
-        inQuotes = !inQuotes; // Toggle quotes flag
-      } else if (c == ',' && !inQuotes) {
-        result.add(currentField.toString().trim());
-        currentField.setLength(0); // Clear the current field
-      } else {
-        currentField.append(c);
-      }
-    }
-    // Add the last field
-    result.add(currentField.toString().trim());
-
-    return result.toArray(new String[0]);
-  }
 
   /**
    * Create logging text file

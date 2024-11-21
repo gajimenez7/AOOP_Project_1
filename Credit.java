@@ -8,7 +8,6 @@ public class Credit extends Account {
   }
 
 
-
   public boolean withdraw(double amount) {
     if (this.getBalance() >= creditLimit) {
       return false;
@@ -25,4 +24,11 @@ public class Credit extends Account {
       return false;
     }
   }
+  public void setCreditLimit(double creditLimit){
+    this.creditLimit = creditLimit;
+  }
+  public double getCreditLimit(){
+    return creditLimit;
+  }
+
 }

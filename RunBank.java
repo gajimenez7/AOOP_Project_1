@@ -586,6 +586,7 @@ public class RunBank {
         System.out.println("Unknown transaction type: " + action);
         break;
     }
+    System.out.println();
   }
 
   private static void handlePay(String fromFirst, String fromLast, String fromWhere,

@@ -9,7 +9,6 @@ import java.util.Scanner;
 import java.io.File;
 import java.util.Random;
 
-
 /**
  * Runner class that uses all helper classes
  * 
@@ -27,9 +26,10 @@ public class RunBank {
    * @throws FileNotFoundException
    */
   public static void main(String[] args) throws FileNotFoundException {
-    List<Customer> customers = ParseFile();
+    List<Customer> customers = BankCSVHandler.parseFile();
     createFile();
-
+    
+    readTransactions("Transactions.csv", customers);
     boolean exitFlag = false;
     while (!exitFlag) {
       String userInput = Prompt();
@@ -54,7 +54,7 @@ public class RunBank {
           System.out.println("You Selected: Bank Manager\n");
           bankManager(customers);
           break;
-          
+
         case "6":
           System.out.println("Exiting...Goodbye!");
           exitFlag = true;
@@ -68,34 +68,36 @@ public class RunBank {
           break;
       }
     }
-    ParseFile();
+    BankCSVHandler.parseFile();
   }
-private static boolean hasNumber(String str){
-  for (char c : str.toCharArray()) {
-    if (Character.isDigit(c)) {
-       return true;
+
+  private static boolean hasNumber(String str) {
+    for (char c : str.toCharArray()) {
+      if (Character.isDigit(c)) {
+        return true;
+      }
     }
- }
- return false;
-}
-private static boolean hasLetter(String num){
-  boolean valid = false;
-  for (char c : num.toCharArray()) {
-    if (Character.isDigit(c)) {
-       valid = false;
+    return false;
+  }
+
+  private static boolean hasLetter(String num) {
+    boolean valid = false;
+    for (char c : num.toCharArray()) {
+      if (Character.isDigit(c)) {
+        valid = false;
+      } else {
+        return true;
+      }
     }
-    else{
-      return true;
-    }
- }
- return valid;
-}
-  private static void accountCreation(List<Customer> customers){
+    return valid;
+  }
+
+  private static void accountCreation(List<Customer> customers) {
     Scanner scnr = new Scanner(System.in);
-    //String [] newCustInfo = new String[13];
+    // String [] newCustInfo = new String[13];
 
     System.out.println("Enter your first name: \n");
-    String firstName= scnr.nextLine();
+    String firstName = scnr.nextLine();
     firstName = checkName(scnr, firstName);
 
     System.out.println("Enter your last name:\n");
@@ -117,129 +119,130 @@ private static boolean hasLetter(String num){
     String creditScore = scnr.nextLine();
     creditScore = checkCreditScore(scnr, creditScore);
     double creditLimit = assignCreditLimit(creditScore);
-    
 
     int _newID = Integer.parseInt(highestID(customers)) + 1;
     String newID = Integer.toString(_newID);
     System.out.println("Your ID has been assigned. It is " + newID + ".\n");
 
     String checkingAcctID = Integer.toString(highestCheckingAcctNum(customers));
-    System.out.println("Your Checking Account Number is " + checkingAcctID +".\n");
+    System.out.println("Your Checking Account Number is " + checkingAcctID + ".\n");
 
     String savingsAcctID = Integer.toString(highestSavingsAcctNum(customers));
     System.out.println(" Your Savings Account Number is " + savingsAcctID + ".\n");
-    
+
     String creditAcctID = Integer.toString(highestCreditAcctNum(customers));
     System.out.println(" Your Credit Account Number is " + creditAcctID + ".\n");
-    System.out.printf("Your credit limit is $$%.2f.\n" , creditLimit );
+    System.out.printf("Your credit limit is $%.2f.\n", creditLimit);
 
     Customer newCustomer = new Person(newID, firstName, lastName, dob, address, phoneNum);
     customers.add(newCustomer);
 
-        Account checking = new Checking(checkingAcctID, 0.00);
-        Account savings = new Saving(savingsAcctID, 0.00);
-        Account credit = new Credit(creditAcctID, creditLimit, 0.00);
+    Account checking = new Checking(checkingAcctID, 0.00);
+    Account savings = new Saving(savingsAcctID, 0.00);
+    Account credit = new Credit(creditAcctID, creditLimit, 0.00);
 
-        newCustomer.addAccount(credit);
-        newCustomer.addAccount(checking);
-        newCustomer.addAccount(savings);
-  
+    newCustomer.addAccount(credit);
+    newCustomer.addAccount(checking);
+    newCustomer.addAccount(savings);
+    BankCSVHandler.appendUserToCSV(newCustomer);
   }
-  private static int highestCreditAcctNum(List<Customer> customers){
+
+
+  private static int highestCreditAcctNum(List<Customer> customers) {
     Customer highestCustomer = customers.get(0);
     Account highestAccount = highestCustomer.accounts.get(0);
     for (Customer temp : customers) {
-      if(Integer.parseInt(highestAccount.getAccountNumber()) < Integer.parseInt(temp.accounts.get(0).getAccountNumber()) ){
+      if (Integer.parseInt(highestAccount.getAccountNumber()) < Integer
+          .parseInt(temp.accounts.get(0).getAccountNumber())) {
         highestAccount = temp.accounts.get(0);
       }
     }
     return Integer.parseInt(highestAccount.getAccountNumber()) + 1;
   }
-  private static int highestCheckingAcctNum(List<Customer> customers){
+
+  private static int highestCheckingAcctNum(List<Customer> customers) {
     Customer highestCustomer = customers.get(0);
     Account highestAccount = highestCustomer.accounts.get(1);
     for (Customer temp : customers) {
-      if(Integer.parseInt(highestAccount.getAccountNumber()) < Integer.parseInt(temp.accounts.get(1).getAccountNumber()) ){
+      if (Integer.parseInt(highestAccount.getAccountNumber()) < Integer
+          .parseInt(temp.accounts.get(1).getAccountNumber())) {
         highestAccount = temp.accounts.get(1);
       }
     }
     return Integer.parseInt(highestAccount.getAccountNumber()) + 1;
   }
-  private static int highestSavingsAcctNum(List<Customer> customers){
+
+  private static int highestSavingsAcctNum(List<Customer> customers) {
     Customer highestCustomer = customers.get(0);
     Account highestAccount = highestCustomer.accounts.get(2);
     for (Customer temp : customers) {
-      if(Integer.parseInt(highestAccount.getAccountNumber()) < Integer.parseInt(temp.accounts.get(2).getAccountNumber()) ){
+      if (Integer.parseInt(highestAccount.getAccountNumber()) < Integer
+          .parseInt(temp.accounts.get(2).getAccountNumber())) {
         highestAccount = temp.accounts.get(2);
       }
     }
     return Integer.parseInt(highestAccount.getAccountNumber()) + 1;
   }
-  private static String highestID(List<Customer> customers){
+
+  private static String highestID(List<Customer> customers) {
     Customer highestCustomer = customers.get(0);
     for (Customer temp : customers) {
-      if(Integer.parseInt(highestCustomer.getID()) < Integer.parseInt(temp.getID()) ){
+      if (Integer.parseInt(highestCustomer.getID()) < Integer.parseInt(temp.getID())) {
         highestCustomer = temp;
       }
     }
     return highestCustomer.getID();
   }
 
-  
-  private static String checkCreditScore(Scanner scnr, String _creditScore){
+  private static String checkCreditScore(Scanner scnr, String _creditScore) {
     int creditScore = Integer.parseInt(_creditScore);
-    while(creditScore < 0 || creditScore > 850 || hasLetter(_creditScore) == true){
+    while (creditScore < 0 || creditScore > 850 || hasLetter(_creditScore) == true) {
       System.out.println("Enter a valid credit score:\n");
       creditScore = Integer.parseInt(scnr.nextLine());
     }
     return Integer.toString(creditScore);
   }
 
-private static double assignCreditLimit(String _creditScore){
-  double creditScore = Double.parseDouble(_creditScore);
-  Random random = new Random();
+  private static double assignCreditLimit(String _creditScore) {
+    double creditScore = Double.parseDouble(_creditScore);
+    Random random = new Random();
 
-  if(creditScore <= 580){
-    return random.nextInt(699 - 100) + 100;
+    if (creditScore <= 580) {
+      return random.nextInt(699 - 100) + 100;
+    } else if (creditScore > 580 && creditScore < 670) {
+      return random.nextInt(4999 - 700) + 700;
+    } else if (creditScore >= 670 && creditScore < 740) {
+      return random.nextInt(7499 - 5000) + 5000;
+    } else if (creditScore >= 740 && creditScore < 800) {
+      return random.nextInt(15999 - 7500) + 7500;
+    } else if (creditScore >= 800 && creditScore <= 850) {
+      return random.nextInt(25000 - 16000) + 16000;
+    } else {
+      return -1;
+    }
   }
-  else if(creditScore > 580 && creditScore < 670){
-    return random.nextInt(4999 - 700) + 700;
-  }
-  else if(creditScore >= 670 && creditScore <740){
-    return random.nextInt(7499 - 5000) + 5000;
-  }
-  else if(creditScore >= 740 && creditScore <800){
-    return random.nextInt(15999 - 7500) + 7500;
-  }
-  else if(creditScore >= 800 && creditScore <= 850){
-    return random.nextInt(25000 - 16000) + 16000;
-  }
-  else{
-    return -1;
-  }
-}
 
-  private static boolean checkDayToMonth(String day, String month){
+  private static boolean checkDayToMonth(String day, String month) {
     int dayNum = Integer.parseInt(day);
     int monthNum = Integer.parseInt(month);
-    if(monthNum == 1 || monthNum == 3 || monthNum == 5 || monthNum == 7 || monthNum == 8 || monthNum == 10 || monthNum == 12){
-      if(dayNum > 31){
+    if (monthNum == 1 || monthNum == 3 || monthNum == 5 || monthNum == 7 || monthNum == 8 || monthNum == 10
+        || monthNum == 12) {
+      if (dayNum > 31) {
         return false;
       }
-    }
-    else if(monthNum == 4 || monthNum == 6 || monthNum == 9 || monthNum == 11 ){
-      if(dayNum > 30){
+    } else if (monthNum == 4 || monthNum == 6 || monthNum == 9 || monthNum == 11) {
+      if (dayNum > 30) {
         return false;
       }
-    }
-    else if(monthNum == 2){
-      if(dayNum > 29){
+    } else if (monthNum == 2) {
+      if (dayNum > 29) {
         return false;
       }
     }
     return true;
   }
-  private static String monthStr(String monthNum){
+
+  private static String monthStr(String monthNum) {
     switch (monthNum) {
       case "01":
         return "Jan";
@@ -273,13 +276,13 @@ private static double assignCreditLimit(String _creditScore){
 
       case "11":
         return "Nov";
-        
+
       case "12":
         return "Dec";
 
       default:
-      return null;
-      
+        return null;
+
     }
   }
 
@@ -288,50 +291,48 @@ private static double assignCreditLimit(String _creditScore){
       if (str.length() == 6 && !hasLetter(str)) {
         String day = str.substring(0, 2);
         String month = str.substring(2, 4);
-            
+
         if (isValidMonth(month)) {
           if (checkDayToMonth(day, month)) {
-            month = monthStr(month);  
+            month = monthStr(month);
             return String.format("%s-%s-%s", day, month, str.substring(4));
-        } 
-          else {
+          } else {
             System.out.println("The date you inputted is impossible for the given month, try again.\n");
+          }
+        } else {
+          System.out.println("Please enter a valid month (01–12).\n");
         }
-       } 
-          else {
-                System.out.println("Please enter a valid month (01–12).\n");
-            }
       } else {
-            System.out.println("Please enter a DOB in the correct format (DDMMYY) with a valid month (01–12).\n");
-        }
-        
-        str = scnr.nextLine();
-    }
-}
+        System.out.println("Please enter a DOB in the correct format (DDMMYY) with a valid month (01–12).\n");
+      }
 
-private static boolean isValidMonth(String month) {
+      str = scnr.nextLine();
+    }
+  }
+
+  private static boolean isValidMonth(String month) {
     try {
-        int monthInt = Integer.parseInt(month);
-        return monthInt >= 1 && monthInt <= 12;
+      int monthInt = Integer.parseInt(month);
+      return monthInt >= 1 && monthInt <= 12;
     } catch (NumberFormatException e) {
-        return false;
+      return false;
     }
-}
+  }
 
-
-  private static String checkNum(Scanner scnr, String str){
-    while(hasLetter(str) == true || str.length() != 10){
+  private static String checkNum(Scanner scnr, String str) {
+    while (hasLetter(str) == true || str.length() != 10) {
       System.out.println("Please enter a valid number:\n");
       str = scnr.nextLine();
     }
     str = str.trim();
-    return String.format("(%s) %s-%s", 
-      str.substring(0, 3), 
-      str.substring(3, 6), 
-      str.substring(6));
+    return String.format("(%s) %s-%s",
+        str.substring(0, 3),
+        str.substring(3, 6),
+        str.substring(6));
   }
-  private static String checkName(Scanner scnr, String str){
-    while(hasNumber(str) == true){
+
+  private static String checkName(Scanner scnr, String str) {
+    while (hasNumber(str) == true) {
       System.out.println("Please enter a valid name:\n");
       str = scnr.nextLine();
     }
@@ -339,6 +340,7 @@ private static boolean isValidMonth(String month) {
     Character.toUpperCase(str.charAt(0));
     return str;
   }
+
   /**
    * Get valid customer from list of customers and user input
    * 
@@ -450,31 +452,24 @@ private static boolean isValidMonth(String month) {
   private static void transfer(List<Customer> customers) {
     Scanner scnr = new Scanner(System.in);
 
-    Log logger = new Log();
+    Log logger;
 
-    UserTransaction ut1 = new UserTransaction();
-    UserTransaction ut2 = new UserTransaction();
-    
+    UserTransaction ut1, ut2;
+
     double amount = 0.00;
 
     Customer curr = getValidCustomer(scnr, customers);
     Account fromAcct = getValidAccount(scnr, curr);
 
-    ut1.setCustomer(curr);
-    ut1.setAccount(fromAcct);
-    if(ut1.getStartBalance() == 0.00) ut1.setStartBalance(fromAcct.getBalance());
-
-    
-
     System.out.println("How much will you be transferring?");
     amount = Double.parseDouble(scnr.nextLine());
-    
-    while(amount < 0){
+
+    while (amount < 0) {
       System.out.println("Invalid Input");
       System.out.println("How much will you be transferring?");
       amount = Double.parseDouble(scnr.next());
     }
-    
+
     if (fromAcct.getBalance() < amount) {
       System.out.println("You do not have sufficient funds.");
       return;
@@ -482,21 +477,31 @@ private static boolean isValidMonth(String month) {
 
     Account toAcct = getValidAccount(scnr, curr);
 
-    ut2.setCustomer(curr);
-    ut2.setAccount(toAcct);
-    if(ut2.getStartBalance() == 0.00) ut2.setStartBalance(toAcct.getBalance());
-
     fromAcct.setBalance(fromAcct.getBalance() - amount);
     toAcct.setBalance(toAcct.getBalance() + amount);
 
-    ut1.setEndBalance(fromAcct.getBalance());
-    ut2.setEndBalance(toAcct.getBalance());
+    ut1 = new Builder()
+        .customer(curr)
+        .account1(fromAcct)
+        .startBalance(fromAcct.getBalance())
+        .endBalance(fromAcct.getBalance())
+        .buildTransaction();
 
-    logger.setAccount1(fromAcct);
-    logger.setAccount2(toAcct);
-    logger.setPerson1(curr);
-    logger.setAmount(Double.toString(amount));
-    logger.setTransaction("transfer");
+    ut2 = new Builder()
+        .customer(curr)
+        .account1(toAcct)
+        .startBalance(toAcct.getBalance())
+        .endBalance(toAcct.getBalance())
+        .buildTransaction();
+
+    logger = new Builder()
+        .account1(fromAcct)
+        .account2(toAcct)
+        .person1(curr)
+        .amount(Double.toString(amount))
+        .transaction("transfer")
+        .buildLog();
+
     toFile(logger.parseTransaction());
 
     ut1.addTransaction(logger.parseTransaction());
@@ -509,99 +514,102 @@ private static boolean isValidMonth(String month) {
         " to account " + toAcct.getAccountNumber() + ".");
 
   }
+
   public static void readTransactions(String filePath, List<Customer> customers) {
     try (Scanner scanner = new Scanner(new File(filePath))) {
-        if (scanner.hasNextLine()) {
-            scanner.nextLine();
-        }
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            processTransaction(line, customers);
-        }
+      if (scanner.hasNextLine()) {
+        scanner.nextLine();
+      }
+      while (scanner.hasNextLine()) {
+        String line = scanner.nextLine();
+        processTransaction(line, customers);
+      }
     } catch (FileNotFoundException e) {
-        System.out.println("Transaction file not found: " + e.getMessage());
-    }
-}
-
-public static Customer isValidCustomer2(String firstName, String lastName, List<Customer> customers) {
-  for (Customer temp : customers) {
-    if (temp.getFirstName().equals(firstName) && temp.getLastName().equals(lastName)) {
-      return temp;
+      System.out.println("Transaction file not found: " + e.getMessage());
     }
   }
-  return null;
-}
-public static void processTransaction(String transaction, List<Customer> customers) {
+
+  public static Customer isValidCustomer2(String firstName, String lastName, List<Customer> customers) {
+    for (Customer temp : customers) {
+      if (temp.getFirstName().equals(firstName) && temp.getLastName().equals(lastName)) {
+        return temp;
+      }
+    }
+    return null;
+  }
+
+  public static void processTransaction(String transaction, List<Customer> customers) {
     String[] parts = transaction.split(",");
-    String fromFirstName = parts[0].trim() ;
+    String fromFirstName = parts[0].trim();
     String fromLastName = parts[1].trim();
-    
+
     Customer curr = isValidCustomer2(fromFirstName, fromLastName, customers);
-    
-    if(curr == null ){
+
+    if (curr == null) {
       return;
     }
     String fromWhere = parts[2].trim();
     String action = parts[3].trim().toLowerCase();
 
     switch (action) {
-        case "pays":
-            String toFirstName = parts[4].trim();
-            String toLastName = parts[5].trim();
-            Customer curr2 = isValidCustomer2(toFirstName, toLastName, customers);
-            if(curr2 == null){
-              return;
-            }
-            String toWhere = parts[6].trim();
-            double payAmount = Double.parseDouble(parts[7].trim());
-            handlePay(fromFirstName, fromLastName, fromWhere, toFirstName, toLastName, toWhere, payAmount);
-            break;
-        case "transfers":
-            String transferToWhere = parts[6].trim();
-            double transferAmount = Double.parseDouble(parts[7].trim());
-            handleTransfer(fromFirstName, fromLastName, fromWhere, transferToWhere, transferAmount);
-            break;
-        case "inquires":
-            handleInquire(fromFirstName, fromLastName, fromWhere);
-            break;
-        case "withdraws":
-            double withdrawAmount = Double.parseDouble(parts[7].trim());
-            handleWithdraw(fromFirstName, fromLastName, fromWhere, withdrawAmount);
-            break;
-        case "deposits":
-            String depositToFirstName = parts[4].trim();
-            String depositToLastName = parts[5].trim();
-            String depositToWhere = parts[6].trim();
-            double depositAmount = Double.parseDouble(parts[7].trim());
-            handleDeposit(depositToFirstName, depositToLastName, depositToWhere, depositAmount);
-            break;
-        default:
-            System.out.println("Unknown transaction type: " + action);
-            break;
+      case "pays":
+        String toFirstName = parts[4].trim();
+        String toLastName = parts[5].trim();
+        Customer curr2 = isValidCustomer2(toFirstName, toLastName, customers);
+        if (curr2 == null) {
+          return;
+        }
+        String toWhere = parts[6].trim();
+        double payAmount = Double.parseDouble(parts[7].trim());
+        handlePay(fromFirstName, fromLastName, fromWhere, toFirstName, toLastName, toWhere, payAmount);
+        break;
+      case "transfers":
+        String transferToWhere = parts[6].trim();
+        double transferAmount = Double.parseDouble(parts[7].trim());
+        handleTransfer(fromFirstName, fromLastName, fromWhere, transferToWhere, transferAmount);
+        break;
+      case "inquires":
+        handleInquire(fromFirstName, fromLastName, fromWhere);
+        break;
+      case "withdraws":
+        double withdrawAmount = Double.parseDouble(parts[7].trim());
+        handleWithdraw(fromFirstName, fromLastName, fromWhere, withdrawAmount);
+        break;
+      case "deposits":
+        String depositToFirstName = parts[4].trim();
+        String depositToLastName = parts[5].trim();
+        String depositToWhere = parts[6].trim();
+        double depositAmount = Double.parseDouble(parts[7].trim());
+        handleDeposit(depositToFirstName, depositToLastName, depositToWhere, depositAmount);
+        break;
+      default:
+        System.out.println("Unknown transaction type: " + action);
+        break;
     }
-}
+  }
 
-private static void handlePay(String fromFirst, String fromLast, String fromWhere,
-                              String toFirst, String toLast, String toWhere, double amount) {
+  private static void handlePay(String fromFirst, String fromLast, String fromWhere,
+      String toFirst, String toLast, String toWhere, double amount) {
     System.out.println(fromFirst + " " + fromLast + " pays " + amount + " to " + toFirst + " " + toLast);
-}
+  }
 
-private static void handleTransfer(String fromFirst, String fromLast, String fromWhere,
-                                   String toWhere, double amount) {
+  private static void handleTransfer(String fromFirst, String fromLast, String fromWhere,
+      String toWhere, double amount) {
     System.out.println(fromFirst + " " + fromLast + " transfers " + amount + " from " + fromWhere + " to " + toWhere);
-}
+  }
 
-private static void handleInquire(String fromFirst, String fromLast, String fromWhere) {
+  private static void handleInquire(String fromFirst, String fromLast, String fromWhere) {
     System.out.println(fromFirst + " " + fromLast + " inquires about " + fromWhere + " account.");
-}
+  }
 
-private static void handleWithdraw(String fromFirst, String fromLast, String fromWhere, double amount) {
+  private static void handleWithdraw(String fromFirst, String fromLast, String fromWhere, double amount) {
     System.out.println(fromFirst + " " + fromLast + " withdraws " + amount + " from " + fromWhere);
-}
+  }
 
-private static void handleDeposit(String toFirst, String toLast, String toWhere, double amount) {
+  private static void handleDeposit(String toFirst, String toLast, String toWhere, double amount) {
     System.out.println("Depositing " + amount + " to " + toFirst + " " + toLast + "'s " + toWhere + " account.");
-}
+  }
+
   /**
    * Transaction user interface
    * 
@@ -615,17 +623,14 @@ private static void handleDeposit(String toFirst, String toLast, String toWhere,
     Customer curr = getValidCustomer(scnr, customers);
     Account currAcc = getValidAccount(scnr, curr);
 
-    Log logger = new Log();
+    Log logger;
 
-    UserTransaction ut = new UserTransaction();
-    ut.setCustomer(curr);
-    ut.setAccount(currAcc);
-    if(ut.getStartBalance() == 0.00) ut.setStartBalance(currAcc.getBalance());
+    UserTransaction ut;
 
     System.out.println("How much would you like to deposit/withdraw?");
     amount = Double.parseDouble(scnr.nextLine());
 
-    while(amount < 0){
+    while (amount < 0) {
       System.out.println("Invalid Input");
       System.out.println("How much would you like to deposit/withdraw?");
       amount = Double.parseDouble(scnr.nextLine());
@@ -638,38 +643,69 @@ private static void handleDeposit(String toFirst, String toLast, String toWhere,
       case "1":
         currAcc.deposit(amount);
 
-        logger.setAccount1(currAcc);
-        logger.setPerson1(curr);
-        logger.setTransaction("deposit");
-        logger.setAmount(Double.toString(amount));
+        ut = new Builder()
+            .customer(curr)
+            .account1(currAcc)
+            .startBalance(currAcc.getBalance())
+            .endBalance(currAcc.getBalance())
+            .buildTransaction();
+
+        logger = new Builder()
+            .account1(currAcc)
+            .person1(curr)
+            .amount(Double.toString(amount))
+            .transaction("deposit")
+            .buildLog();
+
         toFile(logger.parseTransaction());
 
-        ut.setEndBalance(currAcc.getBalance());
-
         ut.addTransaction(logger.parseTransaction());
+        ut.generateTransactionFile();
 
         System.out.println("Your balance is now $" + currAcc.getBalance() + "\n");
         break;
       case "2":
         if (currAcc.withdraw(amount)) {
-          ut.setEndBalance(currAcc.getBalance());
+
+          ut = new Builder()
+              .customer(curr)
+              .account1(currAcc)
+              .startBalance(currAcc.getBalance())
+              .endBalance(currAcc.getBalance())
+              .buildTransaction();
 
           System.out.println("Your balance is now $" + currAcc.getBalance() + "\n");
 
-          logger.setAccount1(currAcc);
-          logger.setPerson1(curr);
-          logger.setTransaction("withdraw");
-          logger.setAmount(Double.toString(amount));
-          toFile(logger.parseTransaction());
-          
-          ut.addTransaction(logger.parseTransaction());
-        } else {
-          logger.setAccount1(currAcc);
-          logger.setPerson1(curr);
-          logger.setTransaction("invalid");
+          logger = new Builder()
+              .account1(currAcc)
+              .person1(curr)
+              .amount(Double.toString(amount))
+              .transaction("withdraw")
+              .buildLog();
+
           toFile(logger.parseTransaction());
 
           ut.addTransaction(logger.parseTransaction());
+          ut.generateTransactionFile();
+        } else {
+
+          ut = new Builder()
+              .customer(curr)
+              .account1(currAcc)
+              .startBalance(currAcc.getBalance())
+              .endBalance(currAcc.getBalance())
+              .buildTransaction();
+
+          logger = new Builder()
+              .account1(currAcc)
+              .person1(curr)
+              .transaction("invalid")
+              .buildLog();
+
+          toFile(logger.parseTransaction());
+
+          ut.addTransaction(logger.parseTransaction());
+          ut.generateTransactionFile();
 
           System.out.println("You do not have sufficient funds.\n");
         }
@@ -677,7 +713,7 @@ private static void handleDeposit(String toFirst, String toLast, String toWhere,
       default:
         System.out.println("Invalid option. Transaction cancelled.");
     }
-    ut.generateTransactionFile();
+    
   }
 
   /**
@@ -686,22 +722,18 @@ private static void handleDeposit(String toFirst, String toLast, String toWhere,
    * @param customers
    */
   private static void pay(List<Customer> customers) {
-    Log logger = new Log();
+    Log logger;
 
-    UserTransaction ut1 = new UserTransaction();
-    UserTransaction ut2 = new UserTransaction();
-    
+    UserTransaction ut1, ut2;
+
     double amount = 0.00;
 
     Scanner scnr = new Scanner(System.in);
     Customer curr = getValidCustomer(scnr, customers);
     Account fromAcct = getValidAccount(scnr, curr);
 
-    ut1.setCustomer(curr);
-    ut1.setAccount(fromAcct);
-    if(ut1.getStartBalance() == 0.00) ut1.setStartBalance(fromAcct.getBalance());
 
-    while(amount < 0){
+    while (amount < 0) {
       System.out.println("Invalid Input");
       System.out.println("How much will you be paying?");
       amount = Double.parseDouble(scnr.nextLine());
@@ -715,22 +747,32 @@ private static void handleDeposit(String toFirst, String toLast, String toWhere,
     Customer paid = getValidCustomer(scnr, customers);
     Account payAcct = getValidAccount(scnr, paid);
 
-    ut2.setCustomer(paid);
-    ut2.setAccount(payAcct);
-    if(ut2.getStartBalance() == 0.00) ut2.setStartBalance(payAcct.getBalance());
 
     fromAcct.setBalance(fromAcct.balance - amount);
     payAcct.setBalance(payAcct.balance + amount);
+    ut1 = new Builder()
+        .customer(curr)
+        .account1(fromAcct)
+        .startBalance(fromAcct.getBalance())
+        .endBalance(fromAcct.getBalance())
+        .buildTransaction();
 
-    ut1.setEndBalance(fromAcct.getBalance());
-    ut2.setEndBalance(payAcct.getBalance());
+    ut2 = new Builder()
+        .customer(curr)
+        .account1(payAcct)
+        .startBalance(payAcct.getBalance())
+        .endBalance(payAcct.getBalance())
+        .buildTransaction();
 
-    logger.setAccount1(fromAcct);
-    logger.setAccount2(payAcct);
-    logger.setPerson1(curr);
-    logger.setPerson2(paid);
-    logger.setAmount(Double.toString(amount));
-    logger.setTransaction("payment");
+    logger = new Builder()
+        .account1(fromAcct)
+        .account2(payAcct)
+        .person1(curr)
+        .person2(paid)
+        .transaction("payment")
+        .amount(Double.toString(amount))
+        .buildLog();
+
     toFile(logger.parseTransaction());
 
     ut1.addTransaction(logger.parseTransaction());
@@ -772,146 +814,47 @@ private static void handleDeposit(String toFirst, String toLast, String toWhere,
    */
 
   public static Customer isValidCustomer(String name, List<Customer> customers) {
-    String[] fullName = name.split(" ");
-    for (Customer temp : customers) {
-      if (temp.getFirstName().equals(fullName[0]) && temp.getLastName().equals(fullName[1])) {
-        return temp;
+    
+    if(name.contains(" ") ){
+      String[] fullName = name.split(" ");
+      for (Customer temp : customers) {
+        if (temp.getFirstName().equals(fullName[0]) && temp.getLastName().equals(fullName[1])) {
+          return temp;
+        }
+      
       }
     }
+    
     return null;
   }
 
+
   /**
-   * Parse csv file
-   * 
-   * @return
-   * @throws FileNotFoundException
+   * Create logging text file
    */
+  public static void createFile() {
+    try {
+      File f = new File("log.txt");
+      f.createNewFile();
+    } catch (IOException e) {
+      System.out.println("An error occurred");
+      e.printStackTrace();
+    }
+  }
 
-   /**
-   * Parse csv file
+  /**
+   * Write transactions to logging text file
    * 
-   * @return
-   * @throws FileNotFoundException
+   * @param transaction
    */
-
-   public static List<Customer> ParseFile() throws FileNotFoundException {
-    List<Customer> customerList = new ArrayList<>();
-    Map<String, Integer> headerMap = new HashMap<>();
-
-    try (Scanner scanner = new Scanner(new File("Bank Users.csv"))) {
-        // Read the header row and create a map for column indices
-        if (scanner.hasNextLine()) {
-            String headerLine = scanner.nextLine();
-            String[] headers = splitLine(headerLine);
-            for (int i = 0; i < headers.length; i++) {
-                headerMap.put(headers[i].trim(), i);
-            }
-        }
-
-        // Retrieve column indices dynamically
-        int idIndex = headerMap.getOrDefault("Identification Number", -1);
-        int firstNameIndex = headerMap.getOrDefault("First Name", -1);
-        int lastNameIndex = headerMap.getOrDefault("Last Name", -1);
-        int dobIndex = headerMap.getOrDefault("Date of Birth", -1);
-        int addressIndex = headerMap.getOrDefault("Address", -1);
-        int phoneNumberIndex = headerMap.getOrDefault("Phone Number", -1);
-        int checkingAccountIndex = headerMap.getOrDefault("Checking Account Number", -1);
-        int checkingBalanceIndex = headerMap.getOrDefault("Checking Starting Balance", -1);
-        int savingsAccountIndex = headerMap.getOrDefault("Savings Account Number", -1);
-        int savingsBalanceIndex = headerMap.getOrDefault("Savings Starting Balance", -1);
-        int creditAccountIndex = headerMap.getOrDefault("Credit Account Number", -1);
-        int creditMaxIndex = headerMap.getOrDefault("Credit Max", -1);
-        int creditBalanceIndex = headerMap.getOrDefault("Credit Starting Balance", -1);
-
-        // Read each data row and parse it based on header indices
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            String[] accountData = splitLine(line);
-
-            // Retrieve values dynamically using header map indices
-            String id = idIndex >= 0 ? accountData[idIndex] : "";
-            String firstName = firstNameIndex >= 0 ? accountData[firstNameIndex] : "";
-            String lastName = lastNameIndex >= 0 ? accountData[lastNameIndex] : "";
-            String dob = dobIndex >= 0 ? accountData[dobIndex] : "";
-            String address = addressIndex >= 0 ? accountData[addressIndex] : "";
-            String phoneNumber = phoneNumberIndex >= 0 ? accountData[phoneNumberIndex] : "";
-            String checkAcctNum = checkingAccountIndex >= 0 ? accountData[checkingAccountIndex] : "";
-            double checkStart = checkingBalanceIndex >= 0 ? Double.parseDouble(accountData[checkingBalanceIndex]) : 0.0;
-            String savAcctNum = savingsAccountIndex >= 0 ? accountData[savingsAccountIndex] : "";
-            double savStart = savingsBalanceIndex >= 0 ? Double.parseDouble(accountData[savingsBalanceIndex]) : 0.0;
-            String creditAcctNum = creditAccountIndex >= 0 ? accountData[creditAccountIndex] : "";
-            double creditLim = creditMaxIndex >= 0 ? Double.parseDouble(accountData[creditMaxIndex]) : 0.0;
-            double creditStart = creditBalanceIndex >= 0 ? Double.parseDouble(accountData[creditBalanceIndex]) : 0.0;
-
-            // Create Customer and Accounts
-            Customer customer = new Person(id, firstName, lastName, dob, address, phoneNumber);
-            customerList.add(customer);
-
-            Account checking = new Checking(checkAcctNum, checkStart);
-            Account savings = new Saving(savAcctNum, savStart);
-            Account credit = new Credit(creditAcctNum, creditLim, creditStart);
-
-            customer.addAccount(credit);
-            customer.addAccount(checking);
-            customer.addAccount(savings);
-        }
-
-    } catch (FileNotFoundException e) {
-        System.out.println("File not found: " + e.getMessage());
-    } catch (Exception e) {
-        System.out.println("Error: " + e.getMessage());
+  public static void toFile(String transaction) {
+    try {
+      FileWriter fw = new FileWriter("log.txt", true);
+      fw.write(transaction);
+      fw.close();
+    } catch (IOException e) {
+      System.out.println("An error occurred");
+      e.printStackTrace();
     }
-
-    return customerList;
-}
-
-// Method to handle splitting lines with quoted fields
-private static String[] splitLine(String line) {
-    List<String> result = new ArrayList<>();
-    StringBuilder currentField = new StringBuilder();
-    boolean inQuotes = false;
-
-    for (char c : line.toCharArray()) {
-        if (c == '"') {
-            inQuotes = !inQuotes; // Toggle quotes flag
-        } else if (c == ',' && !inQuotes) {
-            result.add(currentField.toString().trim());
-            currentField.setLength(0); // Clear the current field
-        } else {
-            currentField.append(c);
-        }
-    }
-    // Add the last field
-    result.add(currentField.toString().trim());
-
-    return result.toArray(new String[0]);
-}
-/**
-* Create logging text file
-*/
-public static void createFile() {
-try {
-  File f = new File("log.txt");
-  f.createNewFile();
-} catch (IOException e) {
-  System.out.println("An error occurred");
-  e.printStackTrace();
-}
-}
-/**
-* Write transactions to logging text file
-* 
-* @param transaction
-*/
-public static void toFile(String transaction) {
-try {
-  FileWriter fw = new FileWriter("log.txt", true);
-  fw.write(transaction);
-  fw.close();
-} catch (IOException e) {
-  System.out.println("An error occurred");
-  e.printStackTrace();
-}
-}
+  }
 }

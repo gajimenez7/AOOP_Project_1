@@ -16,25 +16,16 @@ public class UserTransaction {
   private ArrayList<String> transactions;
   private LocalDate date;
 
-  public UserTransaction() {
-    this.startBalance = 0.00;
-    this.date = LocalDate.now();
-    this.transactions = new ArrayList<>();
-  }
-
   /**
-   * @param customer
-   * @param account
-   * @param startBalance
-   * @param endBalance
-   * @param transactions
-   * @param date
+   * set parameters for builder
+   * @param builder
    */
-  public UserTransaction(Customer customer, Account account, Double startBalance, Double endBalance) {
-    this.customer = customer;
-    this.account = account;
-    this.startBalance = startBalance;
-    this.endBalance = endBalance;
+  UserTransaction(Builder builder) {
+    this.customer = builder.customer;
+    this.account = builder.account1;
+    this.startBalance = builder.startBalance;
+    this.endBalance = builder.endBalance;
+    this.startBalance = 0.00;
     this.date = LocalDate.now();
     this.transactions = new ArrayList<>();
   }
@@ -46,38 +37,10 @@ public class UserTransaction {
     return this.startBalance;
   }
 
-  /**
-   * Set account information
-   * @param customer
-   */
-  public void setCustomer(Customer customer) {
-    this.customer = customer;
-  }
 
-  /**
-   * Set account information
-   * @param account
-   */
-  public void setAccount(Account account) {
-    this.account = account;
-  }
+  
 
-  /**
-   * Set Starting Balance
-   * @param startBalance
-   */
-  public void setStartBalance(Double startBalance) {
-    //
-    this.startBalance = startBalance;
-  }
-
-  /**
-   * Set Ending Balance at time of file generation
-   * @param endBalance
-   */
-  public void setEndBalance(Double endBalance) {
-    this.endBalance = endBalance;
-  }
+  
 
   /**
    * Set all transactions of requested customer

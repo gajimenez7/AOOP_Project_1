@@ -28,7 +28,7 @@ public class Log {
   //   this.transaction = transaction;
   //   this.amount = amount;
   // }
-  Log(LogBuilder builder){
+  Log(Builder builder){
     this.account1 = builder.account1;
     this.account2 = builder.account2;
     this.customer1 = builder.customer1;

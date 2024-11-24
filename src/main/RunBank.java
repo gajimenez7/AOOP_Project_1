@@ -1,3 +1,4 @@
+package src.main;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -6,6 +7,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+
+import src.resources.Account;
+import src.resources.BankCSVHandler;
+import src.resources.Builder;
+import src.resources.Checking;
+import src.resources.Credit;
+import src.resources.Customer;
+import src.resources.Log;
+import src.resources.Person;
+import src.resources.Saving;
+import src.resources.UserTransaction;
+
 import java.io.File;
 import java.util.Random;
 
@@ -740,7 +753,7 @@ public class RunBank {
       amount = Double.parseDouble(scnr.nextLine());
     }
 
-    while (amount > fromAcct.balance) {
+    while (amount > fromAcct.getBalance()) {
       System.out.println("Not enough funds.");
       amount = Double.parseDouble(scnr.nextLine());
     }
@@ -749,8 +762,8 @@ public class RunBank {
     Account payAcct = getValidAccount(scnr, paid);
 
 
-    fromAcct.setBalance(fromAcct.balance - amount);
-    payAcct.setBalance(payAcct.balance + amount);
+    fromAcct.setBalance(fromAcct.getBalance() - amount);
+    payAcct.setBalance(payAcct.getBalance() + amount);
     ut1 = new Builder()
         .customer(curr)
         .account1(fromAcct)

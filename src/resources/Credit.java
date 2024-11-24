@@ -1,3 +1,4 @@
+package src.resources;
 public class Credit extends Account {
   private double creditLimit;
 

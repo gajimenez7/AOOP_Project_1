@@ -1,3 +1,4 @@
+package src.resources;
 
 /**
  * Log class that handles logging transactions using a Log Builder

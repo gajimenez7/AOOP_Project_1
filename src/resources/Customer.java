@@ -1,8 +1,10 @@
+package src.resources;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Customer {
-  protected List<Account> accounts;
+  //changed accounts from protected to public, should change to use getter
+  public List<Account> accounts;
   private String id;
   private String firstName;
   private String lastName;

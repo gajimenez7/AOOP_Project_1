@@ -1,3 +1,4 @@
+package src.resources;
 
 /**creates a person class that has info of customers
  * @author Stephanie Reyes

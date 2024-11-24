@@ -1,3 +1,4 @@
+package src.resources;
 public class Checking extends Account {
 
     public Checking(String accountNumber, double initialBalance) {

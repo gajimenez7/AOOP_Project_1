@@ -4,10 +4,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-interface History {
-    public static void createFile(String fileName) {
+public interface History {
+    public static void createFile(String pathToFile) {
         try {
-            File f = new File(fileName);
+            File f = new File(pathToFile);
             f.createNewFile();
         } catch (IOException e) {
             System.out.println("An error occurred");
@@ -15,9 +15,9 @@ interface History {
         }
     }
 
-    public static void writeToFile(String transaction) {
+    public static void writeToFile(String transaction, String fileName) {
         try {
-            FileWriter fw = new FileWriter("log.txt", true);
+            FileWriter fw = new FileWriter(fileName, true);
             fw.write(transaction);
             fw.close();
         } catch (IOException e) {

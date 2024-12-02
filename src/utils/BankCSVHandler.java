@@ -4,8 +4,8 @@ import java.io.*;
 import java.util.*;
 
 public class BankCSVHandler {
-
-    private static final String fileName = "Bank Users.csv";
+    
+    private static final String fileName = "resources/Bank Users.csv";
     private static Map<String, Integer> headerMap;
 
     static {

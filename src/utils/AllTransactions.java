@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class AllTransactions {
+
+  final static String logDir = "../output/log/log.txt";
+  final static String utDir = "../output/UserTransactionFiles";
+
   /**
    * Transfer user interface
    * 
@@ -42,7 +46,6 @@ public class AllTransactions {
   }
 
   public static void transfer(Account toAcct, Account fromAcct, Customer curr, double amount) {
-
     Log logger;
 
     UserTransaction ut1, ut2;
@@ -71,13 +74,15 @@ public class AllTransactions {
         .transaction("transfer")
         .buildLog();
 
-    History.createFile(logger.parseTransaction());
+    // log write to file
+    History.writeToFile(logger.parseTransaction(), logDir);
 
     ut1.addTransaction(logger.parseTransaction());
     ut2.addTransaction(logger.parseTransaction());
 
-    ut1.generateTransactionFile();
-    ut2.generateTransactionFile();
+    // User Transactions write to file
+    History.writeToFile(ut1.transactions1(utDir, ut1.fileName()), utDir + ut1.fileName());
+    History.writeToFile(ut2.transactions1(utDir, ut2.fileName()), utDir + ut2.fileName());
 
   }
 
@@ -136,10 +141,12 @@ public class AllTransactions {
               .transaction("invalid")
               .buildLog();
 
-          Log.toFile(logger.parseTransaction());
+          // Log write to file
+          History.writeToFile(logger.parseTransaction(), logDir);
 
+          // User Transaction to file
           ut.addTransaction(logger.parseTransaction());
-          ut.generateTransactionFile();
+          History.writeToFile(ut.transactions1(utDir, ut.fileName()), utDir + ut.fileName());
 
           System.out.println("You do not have sufficient funds.\n");
         }
@@ -185,10 +192,12 @@ public class AllTransactions {
 
     }
 
-    Log.toFile(logger.parseTransaction());
+    // log write to file
+    History.writeToFile(logger.parseTransaction(), logDir);
 
+    // user transaction write to file
     ut.addTransaction(logger.parseTransaction());
-    ut.generateTransactionFile();
+    History.writeToFile(ut.transactions1(utDir, ut.fileName()), utDir + ut.fileName());
   }
 
   /**
@@ -254,13 +263,14 @@ public class AllTransactions {
         .amount(Double.toString(amount))
         .buildLog();
 
-    Log.toFile(logger.parseTransaction());
+    History.writeToFile(logger.parseTransaction(), logDir);
 
     ut1.addTransaction(logger.parseTransaction());
     ut2.addTransaction(logger.parseTransaction());
 
-    ut1.generateTransactionFile();
-    ut2.generateTransactionFile();
+    // User Transactions write to file
+    History.writeToFile(ut1.transactions1(utDir, ut1.fileName()), utDir + ut1.fileName());
+    History.writeToFile(ut2.transactions1(utDir, ut2.fileName()), utDir + ut2.fileName());
   }
 
   // for transaction csv

@@ -61,41 +61,10 @@ public class UserTransaction {
   /**
    * Generate transaction file for specified user
    */
-  public void generateTransactionFile() {
-    String dir = "UserTransactionFiles";
+  public String fileName() {
     String fileExtension = ".txt";
     String fileName = customer.getLastName() + "_" + customer.getFirstName() + fileExtension;
-    makeFile(dir, fileName);
-  }
-
-  /**
-   * Create transaction file
-   * 
-   * @param dir
-   * @param fileName
-   */
-  private void makeFile(String dir, String fileName) {
-
-    try {
-      // make directory
-      File fd = new File(dir);
-      if (fd.mkdir())
-        ;
-      else
-        System.out.println("Error making directory");
-
-      // make file
-      File f = new File(dir + "\\" + fileName);
-      if (f.createNewFile()) {
-        writeToFile1(dir, fileName);
-      } else {
-        writeToFile2(dir, fileName);
-      }
-
-    } catch (IOException e) {
-      System.out.println("An error occurred");
-      e.printStackTrace();
-    }
+    return fileName;
   }
 
   /**
@@ -110,34 +79,27 @@ public class UserTransaction {
    * @param dir
    * @param fileName
    */
-  private void writeToFile1(String dir, String fileName) {
+  String transactions1(String dir, String fileName) {
     String title = customer.getFirstName() + " " + customer.getLastName() + " Transaction File: \n";
+    String output = "";
+    // title with customer name
+    output += title + "\n";
+    // account number
+    output += account.getAccountNumber() + "\n";
+    // starting balance
+    output += String.valueOf(startBalance) + "\n";
+    // end (current) balance
+    output += String.valueOf(endBalance) + "\n";
 
-    try {
-      FileWriter fw = new FileWriter(dir + "\\" + fileName, true);
-      // title with customer name
-      fw.write(title + "\n");
-      // account number
-      fw.write(account.getAccountNumber() + "\n");
-      // starting balance
-      fw.write(String.valueOf(startBalance) + "\n");
-      // end (current) balance
-      fw.write(String.valueOf(endBalance) + "\n");
-
-      // transactions
-      if (!transactions.isEmpty()) {
-        for (String transaction : transactions) {
-          fw.write(transaction + "\n");
-        }
+    // transactions
+    if (!transactions.isEmpty()) {
+      for (String transaction : transactions) {
+        output += transaction + "\n";
       }
-      // date of generation
-      fw.write(date.toString() + "\n\n");
-      // close writer
-      fw.close();
-    } catch (IOException e) {
-      System.out.println("An error occurred");
-      e.printStackTrace();
     }
+    // date of generation
+    output += date.toString() + "\n\n";
+    return output;
   }
 
   /**
@@ -152,29 +114,23 @@ public class UserTransaction {
    * @param dir
    * @param fileName
    */
-  private void writeToFile2(String dir, String fileName) {
-    try {
-      FileWriter fw = new FileWriter(dir + "\\" + fileName, true);
-      // account number
-      fw.write(account.getAccountNumber() + "\n");
-      // starting balance
-      fw.write(String.valueOf(startBalance) + "\n");
-      // end (current) balance
-      fw.write(String.valueOf(endBalance) + "\n");
+  private String transactions2(String dir, String fileName) {
+    String output = "";
+    // account number
+    output += account.getAccountNumber() + "\n";
+    // starting balance
+    output += String.valueOf(startBalance) + "\n";
+    // end (current) balance
+    output += String.valueOf(endBalance) + "\n";
 
-      // transactions
-      if (!transactions.isEmpty()) {
-        for (String transaction : transactions) {
-          fw.write(transaction + "\n");
-        }
+    // transactions
+    if (!transactions.isEmpty()) {
+      for (String transaction : transactions) {
+        output += transaction + "\n";
       }
-      // date of generation
-      fw.write(date.toString() + "\n\n");
-      // close writer
-      fw.close();
-    } catch (IOException e) {
-      System.out.println("An error occurred");
-      e.printStackTrace();
     }
+    // date of generation
+    output += date.toString() + "\n\n";
+    return output;
   }
 }

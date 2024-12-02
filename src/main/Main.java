@@ -2,22 +2,20 @@ import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
 
-import src.utils.AllTransactions;
-import src.utils.BankCSVHandler;
-import src.utils.BankManager;
-import src.utils.CreateAcct;
-import src.utils.Customer;
-import src.utils.Log;
+import src.utils.*;
 
-
-public class Main { 
+public class Main {
 
     public static void main(String[] args) throws FileNotFoundException {
+        final String logDir = "../output/log/log.txt";
+        
         List<Customer> customers = BankCSVHandler.parseFile();
 
-        AllTransactions.readTransactions("Transactions.csv", customers);
-        Log.createFile();
-        
+        AllTransactions.readTransactions("resources/Transactions.csv", customers);
+
+        //create log file
+        History.createFile(logDir);
+
         boolean exitFlag = false;
         while (!exitFlag) {
             String userInput = Prompt();
@@ -65,7 +63,7 @@ public class Main {
      */
     private static String Prompt() {
         String input = "";
-        Scanner scnr = new Scanner(System.in);  
+        Scanner scnr = new Scanner(System.in);
         System.out.println("WELCOME TO MINERS BANK!\n");
         System.out.println("Please make a selection: ");
         System.out.println("[1] Make individual transaction");
@@ -75,7 +73,7 @@ public class Main {
         System.out.println("[5] User Info");
         System.out.println("[6] Exit");
 
-        input = scnr.nextLine();  
+        input = scnr.nextLine();
         return input;
     }
 }

@@ -1,4 +1,5 @@
-package src.resources;
+package src.utils;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -96,7 +97,7 @@ public class Builder {
      * @param startBalance
      */
     public Builder startBalance(Double startBalance) {
-        if(this.startBalance == 0.00)
+        if (this.startBalance == 0.00)
             this.startBalance = startBalance;
         return this;
     }

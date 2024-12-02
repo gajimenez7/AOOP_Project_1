@@ -1,5 +1,11 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import src.utils.Checking;
+import src.utils.Credit;
+import src.utils.Customer;
+import src.utils.Saving;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BankTests {

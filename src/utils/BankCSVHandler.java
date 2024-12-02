@@ -1,4 +1,5 @@
-package src.resources;
+package src.utils;
+
 import java.io.*;
 import java.util.*;
 
@@ -14,19 +15,17 @@ public class BankCSVHandler {
         }
     }
 
-
     public static List<Customer> parseFile() throws FileNotFoundException {
         List<Customer> customerList = new ArrayList<>();
 
         try (Scanner scanner = new Scanner(new File(fileName))) {
 
-            if (scanner.hasNextLine()) scanner.nextLine();
-
+            if (scanner.hasNextLine())
+                scanner.nextLine();
 
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] accountData = splitLine(line);
-
 
                 String id = getValue(accountData, "Identification Number");
                 String firstName = getValue(accountData, "First Name");
@@ -39,16 +38,19 @@ public class BankCSVHandler {
 
                 String checkAcctNum = getValue(accountData, "Checking Account Number");
                 double checkStart = parseDouble(getValue(accountData, "Checking Starting Balance"), 0.0);
-                if (!checkAcctNum.isEmpty()) customer.addAccount(new Checking(checkAcctNum, checkStart));
+                if (!checkAcctNum.isEmpty())
+                    customer.addAccount(new Checking(checkAcctNum, checkStart, "checking"));
 
                 String savAcctNum = getValue(accountData, "Savings Account Number");
                 double savStart = parseDouble(getValue(accountData, "Savings Starting Balance"), 0.0);
-                if (!savAcctNum.isEmpty()) customer.addAccount(new Saving(savAcctNum, savStart));
+                if (!savAcctNum.isEmpty())
+                    customer.addAccount(new Saving(savAcctNum, savStart, "savings"));
 
                 String creditAcctNum = getValue(accountData, "Credit Account Number");
                 double creditLimit = parseDouble(getValue(accountData, "Credit Max"), 0.0);
                 double creditStart = parseDouble(getValue(accountData, "Credit Starting Balance"), 0.0);
-                if (!creditAcctNum.isEmpty()) customer.addAccount(new Credit(creditAcctNum, creditLimit, creditStart));
+                if (!creditAcctNum.isEmpty())
+                    customer.addAccount(new Credit(creditAcctNum, creditLimit, creditStart, "credit"));
 
                 customerList.add(customer);
             }
@@ -56,31 +58,31 @@ public class BankCSVHandler {
 
         return customerList;
     }
+
     private static String[] splitLine(String line) {
         List<String> result = new ArrayList<>();
         StringBuilder currentField = new StringBuilder();
         boolean inQuotes = false;
-    
+
         for (char c : line.toCharArray()) {
-          if (c == '"') {
-            inQuotes = !inQuotes; 
-          } else if (c == ',' && !inQuotes) {
-            result.add(currentField.toString().trim());
-            currentField.setLength(0); 
-          } else {
-            currentField.append(c);
-          }
+            if (c == '"') {
+                inQuotes = !inQuotes;
+            } else if (c == ',' && !inQuotes) {
+                result.add(currentField.toString().trim());
+                currentField.setLength(0);
+            } else {
+                currentField.append(c);
+            }
         }
 
         result.add(currentField.toString().trim());
-    
+
         return result.toArray(new String[0]);
-      }
+    }
 
     public static void appendUserToCSV(Customer customer) {
         String[] row = new String[headerMap.size()];
-        Arrays.fill(row, ""); 
-
+        Arrays.fill(row, "");
 
         row[headerMap.get("Identification Number")] = customer.getID();
         row[headerMap.get("First Name")] = customer.getFirstName();
@@ -95,7 +97,6 @@ public class BankCSVHandler {
         row[headerMap.get("Credit Account Number")] = customer.accounts.get(0).getAccountNumber();
         row[headerMap.get("Credit Max")] = String.valueOf(((Credit) customer.accounts.get(0)).getCreditLimit());
         row[headerMap.get("Credit Starting Balance")] = String.valueOf(customer.accounts.get(0).getBalance());
-        
 
         // Write the row to the file
         try (FileWriter writer = new FileWriter(fileName, true)) {
@@ -112,6 +113,7 @@ public class BankCSVHandler {
         }
         return line;
     }
+
     // Helper method to create a header map
     private static Map<String, Integer> getHeaderMap(String fileName) {
         Map<String, Integer> headerMap = new LinkedHashMap<>();
@@ -129,15 +131,13 @@ public class BankCSVHandler {
         return headerMap;
     }
 
-
     private static String getValue(String[] accountData, String key) {
         int index = headerMap.getOrDefault(key, -1);
         return (index >= 0 && index < accountData.length) ? accountData[index] : "";
     }
 
     private static double parseDouble(String value, double defaultValue) {
-         return Double.parseDouble(value);
+        return Double.parseDouble(value);
     }
 
-  
 }

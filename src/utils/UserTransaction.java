@@ -1,4 +1,5 @@
-package src.resources;
+package src.utils;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.io.File;
@@ -19,6 +20,7 @@ public class UserTransaction {
 
   /**
    * set parameters for builder
+   * 
    * @param builder
    */
   UserTransaction(Builder builder) {
@@ -34,17 +36,13 @@ public class UserTransaction {
   /**
    * get start balance
    */
-  public double getStartBalance(){
+  public double getStartBalance() {
     return this.startBalance;
   }
 
-
-  
-
-  
-
   /**
    * Set all transactions of requested customer
+   * 
    * @param transaction
    */
   public void addTransaction(String transaction) {
@@ -53,6 +51,7 @@ public class UserTransaction {
 
   /**
    * Set the date which file was generated
+   * 
    * @param date
    */
   public void setDate(LocalDate date) {
@@ -71,23 +70,25 @@ public class UserTransaction {
 
   /**
    * Create transaction file
+   * 
    * @param dir
    * @param fileName
    */
   private void makeFile(String dir, String fileName) {
-    
+
     try {
       // make directory
       File fd = new File(dir);
-      if(fd.mkdir());
+      if (fd.mkdir())
+        ;
       else
         System.out.println("Error making directory");
-      
+
       // make file
-      File f = new File(dir + "\\" +  fileName);
-      if(f.createNewFile()){
+      File f = new File(dir + "\\" + fileName);
+      if (f.createNewFile()) {
         writeToFile1(dir, fileName);
-      } else{
+      } else {
         writeToFile2(dir, fileName);
       }
 
@@ -105,6 +106,7 @@ public class UserTransaction {
    * - Start and End Balance
    * - List of transactions
    * - Date generated
+   * 
    * @param dir
    * @param fileName
    */
@@ -112,7 +114,7 @@ public class UserTransaction {
     String title = customer.getFirstName() + " " + customer.getLastName() + " Transaction File: \n";
 
     try {
-      FileWriter fw = new FileWriter(dir + "\\" +  fileName, true);
+      FileWriter fw = new FileWriter(dir + "\\" + fileName, true);
       // title with customer name
       fw.write(title + "\n");
       // account number
@@ -146,12 +148,13 @@ public class UserTransaction {
    * - Start and End Balance
    * - List of transactions
    * - Date generated
+   * 
    * @param dir
    * @param fileName
    */
   private void writeToFile2(String dir, String fileName) {
     try {
-      FileWriter fw = new FileWriter(dir + "\\" +  fileName, true);
+      FileWriter fw = new FileWriter(dir + "\\" + fileName, true);
       // account number
       fw.write(account.getAccountNumber() + "\n");
       // starting balance

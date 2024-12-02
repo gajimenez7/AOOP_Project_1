@@ -1,13 +1,14 @@
-package src.resources;
+package src.utils;
+
 public class Credit extends Account {
   private double creditLimit;
 
-  public Credit(String acctNum, double creditLim, double creditStart) {
+  public Credit(String acctNum, double creditLim, double creditStart, String type) {
     this.setAccountNumber(acctNum);
     this.creditLimit = creditLim;
     this.setBalance(creditStart);
+    this.type = type;
   }
-
 
   public boolean withdraw(double amount) {
     if (this.getBalance() >= creditLimit) {
@@ -25,10 +26,12 @@ public class Credit extends Account {
       return false;
     }
   }
-  public void setCreditLimit(double creditLimit){
+
+  public void setCreditLimit(double creditLimit) {
     this.creditLimit = creditLimit;
   }
-  public double getCreditLimit(){
+
+  public double getCreditLimit() {
     return creditLimit;
   }
 

@@ -1,16 +1,20 @@
-package src.resources;
+package src.utils;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * Log class that handles logging transactions using a Log Builder
  */
-public class Log {
+public class Log implements History {
   private Account account1;
   private Account account2;
   private Customer customer1;
   private Customer customer2;
   private String transaction;
   private String amount;
-  
+
   /**
    * Log Constructor
    * 
@@ -21,15 +25,7 @@ public class Log {
    * @param transaction
    * @param amount
    */
-  // public Log(Account a1, Account a2, Customer c1, Customer c2, String transaction, String amount) {
-  //   this.account1 = a1;
-  //   this.account2 = a2;
-  //   this.customer1 = c1;
-  //   this.customer2 = c2;
-  //   this.transaction = transaction;
-  //   this.amount = amount;
-  // }
-  Log(Builder builder){
+  Log(Builder builder) {
     this.account1 = builder.account1;
     this.account2 = builder.account2;
     this.customer1 = builder.customer1;
@@ -37,6 +33,7 @@ public class Log {
     this.transaction = builder.transaction;
     this.amount = builder.amount;
   }
+
   /**
    * Parse object attributes to return information to log
    * depending on transaction type
@@ -116,5 +113,14 @@ public class Log {
         "FROM CUSTOMER: " + this.customer1.getFirstName() + " " + this.customer1.getLastName() + "\n\n";
     return log;
   }
-  
+
+  /**
+   * Write transactions to logging text file
+   * 
+   * @param transaction
+   */
+  public static void writeToFile() {
+
+  }
+
 }

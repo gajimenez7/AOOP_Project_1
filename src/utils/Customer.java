@@ -1,10 +1,10 @@
-package src.resources;
+package src.utils;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Customer {
-  //changed accounts from protected to public, should change to use getter
-  public List<Account> accounts;
+  protected List<Account> accounts;
   private String id;
   private String firstName;
   private String lastName;
@@ -80,7 +80,7 @@ public abstract class Customer {
     for (Account temp : accounts) {
       if (temp.getAccountNumber().equals(acctNum)) {
         return temp;
-     }
+      }
 
     }
     return null;

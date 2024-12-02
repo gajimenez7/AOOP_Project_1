@@ -1,9 +1,11 @@
-package src.resources;
+package src.utils;
+
 public class Checking extends Account {
 
-    public Checking(String accountNumber, double initialBalance) {
+    public Checking(String accountNumber, double initialBalance, String type) {
         this.setAccountNumber(accountNumber);
         this.setBalance(initialBalance);
+        this.type = type;
     }
 
     @Override

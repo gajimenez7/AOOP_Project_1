@@ -191,6 +191,9 @@ public class ErrorHandler {
   }
 
   public static Customer isValidCustomer2(String firstName, String lastName, List<Customer> customers) {
+    if(firstName.isEmpty() || lastName.isEmpty()){
+      return null;
+    }
     for (Customer temp : customers) {
       if (temp.getFirstName().equals(firstName) && temp.getLastName().equals(lastName)) {
         return temp;

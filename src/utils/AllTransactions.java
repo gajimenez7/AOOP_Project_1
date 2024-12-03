@@ -6,15 +6,14 @@ import java.util.List;
 import java.util.Scanner;
 
 public class AllTransactions {
-
-  final static String logDir = "../output/log/log.txt";
-  final static String utDir = "../output/UserTransactionFiles";
-
   /**
    * Transfer user interface
    * 
    * @param customers
    */
+
+  final static String logDir = "output/log/log.txt";
+  final static String utDir = "output/UserTransactionFiles/";
 
   public static void transferPrompt(List<Customer> customers) {
     Scanner scnr = new Scanner(System.in);
@@ -46,6 +45,7 @@ public class AllTransactions {
   }
 
   public static void transfer(Account toAcct, Account fromAcct, Customer curr, double amount) {
+
     Log logger;
 
     UserTransaction ut1, ut2;
@@ -81,8 +81,8 @@ public class AllTransactions {
     ut2.addTransaction(logger.parseTransaction());
 
     // User Transactions write to file
-    History.writeToFile(ut1.transactions1(utDir, ut1.fileName()), utDir + ut1.fileName());
-    History.writeToFile(ut2.transactions1(utDir, ut2.fileName()), utDir + ut2.fileName());
+    History.writeToFile(ut1.fileOutput(utDir, ut1.fileName()), utDir + ut1.fileName());
+    History.writeToFile(ut2.fileOutput(utDir, ut2.fileName()), utDir + ut2.fileName());
 
   }
 
@@ -141,12 +141,13 @@ public class AllTransactions {
               .transaction("invalid")
               .buildLog();
 
-          // Log write to file
+          // log write to file
           History.writeToFile(logger.parseTransaction(), logDir);
 
-          // User Transaction to file
           ut.addTransaction(logger.parseTransaction());
-          History.writeToFile(ut.transactions1(utDir, ut.fileName()), utDir + ut.fileName());
+
+          // User Transactions write to file
+          History.writeToFile(ut.fileOutput(utDir, ut.fileName()), utDir + ut.fileName());
 
           System.out.println("You do not have sufficient funds.\n");
         }
@@ -195,9 +196,10 @@ public class AllTransactions {
     // log write to file
     History.writeToFile(logger.parseTransaction(), logDir);
 
-    // user transaction write to file
     ut.addTransaction(logger.parseTransaction());
-    History.writeToFile(ut.transactions1(utDir, ut.fileName()), utDir + ut.fileName());
+
+    // User Transactions write to file
+    History.writeToFile(ut.fileOutput(utDir, ut.fileName()), utDir + ut.fileName());
   }
 
   /**
@@ -263,25 +265,29 @@ public class AllTransactions {
         .amount(Double.toString(amount))
         .buildLog();
 
+    // log write to file
     History.writeToFile(logger.parseTransaction(), logDir);
 
     ut1.addTransaction(logger.parseTransaction());
     ut2.addTransaction(logger.parseTransaction());
 
     // User Transactions write to file
-    History.writeToFile(ut1.transactions1(utDir, ut1.fileName()), utDir + ut1.fileName());
-    History.writeToFile(ut2.transactions1(utDir, ut2.fileName()), utDir + ut2.fileName());
+    History.writeToFile(ut1.fileOutput(utDir, ut1.fileName()), utDir + ut1.fileName());
+    History.writeToFile(ut2.fileOutput(utDir, ut2.fileName()), utDir + ut2.fileName());
   }
 
   // for transaction csv
   public static void readTransactions(String filePath, List<Customer> customers) {
     try (Scanner scanner = new Scanner(new File(filePath))) {
-      if (scanner.hasNextLine()) {
-        scanner.nextLine();
-      }
+      String firstLine = scanner.nextLine();
       while (scanner.hasNextLine()) {
         String line = scanner.nextLine();
-        processTransaction(line, customers);
+        if (line.equals(firstLine)) {
+          scanner.nextLine();
+        } else {
+          processTransaction(line, customers);
+        }
+
       }
     } catch (FileNotFoundException e) {
       System.out.println("Transaction file not found: " + e.getMessage());
@@ -290,17 +296,16 @@ public class AllTransactions {
 
   public static void processTransaction(String transaction, List<Customer> customers) {
     String[] parts = transaction.split(",", -1);
-    System.out.println(parts.length);
     String fromFirstName = parts[0];
     String fromLastName = parts[1];
-    String fromFullName = fromFirstName + " " + fromLastName;
+    // String fromFullName = fromFirstName + " " + fromLastName;
 
     Account toAcct;
     Customer curr;
     if (fromFirstName.isEmpty() && fromLastName.isEmpty()) {
-      curr = ErrorHandler.isValidCustomer(fromFullName, customers);
-    } else {
       curr = null;
+    } else {
+      curr = ErrorHandler.isValidCustomer2(fromFirstName, fromLastName, customers);
     }
 
     String fromWhere = parts[2].trim();
@@ -308,12 +313,12 @@ public class AllTransactions {
     String action = parts[3].trim().toLowerCase();
     String toFirstName = parts[4].trim();
     String toLastName = parts[5].trim();
-    String toFullName = toFirstName + " " + toLastName;
+    // String toFullName = toFirstName + " " + toLastName;
     Customer curr2;
     if (toFirstName.isEmpty() && toLastName.isEmpty()) {
-      curr2 = ErrorHandler.isValidCustomer(toFullName, customers);
-    } else {
       curr2 = null;
+    } else {
+      curr2 = ErrorHandler.isValidCustomer2(toFirstName, toLastName, customers);
     }
     // Customer curr2 = ErrorHandler.isValidCustomer(toFullName, customers);
     String toWhere = parts[6].trim();
@@ -357,6 +362,14 @@ public class AllTransactions {
             .amount(null)
             .transaction("inquire")
             .buildLog();
+
+        // log write to file
+        History.writeToFile(logger.parseTransaction(), logDir);
+
+        ut.addTransaction(logger.parseTransaction());
+
+        // User Transactions write to file
+        History.writeToFile(ut.fileOutput(utDir, ut.fileName()), utDir + ut.fileName());
         break;
       case "withdraws":
 
@@ -365,7 +378,7 @@ public class AllTransactions {
         break;
       case "deposits":
         toAcct.deposit(amount);
-        depositLog(curr, toAcct, amount, "deposit");
+        depositLog(curr2, toAcct, amount, "deposit");
 
         break;
       default:

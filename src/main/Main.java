@@ -7,7 +7,7 @@ import src.utils.*;
 public class Main {
 
     public static void main(String[] args) throws FileNotFoundException {
-        final String logDir = "../output/log/log.txt";
+        final String logDir = "output/log/log.txt";
         
         List<Customer> customers = BankCSVHandler.parseFile();
 

@@ -59,7 +59,7 @@ public class UserTransaction {
   }
 
   /**
-   * Generate transaction file for specified user
+   * Generate transaction file name for specified user
    */
   public String fileName() {
     String fileExtension = ".txt";
@@ -67,6 +67,22 @@ public class UserTransaction {
     return fileName;
   }
 
+  /**
+   * Generate output to user file based on if it has already been created or not
+   * @param dir
+   * @param fileName
+   * @return
+   */
+  public String fileOutput(String dir, String fileName){
+    String output = "";
+    File outFile = new File(dir + fileName);
+    if(outFile.isFile()){
+      output = transactions2(dir, fileName);
+    } else{
+      output = transactions1(dir, fileName);
+    }
+    return output;
+  }
   /**
    * Write Customer transactions to transaction text file first time
    * which includes
@@ -79,7 +95,7 @@ public class UserTransaction {
    * @param dir
    * @param fileName
    */
-  String transactions1(String dir, String fileName) {
+  private String transactions1(String dir, String fileName) {
     String title = customer.getFirstName() + " " + customer.getLastName() + " Transaction File: \n";
     String output = "";
     // title with customer name

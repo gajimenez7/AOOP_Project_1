@@ -320,7 +320,7 @@ public class AllTransactions {
     } else {
       curr2 = ErrorHandler.isValidCustomer2(toFirstName, toLastName, customers);
     }
-    // Customer curr2 = ErrorHandler.isValidCustomer(toFullName, customers);
+
     String toWhere = parts[6].trim();
     toAcct = ErrorHandler.getAccount(curr2, toWhere);
     fromAcct = ErrorHandler.getAccount(curr, fromWhere);

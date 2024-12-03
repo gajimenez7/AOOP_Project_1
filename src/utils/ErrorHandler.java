@@ -17,9 +17,24 @@ public class ErrorHandler {
   }
 
   public static Customer getValidCustomer(Scanner scnr, List<Customer> customers) {
+    int retry = 3;
     System.out.println("Whose account is the request?");
     String input = scnr.nextLine();
     Customer curr = isValidCustomer(input, customers);
+
+    // prompt login
+    while (retry != 0) {
+      if (LoginPrompt.promptPassword(curr)) {
+        System.out.println("Login Successful!");
+        break;
+      } else
+        retry--;
+    }
+    if (retry == 0) {
+      System.out.println("Login failed!");
+      retry = 3;
+    }
+
     while (curr == null) {
       System.out.println("Not a valid user. Try again.");
       input = scnr.nextLine();
@@ -191,7 +206,7 @@ public class ErrorHandler {
   }
 
   public static Customer isValidCustomer2(String firstName, String lastName, List<Customer> customers) {
-    if(firstName.isEmpty() || lastName.isEmpty()){
+    if (firstName.isEmpty() || lastName.isEmpty()) {
       return null;
     }
     for (Customer temp : customers) {
@@ -203,7 +218,6 @@ public class ErrorHandler {
   }
 
   public static Customer isValidCustomer(String name, List<Customer> customers) {
-    System.out.println(name);
     if (name.contains(" ") && name.length() > 1) {
       String[] fullName = name.split(" ");
       for (Customer temp : customers) {

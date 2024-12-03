@@ -7,15 +7,18 @@ import src.utils.*;
 public class Main {
 
     public static void main(String[] args) throws FileNotFoundException {
+        // output directory for Logs
         final String logDir = "output/log/log.txt";
-        
+
+        // create Customer list
         List<Customer> customers = BankCSVHandler.parseFile();
 
+        // begin reading and processing Transactions.csv
         AllTransactions.readTransactions("resources/Transactions.csv", customers);
 
-        //create log file
+        // create log file
         History.createFile(logDir);
-
+        
         boolean exitFlag = false;
         while (!exitFlag) {
             String userInput = Prompt();

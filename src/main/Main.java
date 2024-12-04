@@ -6,6 +6,11 @@ import src.utils.*;
 
 public class Main {
 
+    
+    /** 
+     * @param args
+     * @throws FileNotFoundException
+     */
     public static void main(String[] args) throws FileNotFoundException {
         // output directory for Logs
         final String logDir = "output/log/log.txt";
@@ -18,10 +23,12 @@ public class Main {
 
         // create log file
         History.createFile(logDir);
-        
+
+        // prompt user for input
         boolean exitFlag = false;
         while (!exitFlag) {
             String userInput = Prompt();
+            // user options
             switch (userInput) {
                 case "1":
                     System.out.println("You Selected: Make individual transaction\n");

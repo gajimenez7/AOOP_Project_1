@@ -1,12 +1,11 @@
 package src.utils;
 
 /**
+ * Account with account number and balance
  * @author George Jimenez
- *         creates an account with account number and balance
  */
 
 public abstract class Account {
-  // NumberFormat moneyFormat = NumberFormat.getCurrencyInstance();
   protected String accountNumber;
   protected double balance;
   protected String type;
@@ -20,7 +19,9 @@ public abstract class Account {
     this.balance += amount;
   }
 
-  /** gets balance */
+  /** 
+   *  @return double balance 
+   * */
   public double getBalance() {
     return this.balance;
   }
@@ -35,8 +36,8 @@ public abstract class Account {
   }
 
   /**
-   * gets and sets account number
-   * 
+   * Sets account number
+   * and returns true if successful 
    * @param accountNum
    */
   public boolean setAccountNumber(String accountNum) {
@@ -44,10 +45,18 @@ public abstract class Account {
     return true;
   }
 
+  /**
+   * Account number getter
+   * @return account number
+   */
   public String getAccountNumber() {
     return this.accountNumber;
   }
 
+  /**
+   * Type getter
+   * @return type
+   */
   public String getType() {
     return type;
   }
@@ -66,6 +75,12 @@ public abstract class Account {
       return false;
   }
 
+  /**
+   * Abstract method for transferring
+   * @param account
+   * @param amount
+   * @return
+   */
   abstract boolean transfer(Account account, double amount);
 
 }

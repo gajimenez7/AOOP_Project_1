@@ -1,9 +1,5 @@
 package src.utils;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-
 /**
  * Log class that handles logging transactions using a Log Builder
  */
@@ -44,26 +40,31 @@ public class Log implements History {
     String logHistory = "";
     switch (this.transaction) {
       case "deposit":
-        logHistory = logDeposit();
+        logHistory += logDeposit();
         break;
       case "withdraw":
-        logHistory = logWithdraw();
+        logHistory += logWithdraw();
         break;
       case "transfer":
-        logHistory = logTransfer();
+        logHistory += logTransfer();
         break;
       case "payment":
-        logHistory = logPayement();
+        logHistory += logPayment();
         break;
       case "invalid":
-        logHistory = logInvalid();
+        logHistory += logInvalid();
     }
     return logHistory;
   }
 
+  /**
+   * Generate deposit string for log output
+   * 
+   * @return String log
+   */
   public String logDeposit() {
     String log;
-    log = "TRANSACTION: " + this.transaction + "\n" +
+    log = "TRANSACTION: " + HistoryFlyweightFactory.getTransactionType(this.transaction) + "\n" +
         "ACCOUNT: " + this.account1.getAccountNumber() + "\n" +
         "CUSTOMER: " + this.customer1.getFirstName() + " " + this.customer1.getLastName() + "\n" +
         "AMOUNT: " + this.amount + "\n" +
@@ -72,9 +73,14 @@ public class Log implements History {
     return log;
   }
 
+  /**
+   * Generate withdraw string for log output
+   * 
+   * @return String log
+   */
   public String logWithdraw() {
     String log;
-    log = "TRANSACTION: " + this.transaction + "\n" +
+    log = "TRANSACTION: " + HistoryFlyweightFactory.getTransactionType(this.transaction) + "\n" +
         "ACCOUNT: " + this.account1.getAccountNumber() + "\n" +
         "CUSTOMER: " + this.customer1.getFirstName() + " " + this.customer1.getLastName() + "\n" +
         "AMOUNT: $" + this.amount + "\n" +
@@ -83,9 +89,14 @@ public class Log implements History {
     return log;
   }
 
+  /**
+   * Generate transfer string for log output
+   * 
+   * @return String log
+   */
   public String logTransfer() {
     String log;
-    log = "TRANSACTION: " + this.transaction + "\n" +
+    log = "TRANSACTION: " + HistoryFlyweightFactory.getTransactionType(this.transaction) + "\n" +
         "FROM ACCOUNT: " + this.account1.getAccountNumber() + "\n" +
         "TO ACCOUNT: " + this.account2.getAccountNumber() + "\n" +
         "CUSTOMER: " + this.customer1.getFirstName() + " " + this.customer1.getLastName() + "\n" +
@@ -95,9 +106,14 @@ public class Log implements History {
     return log;
   }
 
-  public String logPayement() {
+  /**
+   * Generate payment string for log output
+   * 
+   * @return String log
+   */
+  public String logPayment() {
     String log;
-    log = "TRANSACTION: " + this.transaction + "\n" +
+    log = "TRANSACTION: " + HistoryFlyweightFactory.getTransactionType(this.transaction) + "\n" +
         "FROM ACCOUNT: " + this.account1.getAccountNumber() + "\n" +
         "TO ACCOUNT: " + this.account2.getAccountNumber() + "\n" +
         "FROM CUSTOMER: " + this.customer1.getFirstName() + " " + this.customer1.getLastName() + "\n" +
@@ -106,21 +122,16 @@ public class Log implements History {
     return log;
   }
 
+  /**
+   * Generate invalid transaction string for log output
+   * 
+   * @return String log
+   */
   public String logInvalid() {
     String log;
-    log = "TRANSACTION: " + this.transaction + "\n" +
+    log = "TRANSACTION: " + HistoryFlyweightFactory.getTransactionType(this.transaction) + "\n" +
         "ACCOUNT: " + this.account1.getAccountNumber() + "\n" +
         "FROM CUSTOMER: " + this.customer1.getFirstName() + " " + this.customer1.getLastName() + "\n\n";
     return log;
   }
-
-  /**
-   * Write transactions to logging text file
-   * 
-   * @param transaction
-   */
-  public static void writeToFile() {
-
-  }
-
 }

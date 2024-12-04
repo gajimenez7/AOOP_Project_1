@@ -14,6 +14,7 @@ public class BankManager {
     System.out.println("Would you like to 1. Display user info, 2. show account info");
     String input = scnr.nextLine();
 
+    // bank manager options
     switch (input) {
       case "1":
         System.out.println("Search user by A. Name or B. ID number?");
@@ -36,7 +37,6 @@ public class BankManager {
           }
 
         }
-
         break;
       case "2":
         Customer showAcctInfo = ErrorHandler.getValidCustomer(scnr, customers);
@@ -51,7 +51,5 @@ public class BankManager {
       default:
         break;
     }
-
   }
-
 }

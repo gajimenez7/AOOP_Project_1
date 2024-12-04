@@ -1,4 +1,7 @@
 import org.junit.jupiter.api.Test;
+
+import src.utils.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
 
@@ -14,7 +17,7 @@ public class BankCSVHandlerTest {
     @Test
     void testParseFileMalformed() {
         assertThrows(IllegalStateException.class, () -> {
-            BankCSVHandler.parseFile("InvalidFile.csv");
+            BankCSVHandler.parseFile();
         }, "Should throw exception for malformed CSV.");
     }
 }

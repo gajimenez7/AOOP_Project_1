@@ -10,6 +10,11 @@ public class Credit extends Account {
     this.type = type;
   }
 
+  
+  /** 
+   * @param amount
+   * @return boolean
+   */
   public boolean withdraw(double amount) {
     if (this.getBalance() >= creditLimit) {
       return false;
@@ -18,6 +23,9 @@ public class Credit extends Account {
     }
   }
 
+  /**
+   * Transfer from credit accounts
+   */
   public boolean transfer(Account account, double amount) {
     if (this.withdraw(amount)) {
       account.deposit(amount);
@@ -27,10 +35,18 @@ public class Credit extends Account {
     }
   }
 
+  /**
+   * Modify credit limit
+   * @param creditLimit
+   */
   public void setCreditLimit(double creditLimit) {
     this.creditLimit = creditLimit;
   }
 
+  /**
+   * Access credit limit
+   * @return
+   */
   public double getCreditLimit() {
     return creditLimit;
   }

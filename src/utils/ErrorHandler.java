@@ -4,6 +4,12 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ErrorHandler {
+
+  /**
+   * @param scnr
+   * @param customer
+   * @return Account
+   */
   public static Account getValidAccount(Scanner scnr, Customer customer) {
     System.out.println("Enter the account number:");
     String input = scnr.nextLine();
@@ -16,6 +22,13 @@ public class ErrorHandler {
     return account;
   }
 
+  /**
+   * Get a valid customer
+   * 
+   * @param scnr
+   * @param customers
+   * @return
+   */
   public static Customer getValidCustomer(Scanner scnr, List<Customer> customers) {
     int retry = 3;
     System.out.println("Whose account is the request?");
@@ -43,6 +56,13 @@ public class ErrorHandler {
     return curr;
   }
 
+  /**
+   * Get valid accounr
+   * 
+   * @param curr
+   * @param _acctType
+   * @return
+   */
   public static Account getAccount(Customer curr, String _acctType) {
     if (curr == null) {
       return null;
@@ -56,6 +76,13 @@ public class ErrorHandler {
     return null;
   }
 
+  /**
+   * Validate date
+   * 
+   * @param day
+   * @param month
+   * @return
+   */
   private static boolean checkDayToMonth(String day, String month) {
     int dayNum = Integer.parseInt(day);
     int monthNum = Integer.parseInt(month);
@@ -76,6 +103,12 @@ public class ErrorHandler {
     return true;
   }
 
+  /**
+   * Generate month as string
+   * 
+   * @param monthNum
+   * @return
+   */
   private static String monthStr(String monthNum) {
     switch (monthNum) {
       case "01":
@@ -120,6 +153,13 @@ public class ErrorHandler {
     }
   }
 
+  /**
+   * Validate DOB
+   * 
+   * @param scnr
+   * @param str
+   * @return
+   */
   public static String checkDOB(Scanner scnr, String str) {
     while (true) {
       if (str.length() == 6 && !hasLetter(str)) {
@@ -144,6 +184,12 @@ public class ErrorHandler {
     }
   }
 
+  /**
+   * Validate month
+   * 
+   * @param month
+   * @return
+   */
   private static boolean isValidMonth(String month) {
     try {
       int monthInt = Integer.parseInt(month);
@@ -153,6 +199,13 @@ public class ErrorHandler {
     }
   }
 
+  /**
+   * Validate Number
+   * 
+   * @param scnr
+   * @param str
+   * @return
+   */
   public static String checkNum(Scanner scnr, String str) {
     while (hasLetter(str) == true || str.length() != 10) {
       System.out.println("Please enter a valid number:\n");
@@ -165,6 +218,13 @@ public class ErrorHandler {
         str.substring(6));
   }
 
+  /**
+   * Validate name
+   * 
+   * @param scnr
+   * @param str
+   * @return
+   */
   public static String checkName(Scanner scnr, String str) {
     while (hasNumber(str) == true) {
       System.out.println("Please enter a valid name:\n");
@@ -175,6 +235,13 @@ public class ErrorHandler {
     return str;
   }
 
+  /**
+   * Validate credit score
+   * 
+   * @param scnr
+   * @param _creditScore
+   * @return
+   */
   public static String checkCreditScore(Scanner scnr, String _creditScore) {
     int creditScore = Integer.parseInt(_creditScore);
     while (creditScore < 0 || creditScore > 850 || hasLetter(_creditScore) == true) {
@@ -184,6 +251,12 @@ public class ErrorHandler {
     return Integer.toString(creditScore);
   }
 
+  /**
+   * Check if string has a number
+   * 
+   * @param str
+   * @return
+   */
   private static boolean hasNumber(String str) {
     for (char c : str.toCharArray()) {
       if (Character.isDigit(c)) {
@@ -193,6 +266,12 @@ public class ErrorHandler {
     return false;
   }
 
+  /**
+   * Check if string has a letter
+   * 
+   * @param num
+   * @return
+   */
   private static boolean hasLetter(String num) {
     boolean valid = false;
     for (char c : num.toCharArray()) {
@@ -205,6 +284,14 @@ public class ErrorHandler {
     return valid;
   }
 
+  /**
+   * Validate second customer
+   * 
+   * @param firstName
+   * @param lastName
+   * @param customers
+   * @return
+   */
   public static Customer isValidCustomer2(String firstName, String lastName, List<Customer> customers) {
     if (firstName.isEmpty() || lastName.isEmpty()) {
       return null;
@@ -217,6 +304,13 @@ public class ErrorHandler {
     return null;
   }
 
+  /**
+   * Validate first customer
+   * 
+   * @param name
+   * @param customers
+   * @return
+   */
   public static Customer isValidCustomer(String name, List<Customer> customers) {
     if (name.contains(" ") && name.length() > 1) {
       String[] fullName = name.split(" ");
@@ -224,7 +318,6 @@ public class ErrorHandler {
         if (temp.getFirstName().equals(fullName[0]) && temp.getLastName().equals(fullName[1])) {
           return temp;
         }
-
       }
     }
 

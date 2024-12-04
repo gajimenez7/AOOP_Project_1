@@ -8,6 +8,13 @@ public class Checking extends Account {
         this.type = type;
     }
 
+    
+    /** 
+     * Transfer for checking account
+     * @param account
+     * @param amount
+     * @return boolean
+     */
     @Override
     public boolean transfer(Account account, double amount) {
         if (this.withdraw(amount)) {

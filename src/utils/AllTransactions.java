@@ -6,15 +6,17 @@ import java.util.List;
 import java.util.Scanner;
 
 public class AllTransactions {
-  /**
-   * Transfer user interface
-   * 
-   * @param customers
-   */
-
+  
+  // log output directory
   final static String logDir = "output/log/log.txt";
+  
+  // user transfer bank statement directory
   final static String utDir = "output/UserTransactionFiles/";
 
+  /**
+   * Transfer user interface
+   * @param customers
+   */
   public static void transferPrompt(List<Customer> customers) {
     Scanner scnr = new Scanner(System.in);
 
@@ -23,15 +25,17 @@ public class AllTransactions {
     Customer curr = ErrorHandler.getValidCustomer(scnr, customers);
     Account fromAcct = ErrorHandler.getValidAccount(scnr, curr);
 
+    // prompt transfer amount
     System.out.println("How much will you be transferring?");
     amount = Double.parseDouble(scnr.nextLine());
-
+    
     while (amount < 0) {
       System.out.println("Invalid Input");
       System.out.println("How much will you be transferring?");
       amount = Double.parseDouble(scnr.next());
     }
 
+    // validate amount
     if (fromAcct.getBalance() < amount) {
       System.out.println("You do not have sufficient funds.");
       return;
@@ -41,9 +45,17 @@ public class AllTransactions {
     System.out.println("You transferred $" + amount + " from account " + fromAcct.getAccountNumber() +
         " to account " + toAcct.getAccountNumber() + ".");
 
+    // begin transfer process
     transfer(toAcct, fromAcct, curr, amount);
   }
 
+  /**
+   * Single user transfer from one account to another
+   * @param toAcct
+   * @param fromAcct
+   * @param curr
+   * @param amount
+   */
   public static void transfer(Account toAcct, Account fromAcct, Customer curr, double amount) {
 
     Log logger;
@@ -52,6 +64,7 @@ public class AllTransactions {
     fromAcct.withdraw(amount);
     toAcct.deposit(amount);
 
+    // build bank statement
     ut1 = new Builder()
         .customer(curr)
         .account1(fromAcct)
@@ -66,6 +79,7 @@ public class AllTransactions {
         .endBalance(toAcct.getBalance())
         .buildTransaction();
 
+    // build log
     logger = new Builder()
         .account1(fromAcct)
         .account2(toAcct)
@@ -114,6 +128,7 @@ public class AllTransactions {
     System.out.println("Would you like to\n1. Deposit\n2. Withdraw");
     String input = scnr.nextLine();
 
+    // logic based on transaction type
     switch (input) {
       case "1":
         currAcc.deposit(amount);
@@ -158,6 +173,13 @@ public class AllTransactions {
 
   }
 
+  /**
+   * Log deposit
+   * @param curr
+   * @param currAcc
+   * @param amount
+   * @param transaction
+   */
   public static void depositLog(Customer curr, Account currAcc, double amount, String transaction) {
     Log logger;
 
@@ -235,6 +257,14 @@ public class AllTransactions {
         + ". Your new balance is " + fromAcct.getBalance());
   }
 
+  /**
+   * Payment method between customers from one account to another
+   * @param paid
+   * @param toAcct
+   * @param curr
+   * @param fromAcct
+   * @param amount
+   */
   public static void pay(Customer paid, Account toAcct, Customer curr, Account fromAcct, double amount) {
     Log logger;
 
@@ -276,7 +306,11 @@ public class AllTransactions {
     History.writeToFile(ut2.fileOutput(utDir, ut2.fileName()), utDir + ut2.fileName());
   }
 
-  // for transaction csv
+  /**
+   * Read and transactions from csv file
+   * @param filePath
+   * @param customers
+   */
   public static void readTransactions(String filePath, List<Customer> customers) {
     try (Scanner scanner = new Scanner(new File(filePath))) {
       String firstLine = scanner.nextLine();
@@ -294,6 +328,11 @@ public class AllTransactions {
     }
   }
 
+  /**
+   * Process transactions from csv file
+   * @param transaction
+   * @param customers
+   */
   public static void processTransaction(String transaction, List<Customer> customers) {
     String[] parts = transaction.split(",", -1);
     String fromFirstName = parts[0];

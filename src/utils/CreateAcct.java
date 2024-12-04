@@ -6,6 +6,10 @@ import java.util.Scanner;
 
 public class CreateAcct {
 
+  
+  /** 
+   * @param customers
+   */
   public static void accountCreation(List<Customer> customers) {
     Scanner scnr = new Scanner(System.in);
 
@@ -60,6 +64,11 @@ public class CreateAcct {
     BankCSVHandler.appendUserToCSV(newCustomer);
   }
 
+  
+  /** 
+   * @param customers
+   * @return int
+   */
   private static int highestCreditAcctNum(List<Customer> customers) {
     Customer highestCustomer = customers.get(0);
     Account highestAccount = highestCustomer.accounts.get(0);
@@ -72,6 +81,11 @@ public class CreateAcct {
     return Integer.parseInt(highestAccount.getAccountNumber()) + 1;
   }
 
+  
+  /** 
+   * @param customers
+   * @return int
+   */
   private static int highestCheckingAcctNum(List<Customer> customers) {
     Customer highestCustomer = customers.get(0);
     Account highestAccount = highestCustomer.accounts.get(1);
@@ -84,6 +98,11 @@ public class CreateAcct {
     return Integer.parseInt(highestAccount.getAccountNumber()) + 1;
   }
 
+  
+  /** 
+   * @param customers
+   * @return int
+   */
   private static int highestSavingsAcctNum(List<Customer> customers) {
     Customer highestCustomer = customers.get(0);
     Account highestAccount = highestCustomer.accounts.get(2);

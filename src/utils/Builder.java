@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Builder {
+    // log attributes
     Account account1;
     Account account2;
     Customer customer1;
@@ -11,12 +12,17 @@ public class Builder {
     String transaction;
     String amount;
 
+    // user transaction attributes
     Customer customer;
     Double startBalance = 0.00;
     Double endBalance;
     ArrayList<String> transactions;
     LocalDate date;
 
+    /**
+     * Create builder instance
+     * @return Builder
+     */
     public static Builder newInstance() {
         return new Builder();
     }
@@ -112,10 +118,18 @@ public class Builder {
         return this;
     }
 
+    /**
+     * Build log object with specifications
+     * @return Log
+     */
     public Log buildLog() {
         return new Log(this);
     }
 
+    /**
+     * Build User Transaction object with specifications
+     * @return UserTransaction
+     */
     public UserTransaction buildTransaction() {
         return new UserTransaction(this);
     }

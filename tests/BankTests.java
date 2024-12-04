@@ -1,10 +1,7 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import src.utils.Checking;
-import src.utils.Credit;
-import src.utils.Customer;
-import src.utils.Saving;
+import src.utils.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,12 +15,12 @@ public class BankTests {
     @BeforeEach
     public void setUp() {
         // Assuming Saving, Checking, and Credit constructors take account number and initial balance
-        checkingAccount = new Checking(1001, 1928.58);
-        savingAccount = new Saving(2001, 3582.37);
-        creditAccount = new Credit(3001, -1513.57); // Assuming negative balance represents credit debt
+        Account checkingAccount = new Checking("1001", 1928.58, "");
+        Account savingAccount = new Saving("2001", 3582.37, "");
+        Account creditAccount = new Credit("3001", 2000, -1513.57, ""); // Assuming negative balance represents credit debt
 
         // Creating a Customer object with information for "Donald Duck"
-        customer = new Customer("Donald", "Duck", "1313 Disneyland Dr, Anaheim, CA 92802", "(714) 781-4636");
+        Customer customer = new Person("1", "Donald", "Duck", "1313 Disneyland Dr, Anaheim, CA 92802", "(714) 781-4636", null);
     }
 
     // Test 1: Check initial balance of the checking account
@@ -61,7 +58,7 @@ public class BankTests {
         assertEquals("Donald", customer.getFirstName(), "First name should be Donald");
         assertEquals("Duck", customer.getLastName(), "Last name should be Duck");
         assertEquals("1313 Disneyland Dr, Anaheim, CA 92802", customer.getAddress(), "Address should be '1313 Disneyland Dr, Anaheim, CA 92802'");
-        assertEquals("(714) 781-4636", customer.getPhoneNumber(), "Phone number should be '(714) 781-4636'");
+        assertEquals("(714) 781-4636", customer.getPhoneNum(), "Phone number should be '(714) 781-4636'");
     }
 }
 

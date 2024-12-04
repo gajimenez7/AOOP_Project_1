@@ -1,9 +1,7 @@
 package src.utils;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.io.File;
-import java.io.FileWriter;
 import java.util.ArrayList;
 
 /**
@@ -69,20 +67,22 @@ public class UserTransaction {
 
   /**
    * Generate output to user file based on if it has already been created or not
+   * 
    * @param dir
    * @param fileName
    * @return
    */
-  public String fileOutput(String dir, String fileName){
+  public String fileOutput(String dir, String fileName) {
     String output = "";
     File outFile = new File(dir + fileName);
-    if(outFile.isFile()){
+    if (outFile.isFile()) {
       output = transactions2(dir, fileName);
-    } else{
+    } else {
       output = transactions1(dir, fileName);
     }
     return output;
   }
+
   /**
    * Write Customer transactions to transaction text file first time
    * which includes
@@ -101,20 +101,21 @@ public class UserTransaction {
     // title with customer name
     output += title + "\n";
     // account number
-    output += account.getAccountNumber() + "\n";
+    output += "Account Number: " + account.getAccountNumber() + "\n";
     // starting balance
-    output += String.valueOf(startBalance) + "\n";
+    output += "Starting Balance: " + String.valueOf(startBalance) + "\n";
     // end (current) balance
-    output += String.valueOf(endBalance) + "\n";
+    output += "Current Balance: " + String.valueOf(endBalance) + "\n\n";
 
     // transactions
     if (!transactions.isEmpty()) {
       for (String transaction : transactions) {
-        output += transaction + "\n";
+        output += transaction;
       }
     }
     // date of generation
-    output += date.toString() + "\n\n";
+    output += "Date: " + date.toString() + "\n\n\n";
+
     return output;
   }
 
@@ -133,20 +134,21 @@ public class UserTransaction {
   private String transactions2(String dir, String fileName) {
     String output = "";
     // account number
-    output += account.getAccountNumber() + "\n";
+    output += "Account Number: " + account.getAccountNumber() + "\n";
     // starting balance
-    output += String.valueOf(startBalance) + "\n";
+    output += "Starting Balance: " + String.valueOf(startBalance) + "\n";
     // end (current) balance
-    output += String.valueOf(endBalance) + "\n";
+    output += "Current Balance: " + String.valueOf(endBalance) + "\n";
 
     // transactions
     if (!transactions.isEmpty()) {
       for (String transaction : transactions) {
-        output += transaction + "\n";
+        output += transaction;
       }
     }
     // date of generation
-    output += date.toString() + "\n\n";
+    output += "Date: " + date.toString() + "\n\n\n";
+
     return output;
   }
 }

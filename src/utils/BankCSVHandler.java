@@ -4,7 +4,8 @@ import java.io.*;
 import java.util.*;
 
 public class BankCSVHandler {
-    
+
+    // csv file path
     private static final String fileName = "resources/Bank Users.csv";
     private static Map<String, Integer> headerMap;
 
@@ -15,6 +16,12 @@ public class BankCSVHandler {
         }
     }
 
+    /**
+     * Parse csv file for processing
+     * 
+     * @return
+     * @throws FileNotFoundException
+     */
     public static List<Customer> parseFile() throws FileNotFoundException {
         List<Customer> customerList = new ArrayList<>();
 
@@ -59,6 +66,12 @@ public class BankCSVHandler {
         return customerList;
     }
 
+    /**
+     * Split csv line for processing
+     * 
+     * @param line
+     * @return
+     */
     private static String[] splitLine(String line) {
         List<String> result = new ArrayList<>();
         StringBuilder currentField = new StringBuilder();
@@ -80,6 +93,11 @@ public class BankCSVHandler {
         return result.toArray(new String[0]);
     }
 
+    /**
+     * Add new transactions to csv file
+     * 
+     * @param customer
+     */
     public static void appendUserToCSV(Customer customer) {
         String[] row = new String[headerMap.size()];
         Arrays.fill(row, "");
@@ -106,6 +124,12 @@ public class BankCSVHandler {
         }
     }
 
+    /**
+     * Format line for appending
+     * 
+     * @param line
+     * @return line
+     */
     private static String quoter(String line) {
         if (line.contains(",") || line.contains("\"") || line.contains(" ")) {
             line = line.replace("\"", "\"\"");
@@ -114,7 +138,12 @@ public class BankCSVHandler {
         return line;
     }
 
-    // Helper method to create a header map
+    /**
+     * Map info from csv file
+     * 
+     * @param fileName
+     * @return headerMap
+     */
     private static Map<String, Integer> getHeaderMap(String fileName) {
         Map<String, Integer> headerMap = new LinkedHashMap<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
@@ -131,11 +160,25 @@ public class BankCSVHandler {
         return headerMap;
     }
 
+    /**
+     * Get value of data
+     * 
+     * @param accountData
+     * @param key
+     * @return accountData
+     */
     private static String getValue(String[] accountData, String key) {
         int index = headerMap.getOrDefault(key, -1);
         return (index >= 0 && index < accountData.length) ? accountData[index] : "";
     }
 
+    /**
+     * Get double value of a String
+     * 
+     * @param value
+     * @param defaultValue
+     * @return value
+     */
     private static double parseDouble(String value, double defaultValue) {
         return Double.parseDouble(value);
     }

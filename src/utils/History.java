@@ -4,25 +4,35 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * History interface for Log and UserTransaction
+ */
 public interface History {
-    public static void createFile(String pathToFile) {
+    String parseTransaction(); // Unique transaction parsing
+    
+    /**
+     * Create file
+     * @param pathToFile
+     */
+    static void createFile(String pathToFile) {
         try {
-            File f = new File(pathToFile);
-            f.createNewFile();
+            File file = new File(pathToFile);
+            file.createNewFile();
         } catch (IOException e) {
-            System.out.println("An error occurred");
-            e.printStackTrace();
+            System.out.println("Error creating file: " + e.getMessage());
         }
     }
 
-    public static void writeToFile(String transaction, String fileName) {
-        try {
-            FileWriter fw = new FileWriter(fileName, true);
-            fw.write(transaction);
-            fw.close();
+    /**
+     * Write to file
+     * @param transaction
+     * @param fileName
+     */
+    static void writeToFile(String data, String fileName) {
+        try (FileWriter writer = new FileWriter(fileName, true)) {
+            writer.write(data);
         } catch (IOException e) {
-            System.out.println("An error occurred");
-            e.printStackTrace();
+            System.out.println("Error writing to file: " + e.getMessage());
         }
     }
 }

@@ -1,0 +1,410 @@
+==== CONFIGS ====		
+{
+    "base_path": "d:\\Documents\\ObNotes\\Class\\Fall_24\\AdvancedObjects\\Projects\\Project_1\\src",
+    "out": "d:\\Documents\\ObNotes\\Class\\Fall_24\\AdvancedObjects\\Projects\\Project_1\\src\\javadoc",
+    "javadoc_executable": "C:\\Program Files\\Java\\jdk-20\\bin\\javadoc.exe",
+    "exclude": [],
+    "raw_params": ""
+}
+
+==== COMMAND ====
+"C:\Program Files\Java\jdk-20\bin\javadoc.exe" 
+	-sourcepath "d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src" 
+	-d "d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc" 
+	"d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\main\Main.java"
+	"d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Account.java"
+	"d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\AllTransactions.java"
+	"d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\BankCSVHandler.java"
+	"d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\BankManager.java"
+	"d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Builder.java"
+	"d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Checking.java"
+	"d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\CreateAcct.java"
+	"d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Credit.java"
+	"d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Customer.java"
+	"d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\ErrorHandler.java"
+	"d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\History.java"
+	"d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\HistoryFlyweightFactory.java"
+	"d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Log.java"
+	"d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\LoginPrompt.java"
+	"d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Person.java"
+	"d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Saving.java"
+	"d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\UserTransaction.java"
+
+
+==== JAVADOC OUTPUT ====
+Loading source file d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\main\Main.java...
+Loading source file d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Account.java...
+Loading source file d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\AllTransactions.java...
+Loading source file d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\BankCSVHandler.java...
+Loading source file d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\BankManager.java...
+Loading source file d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Builder.java...
+Loading source file d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Checking.java...
+Loading source file d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\CreateAcct.java...
+Loading source file d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Credit.java...
+Loading source file d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Customer.java...
+Loading source file d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\ErrorHandler.java...
+Loading source file d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\History.java...
+Loading source file d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\HistoryFlyweightFactory.java...
+Loading source file d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Log.java...
+Loading source file d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\LoginPrompt.java...
+Loading source file d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Person.java...
+Loading source file d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Saving.java...
+Loading source file d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\UserTransaction.java...
+Constructing Javadoc information...
+Creating destination directory: "d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\"
+Building index for all the packages and classes...
+Standard Doclet version 20.0.2+9-78
+Building tree for all the packages and classes...
+Generating d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\src\utils\Account.html...
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Account.java:16: warning: no description for @param
+   * @param amount
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Account.java:25: warning: no main description
+   *  @return double balance 
+      ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Account.java:34: warning: no description for @param
+   * @param balance
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Account.java:43: warning: no description for @param
+   * @param accountNum
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Account.java:45: warning: no @return
+  public boolean setAccountNumber(String accountNum) {
+                 ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Account.java:70: warning: no description for @param
+   * @param amount
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Account.java:72: warning: no @return
+  public boolean withdraw(double amount) {
+                 ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Account.java:9: warning: no comment
+  protected String accountNumber;
+                   ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Account.java:10: warning: no comment
+  protected double balance;
+                   ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Account.java:11: warning: no comment
+  protected String type;
+                   ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Account.java:8: warning: use of default constructor, which does not provide a comment
+public abstract class Account {
+                ^
+Generating d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\src\utils\AllTransactions.html...
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\AllTransactions.java:19: warning: no description for @param
+   * @param customers
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\AllTransactions.java:56: warning: no description for @param
+   * @param toAcct
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\AllTransactions.java:57: warning: no description for @param
+   * @param fromAcct
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\AllTransactions.java:58: warning: no description for @param
+   * @param curr
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\AllTransactions.java:59: warning: no description for @param
+   * @param amount
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\AllTransactions.java:108: warning: no description for @param
+   * @param customers
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\AllTransactions.java:182: warning: no description for @param
+   * @param curr
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\AllTransactions.java:183: warning: no description for @param
+   * @param currAcc
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\AllTransactions.java:184: warning: no description for @param
+   * @param amount
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\AllTransactions.java:185: warning: no description for @param
+   * @param transaction
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\AllTransactions.java:234: warning: no description for @param
+   * @param customers
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\AllTransactions.java:269: warning: no description for @param
+   * @param paid
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\AllTransactions.java:270: warning: no description for @param
+   * @param toAcct
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\AllTransactions.java:271: warning: no description for @param
+   * @param curr
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\AllTransactions.java:272: warning: no description for @param
+   * @param fromAcct
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\AllTransactions.java:273: warning: no description for @param
+   * @param amount
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\AllTransactions.java:320: warning: no description for @param
+   * @param filePath
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\AllTransactions.java:321: warning: no description for @param
+   * @param customers
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\AllTransactions.java:343: warning: no description for @param
+   * @param transaction
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\AllTransactions.java:344: warning: no description for @param
+   * @param customers
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\AllTransactions.java:8: warning: no comment
+public class AllTransactions {
+       ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\AllTransactions.java:8: warning: use of default constructor, which does not provide a comment
+public class AllTransactions {
+       ^
+Generating d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\src\utils\BankCSVHandler.html...
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\BankCSVHandler.java:22: warning: no description for @return
+     * @return
+       ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\BankCSVHandler.java:23: warning: no description for @throws
+     * @throws FileNotFoundException
+       ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\BankCSVHandler.java:99: warning: no description for @param
+     * @param customer
+       ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\BankCSVHandler.java:6: warning: no comment
+public class BankCSVHandler {
+       ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\BankCSVHandler.java:6: warning: use of default constructor, which does not provide a comment
+public class BankCSVHandler {
+       ^
+Generating d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\src\utils\BankManager.html...
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\BankManager.java:10: warning: no description for @param
+   * @param customers
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\BankManager.java:6: warning: no comment
+public class BankManager {
+       ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\BankManager.java:6: warning: use of default constructor, which does not provide a comment
+public class BankManager {
+       ^
+Generating d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\src\utils\Builder.html...
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Builder.java:33: error: @param name not found
+     * @param account1
+              ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Builder.java:33: warning: no description for @param
+     * @param account1
+       ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Builder.java:35: warning: no @param for a
+    public Builder account1(Account a) {
+                   ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Builder.java:35: warning: no @return
+    public Builder account1(Account a) {
+                   ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Builder.java:43: error: @param name not found
+     * @param account2
+              ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Builder.java:43: warning: no description for @param
+     * @param account2
+       ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Builder.java:45: warning: no @param for a
+    public Builder account2(Account a) {
+                   ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Builder.java:45: warning: no @return
+    public Builder account2(Account a) {
+                   ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Builder.java:53: error: @param name not found
+     * @param customer1
+              ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Builder.java:53: warning: no description for @param
+     * @param customer1
+       ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Builder.java:55: warning: no @param for c
+    public Builder person1(Customer c) {
+                   ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Builder.java:55: warning: no @return
+    public Builder person1(Customer c) {
+                   ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Builder.java:63: error: @param name not found
+     * @param customer2
+              ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Builder.java:63: warning: no description for @param
+     * @param customer2
+       ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Builder.java:65: warning: no @param for c
+    public Builder person2(Customer c) {
+                   ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Builder.java:65: warning: no @return
+    public Builder person2(Customer c) {
+                   ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Builder.java:73: warning: no description for @param
+     * @param transaction
+       ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Builder.java:75: warning: no @return
+    public Builder transaction(String transaction) {
+                   ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Builder.java:83: warning: no description for @param
+     * @param amount
+       ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Builder.java:85: warning: no @return
+    public Builder amount(String amount) {
+                   ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Builder.java:93: warning: no description for @param
+     * @param customer
+       ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Builder.java:95: warning: no @return
+    public Builder customer(Customer customer) {
+                   ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Builder.java:103: warning: no description for @param
+     * @param startBalance
+       ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Builder.java:105: warning: no @return
+    public Builder startBalance(Double startBalance) {
+                   ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Builder.java:114: warning: no description for @param
+     * @param endBalance
+       ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Builder.java:116: warning: no @return
+    public Builder endBalance(Double endBalance) {
+                   ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Builder.java:6: warning: no comment
+public class Builder {
+       ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Builder.java:6: warning: use of default constructor, which does not provide a comment
+public class Builder {
+       ^
+Generating d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\src\utils\Checking.html...
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Checking.java:14: warning: no description for @param
+     * @param account
+       ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Checking.java:15: warning: no description for @param
+     * @param amount
+       ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Checking.java:3: warning: no comment
+public class Checking extends Account {
+       ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Checking.java:5: warning: no comment
+    public Checking(String accountNumber, double initialBalance, String type) {
+           ^
+Generating d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\src\utils\CreateAcct.html...
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\CreateAcct.java:11: warning: no main description
+   * @param customers
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\CreateAcct.java:11: warning: no description for @param
+   * @param customers
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\CreateAcct.java:7: warning: no comment
+public class CreateAcct {
+       ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\CreateAcct.java:7: warning: use of default constructor, which does not provide a comment
+public class CreateAcct {
+       ^
+Generating d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\src\utils\Credit.html...
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Credit.java:15: warning: no description for @param
+   * @param amount
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Credit.java:40: warning: no description for @param
+   * @param creditLimit
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Credit.java:48: warning: no description for @return
+   * @return
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Credit.java:3: warning: no comment
+public class Credit extends Account {
+       ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Credit.java:6: warning: no comment
+  public Credit(String acctNum, double creditLim, double creditStart, String type) {
+         ^
+Generating d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\src\utils\Customer.html...
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Customer.java:84: warning: no description for @param
+   * @param firstName
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Customer.java:93: warning: no description for @param
+   * @param lastName
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Customer.java:102: warning: no description for @param
+   * @param id
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Customer.java:111: warning: no description for @param
+   * @param phoneNum
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Customer.java:120: warning: no description for @param
+   * @param address
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Customer.java:129: warning: no description for @param
+   * @param dob
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Customer.java:138: warning: no description for @param
+   * @param account
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Customer.java:147: warning: no description for @param
+   * @param acctNum
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Customer.java:148: warning: no description for @return
+   * @return
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Customer.java:6: warning: no comment
+public abstract class Customer {
+                ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Customer.java:7: warning: no comment
+  protected List<Account> accounts;
+                          ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Customer.java:15: warning: no comment
+  public Customer(String id, String firstName, String lastName, String dob, String address, String phoneNumber) {
+         ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Customer.java:25: warning: no comment
+  public abstract void showCustomerDetails();
+                       ^
+Generating d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\src\utils\ErrorHandler.html...
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\ErrorHandler.java:9: warning: no main description
+   * @param scnr
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\ErrorHandler.java:9: warning: no description for @param
+   * @param scnr
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\ErrorHandler.java:10: warning: no description for @param
+   * @param customer
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\ErrorHandler.java:28: warning: no description for @param
+   * @param scnr
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\ErrorHandler.java:29: warning: no description for @param
+   * @param customers
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\ErrorHandler.java:30: warning: no description for @return
+   * @return
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\ErrorHandler.java:63: warning: no description for @param
+   * @param curr
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\ErrorHandler.java:64: warning: no description for @param
+   * @param _acctType
+     ^
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\ErrorHandler.java:65: warning: no description for @return
+   * @return
+     ^
+Generating d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\src\utils\History.html...
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\History.java:28: error: @param name not found
+     * @param transaction
+              ^
+Generating d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\src\utils\HistoryFlyweightFactory.html...
+Generating d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\src\utils\Log.html...
+Generating d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\src\utils\LoginPrompt.html...
+Generating d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\Main.html...
+Generating d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\src\utils\Person.html...
+d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\utils\Person.java:20: error: invalid use of @return
+     * @return void
+       ^
+Generating d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\src\utils\Saving.html...
+Generating d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\src\utils\UserTransaction.html...
+Generating d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\package-summary.html...
+Generating d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\package-tree.html...
+Generating d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\src\utils\package-summary.html...
+Generating d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\src\utils\package-tree.html...
+Generating d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\overview-tree.html...
+Generating d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\index.html...
+Building index for all classes...
+Generating d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\allclasses-index.html...
+Generating d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\allpackages-index.html...
+Generating d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\index-all.html...
+Generating d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\search.html...
+Generating d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\overview-summary.html...
+Generating d:\Documents\ObNotes\Class\Fall_24\AdvancedObjects\Projects\Project_1\src\javadoc\help-doc.html...
+6 errors
+100 warnings
+
+

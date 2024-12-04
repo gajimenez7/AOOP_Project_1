@@ -6,15 +6,16 @@ import java.util.List;
 import java.util.Scanner;
 
 public class AllTransactions {
-  
+
   // log output directory
   final static String logDir = "output/log/log.txt";
-  
+
   // user transfer bank statement directory
   final static String utDir = "output/UserTransactionFiles/";
 
   /**
    * Transfer user interface
+   * 
    * @param customers
    */
   public static void transferPrompt(List<Customer> customers) {
@@ -28,7 +29,7 @@ public class AllTransactions {
     // prompt transfer amount
     System.out.println("How much will you be transferring?");
     amount = Double.parseDouble(scnr.nextLine());
-    
+
     while (amount < 0) {
       System.out.println("Invalid Input");
       System.out.println("How much will you be transferring?");
@@ -51,6 +52,7 @@ public class AllTransactions {
 
   /**
    * Single user transfer from one account to another
+   * 
    * @param toAcct
    * @param fromAcct
    * @param curr
@@ -111,6 +113,7 @@ public class AllTransactions {
     double amount = 0.00;
 
     Customer curr = ErrorHandler.getValidCustomer(scnr, customers);
+
     Account currAcc = ErrorHandler.getValidAccount(scnr, curr);
     Log logger;
 
@@ -175,6 +178,7 @@ public class AllTransactions {
 
   /**
    * Log deposit
+   * 
    * @param curr
    * @param currAcc
    * @param amount
@@ -237,7 +241,7 @@ public class AllTransactions {
     Customer curr = ErrorHandler.getValidCustomer(scnr, customers);
     Account fromAcct = ErrorHandler.getValidAccount(scnr, curr);
 
-    while (amount < 0) {
+    while (amount <= 0.00) {
       System.out.println("Invalid Input");
       System.out.println("How much will you be paying?");
       amount = Double.parseDouble(scnr.nextLine());
@@ -247,8 +251,10 @@ public class AllTransactions {
       System.out.println("Not enough funds.");
       amount = Double.parseDouble(scnr.nextLine());
     }
+    
     System.out.println("Now input information of the person you'd like to pay");
     Customer paid = ErrorHandler.getValidCustomer(scnr, customers);
+
     Account payAcct = ErrorHandler.getValidAccount(scnr, paid);
 
     pay(paid, payAcct, curr, fromAcct, amount);
@@ -259,6 +265,7 @@ public class AllTransactions {
 
   /**
    * Payment method between customers from one account to another
+   * 
    * @param paid
    * @param toAcct
    * @param curr
@@ -272,6 +279,7 @@ public class AllTransactions {
 
     fromAcct.withdraw(amount);
     toAcct.deposit(amount);
+
     ut1 = new Builder()
         .customer(curr)
         .account1(fromAcct)
@@ -308,6 +316,7 @@ public class AllTransactions {
 
   /**
    * Read and transactions from csv file
+   * 
    * @param filePath
    * @param customers
    */
@@ -330,6 +339,7 @@ public class AllTransactions {
 
   /**
    * Process transactions from csv file
+   * 
    * @param transaction
    * @param customers
    */

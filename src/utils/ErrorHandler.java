@@ -35,6 +35,12 @@ public class ErrorHandler {
     String input = scnr.nextLine();
     Customer curr = isValidCustomer(input, customers);
 
+    while (curr == null) {
+      System.out.println("Not a valid user. Try again.");
+      input = scnr.nextLine();
+      curr = isValidCustomer(input, customers);
+    }
+
     // prompt login
     while (retry != 0) {
       if (LoginPrompt.promptPassword(curr)) {
@@ -48,11 +54,6 @@ public class ErrorHandler {
       retry = 3;
     }
 
-    while (curr == null) {
-      System.out.println("Not a valid user. Try again.");
-      input = scnr.nextLine();
-      curr = isValidCustomer(input, customers);
-    }
     return curr;
   }
 

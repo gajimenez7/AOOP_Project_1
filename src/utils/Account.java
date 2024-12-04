@@ -16,7 +16,9 @@ public abstract class Account {
    * @param amount
    */
   public void deposit(double amount) {
-    this.balance += amount;
+    double n = this.balance;
+    n += amount;
+    this.balance = Math.round(n * 100.0) / 100.0;
   }
 
   /** 
@@ -68,8 +70,10 @@ public abstract class Account {
    * @param amount
    */
   public boolean withdraw(double amount) {
+    double n = this.balance;
     if (amount <= this.balance) {
-      this.balance -= amount;
+      n -= amount;
+      this.balance = Math.round(n * 100.0) / 100.0;
       return true;
     } else
       return false;
